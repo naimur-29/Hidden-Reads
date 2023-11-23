@@ -13,7 +13,12 @@ const Error: React.FC = () => {
     }, 3000);
   });
 
-  return <h2>Error! Page not found!</h2>;
+  return (
+    <>
+      <h2>Error! Page not found!</h2>
+      <p>Redirecting to home page...</p>
+    </>
+  );
 };
 
 export default Error;

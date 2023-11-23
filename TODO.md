@@ -10,3 +10,4 @@
 - create the navbar left section structure ✅
 - complete the navbar ✅
 - create all the pages layout ✅
+- design the home page first part ✅

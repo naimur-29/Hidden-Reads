@@ -6,7 +6,7 @@ import BuildPage from "./Layouts/BuildPage";
 // Pages:
 import Home from "./pages/Home/Home";
 import MostPopular from "./pages/MostPopular/MostPopular";
-import Categories from "./pages/Categories/Categories";
+import Genres from "./pages/Genres/Genres";
 import RecentlyAdded from "./pages/RecentlyAdded/RecentlyAdded";
 import RequestBooks from "./pages/RequestBooks/RequestBooks";
 import Error from "./pages/Error/Error";
@@ -29,10 +29,10 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/categories",
+    path: "/genres",
     element: (
       <BuildPage>
-        <Categories />
+        <Genres />
       </BuildPage>
     ),
   },

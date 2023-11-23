@@ -1,2 +1,66 @@
 .home-page-container {
 }
+
+.home-page-container > .header-container {
+  background-color: #0003;
+
+  width: 100%;
+  padding: 40px 20px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* TITLE START */
+.home-page-container > .header-container > .title-container {
+  width: 95%;
+  margin-bottom: 20px;
+}
+
+.home-page-container > .header-container > .title-container > .title {
+  text-align: center;
+  font-size: 4rem;
+}
+
+@media (max-width: 720px) {
+  .home-page-container > .header-container > .title-container > .title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 412px) {
+  .home-page-container > .header-container > .title-container > .title {
+    font-size: 2.3rem;
+  }
+}
+
+.home-page-container > .header-container > .title-container > .headline {
+  text-align: center;
+  font-style: italic;
+}
+/* TITLE END */
+
+/* SEARCH BAR START */
+.home-page-container > .header-container > .search-container {
+  width: 100%;
+  max-width: 940px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-page-container > .header-container > .search-container > .search-field {
+  width: 80%;
+  height: 40px;
+  padding: 8px;
+  font-size: 1.2rem;
+}
+
+.home-page-container > .header-container > .search-container > .search-btn {
+  height: 40px;
+  padding: 0 10px;
+  font-size: 1.2rem;
+}
+/* SEARCH BAR END */

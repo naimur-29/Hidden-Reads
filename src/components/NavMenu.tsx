@@ -30,8 +30,8 @@ const NavMenu: React.FC = () => {
 
         <MenuItem
           setMenuState={setIsMenuActive}
-          linkTo="/categories"
-          context="Categories"
+          linkTo="/genres"
+          context="Genres"
         />
 
         <MenuItem

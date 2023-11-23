@@ -1,5 +1,5 @@
 .navbar-container {
-  background-color: #0003;
+  background-color: #fff;
   position: fixed;
   top: 0;
   left: 0;
@@ -9,6 +9,7 @@
   height: 50px;
   width: 100%;
   padding: 0 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 /* LEFT SECTION START */
