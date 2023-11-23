@@ -4,4 +4,9 @@
 - choose the infrastructure ✅
 - create the navbar right section structure ✅
 - create the menu structure ✅
-- create the navbar left section structure
+
+### Thursday, November 24
+
+- create the navbar left section structure ✅
+- complete the navbar ✅
+- create all the pages layout ✅

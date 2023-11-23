@@ -1,0 +1,70 @@
+/* MENU START */
+.menu-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.menu-container[data-active="true"] {
+  background-color: #0003;
+}
+
+.menu-container > .menu-icon {
+  background-color: transparent;
+  border: none;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  /* .menu-container > .menu-icon:first-child {
+      background-color: red;
+    }
+  } */
+
+  .menu-container > .menu-icon:hover > .line {
+    background-color: #232323;
+  }
+}
+
+.menu-container > .menu-icon > .line {
+  background-color: #4e4e4e;
+  width: 32px;
+  height: 5px;
+  border-radius: 4px;
+}
+
+.menu-container > .menu-list {
+  background-color: #fff;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 200px;
+  padding: 4px;
+  border: 1px solid #0009;
+  list-style: none;
+}
+
+.menu-container > .menu-list > .menu-item {
+  border: 2px solid #eee;
+}
+
+@media (hover: hover) {
+  .menu-container > .menu-list > .menu-item:hover {
+    border: 2px solid #232323;
+  }
+}
+
+.menu-container > .menu-list > .menu-item > .link {
+  display: inline-block;
+  padding: 10px;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+/* MENU END */

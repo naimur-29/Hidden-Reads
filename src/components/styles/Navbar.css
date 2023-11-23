@@ -1,92 +1,39 @@
 .navbar-container {
   background-color: #0003;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 50px;
-  padding: 20px;
+  width: 100%;
+  padding: 0 10px;
 }
 
-/* RIGHT SECTION START */
-/* MENU START */
-.navbar-container > .right-container > .menu-container {
-  background-color: #0003;
-  position: relative;
-  cursor: pointer;
-}
-
-.navbar-container > .right-container > .menu-container > .menu-icon {
-  background-color: transparent;
-  border: none;
-  height: 50px;
-  width: 50px;
+/* LEFT SECTION START */
+.navbar-container > .left-container {
   display: flex;
-  flex-direction: column;
+  height: 100%;
+}
+
+.navbar-container > .left-container > .books-count {
+  background-color: #0003;
+  padding: 8px;
+  height: 60%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  cursor: pointer;
 }
 
-@media (hover: hover) {
-  /* .navbar-container > .right-container > .menu-container > .menu-icon-icon:hover {
-    .navbar-container > .right-container > .menu-container > .menu-icon:first-child {
-      background-color: red;
-    }
-  } */
+/* LEFT SECTION END */
 
-  .navbar-container
-    > .right-container
-    > .menu-container
-    > .menu-icon:hover
-    > .line {
-    background-color: #232323;
-  }
+/* RIGHT SECTION START */
+.navbar-container > .right-container {
+  /* background-color: #0003; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.navbar-container > .right-container > .menu-container > .menu-icon > .line {
-  background-color: #4e4e4e;
-  width: 32px;
-  height: 5px;
-  border-radius: 4px;
-}
-
-.navbar-container > .right-container > .menu-container > .menu-list {
-  background-color: #0003;
-  position: absolute;
-  right: 0;
-  top: 100%;
-  width: 200px;
-  list-style: none;
-}
-
-.navbar-container
-  > .right-container
-  > .menu-container
-  > .menu-list
-  > .menu-item {
-  padding: 10px;
-  border: 2px solid #eee;
-}
-
-@media (hover: hover) {
-  .navbar-container
-    > .right-container
-    > .menu-container
-    > .menu-list
-    > .menu-item:hover {
-    border: 2px solid #232323;
-  }
-}
-
-.navbar-container
-  > .right-container
-  > .menu-container
-  > .menu-list
-  > .menu-item
-  > .link {
-  text-decoration: none;
-  color: inherit;
-}
-/* MENU END */
 /* RIGHT SECTION END */
