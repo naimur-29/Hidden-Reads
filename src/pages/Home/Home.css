@@ -3,7 +3,6 @@
 
 .home-page-container > .header-container {
   background-color: #0003;
-
   width: 100%;
   padding: 40px 20px;
   height: auto;
@@ -16,6 +15,7 @@
 /* TITLE START */
 .home-page-container > .header-container > .title-container {
   width: 95%;
+  max-width: 1140px;
   margin-bottom: 20px;
 }
 
