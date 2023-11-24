@@ -2,8 +2,9 @@
 }
 
 .home-page-container > .header-container {
-  background-color: #0003;
   width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
   padding: 40px 20px;
   height: auto;
   display: flex;
@@ -12,10 +13,15 @@
   justify-content: flex-start;
 }
 
+@media (max-width: 1200px) {
+  .home-page-container > .header-container {
+    max-width: 940px;
+  }
+}
+
 /* TITLE START */
 .home-page-container > .header-container > .title-container {
   width: 95%;
-  max-width: 1140px;
   margin-bottom: 20px;
 }
 
@@ -45,14 +51,13 @@
 /* SEARCH BAR START */
 .home-page-container > .header-container > .search-container {
   width: 100%;
-  max-width: 940px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .home-page-container > .header-container > .search-container > .search-field {
-  width: 80%;
+  width: 100%;
   height: 40px;
   padding: 8px;
   font-size: 1.2rem;

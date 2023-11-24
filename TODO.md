@@ -5,7 +5,7 @@
 - create the navbar right section structure ✅
 - create the menu structure ✅
 
-### Thursday, November 24
+### Friday, November 24
 
 - create the navbar left section structure ✅
 - complete the navbar ✅
@@ -14,4 +14,8 @@
 - design the genres page ✅
 - design the most popular page ✅
 - design the recently added page ✅
+- design the home page search results ✅
+
+### Saturday, November 25
+
 - design the request books page
