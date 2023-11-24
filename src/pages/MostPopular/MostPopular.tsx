@@ -15,8 +15,8 @@ const MostPopular: React.FC = () => {
 
       <div className="books-container">
         {bookCoverList.map((b) => (
-          <Link to={`/overview/${b.name}_${b.id}`}>
-            <img src={b.cover} alt={b.name} />
+          <Link className="cover-container" to={`/overview/${b.name}_${b.id}`}>
+            <img className="cover" src={b.cover} alt={b.name} />
           </Link>
         ))}
       </div>

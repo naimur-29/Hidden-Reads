@@ -13,5 +13,5 @@
 - design the home page first part ✅
 - design the genres page ✅
 - design the most popular page ✅
+- design the recently added page ✅
 - design the request books page
-- design the recently added page
