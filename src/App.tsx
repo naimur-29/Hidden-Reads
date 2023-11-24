@@ -2,12 +2,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // components:
 import BuildPage from "./Layouts/BuildPage";
+import FilteredBooks from "./components/FilteredBooks";
+import BookOverview from "./components/BookOverview";
 
 // Pages:
 import Home from "./pages/Home/Home";
 import MostPopular from "./pages/MostPopular/MostPopular";
 import Genres from "./pages/Genres/Genres";
-import FilteredBooks from "./components/FilteredBooks";
 import RecentlyAdded from "./pages/RecentlyAdded/RecentlyAdded";
 import RequestBooks from "./pages/RequestBooks/RequestBooks";
 import Error from "./pages/Error/Error";
@@ -58,6 +59,14 @@ const router = createBrowserRouter([
     element: (
       <BuildPage>
         <RequestBooks />
+      </BuildPage>
+    ),
+  },
+  {
+    path: "/overview/:info",
+    element: (
+      <BuildPage>
+        <BookOverview />
       </BuildPage>
     ),
   },

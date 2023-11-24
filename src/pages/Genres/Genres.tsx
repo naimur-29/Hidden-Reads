@@ -44,13 +44,17 @@ const Genres: React.FC = () => {
         className="genres-container"
         data-split={
           GenresList.filter((g) => g.name.toLowerCase().includes(searchInput))
-            .length > 10
+            .length > 16
         }
       >
         {GenresList.filter((g) =>
           g.name.toLowerCase().includes(searchInput)
         ).map((g) => (
-          <GenreLink name={g.name} bookCount={g.bookCount} />
+          <GenreLink
+            key={g.name + g.bookCount}
+            name={g.name}
+            bookCount={g.bookCount}
+          />
         ))}
       </div>
     </section>
