@@ -1,4 +1,5 @@
 export type bookType = {
+  id: string;
   name: string;
   translator: string;
   author: string;
@@ -11,6 +12,7 @@ export type bookType = {
 
 export const books: bookType[] = [
   {
+    id: "<id>",
     name: "Searching for Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "SUNY Press",
     author: "Nayanjot Lahiri",
@@ -22,6 +24,7 @@ export const books: bookType[] = [
     views: 104,
   },
   {
+    id: "<id>",
     name: "Exotic Higgs Boson Decays to Merged Diphotons. A Novel CMS Analysis Using End-to-End Deep Learning. Doctoral Thesis accepted by Carnegie Mellon University, Pittsburgh, USA",
     translator: "Springer",
     author: "Michael Andrews",
@@ -33,6 +36,7 @@ export const books: bookType[] = [
     views: 10,
   },
   {
+    id: "<id>",
     name: "Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "She Writes Press",
     author: "Carole Bumpus",
@@ -44,6 +48,7 @@ export const books: bookType[] = [
     views: 54,
   },
   {
+    id: "<id>",
     name: "Searching for Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "SUNY Press",
     author: "Nayanjot Lahiri",
@@ -55,6 +60,7 @@ export const books: bookType[] = [
     views: 104,
   },
   {
+    id: "<id>",
     name: "Exotic Higgs Boson Decays to Merged Diphotons. A Novel CMS Analysis Using End-to-End Deep Learning. Doctoral Thesis accepted by Carnegie Mellon University, Pittsburgh, USA",
     translator: "Springer",
     author: "Michael Andrews",
@@ -66,6 +72,7 @@ export const books: bookType[] = [
     views: 10,
   },
   {
+    id: "<id>",
     name: "Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "She Writes Press",
     author: "Carole Bumpus",
@@ -77,6 +84,7 @@ export const books: bookType[] = [
     views: 54,
   },
   {
+    id: "<id>",
     name: "Searching for Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "SUNY Press",
     author: "Nayanjot Lahiri",
@@ -88,6 +96,7 @@ export const books: bookType[] = [
     views: 104,
   },
   {
+    id: "<id>",
     name: "Exotic Higgs Boson Decays to Merged Diphotons. A Novel CMS Analysis Using End-to-End Deep Learning. Doctoral Thesis accepted by Carnegie Mellon University, Pittsburgh, USA",
     translator: "Springer",
     author: "Michael Andrews",
@@ -99,6 +108,7 @@ export const books: bookType[] = [
     views: 10,
   },
   {
+    id: "<id>",
     name: "Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "She Writes Press",
     author: "Carole Bumpus",
@@ -110,6 +120,7 @@ export const books: bookType[] = [
     views: 54,
   },
   {
+    id: "<id>",
     name: "Searching for Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "SUNY Press",
     author: "Nayanjot Lahiri",
@@ -121,6 +132,7 @@ export const books: bookType[] = [
     views: 104,
   },
   {
+    id: "<id>",
     name: "Exotic Higgs Boson Decays to Merged Diphotons. A Novel CMS Analysis Using End-to-End Deep Learning. Doctoral Thesis accepted by Carnegie Mellon University, Pittsburgh, USA",
     translator: "Springer",
     author: "Michael Andrews",
@@ -132,6 +144,7 @@ export const books: bookType[] = [
     views: 10,
   },
   {
+    id: "<id>",
     name: "Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "She Writes Press",
     author: "Carole Bumpus",
@@ -143,6 +156,7 @@ export const books: bookType[] = [
     views: 54,
   },
   {
+    id: "<id>",
     name: "Searching for Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "SUNY Press",
     author: "Nayanjot Lahiri",
@@ -154,6 +168,7 @@ export const books: bookType[] = [
     views: 104,
   },
   {
+    id: "<id>",
     name: "Exotic Higgs Boson Decays to Merged Diphotons. A Novel CMS Analysis Using End-to-End Deep Learning. Doctoral Thesis accepted by Carnegie Mellon University, Pittsburgh, USA",
     translator: "Springer",
     author: "Michael Andrews",
@@ -165,6 +180,7 @@ export const books: bookType[] = [
     views: 10,
   },
   {
+    id: "<id>",
     name: "Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "She Writes Press",
     author: "Carole Bumpus",
@@ -176,6 +192,7 @@ export const books: bookType[] = [
     views: 54,
   },
   {
+    id: "<id>",
     name: "Searching for Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "SUNY Press",
     author: "Nayanjot Lahiri",
@@ -187,6 +204,7 @@ export const books: bookType[] = [
     views: 104,
   },
   {
+    id: "<id>",
     name: "Exotic Higgs Boson Decays to Merged Diphotons. A Novel CMS Analysis Using End-to-End Deep Learning. Doctoral Thesis accepted by Carnegie Mellon University, Pittsburgh, USA",
     translator: "Springer",
     author: "Michael Andrews",
@@ -198,6 +216,7 @@ export const books: bookType[] = [
     views: 10,
   },
   {
+    id: "<id>",
     name: "Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "She Writes Press",
     author: "Carole Bumpus",
@@ -209,6 +228,7 @@ export const books: bookType[] = [
     views: 54,
   },
   {
+    id: "<id>",
     name: "Searching for Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "SUNY Press",
     author: "Nayanjot Lahiri",
@@ -220,6 +240,7 @@ export const books: bookType[] = [
     views: 104,
   },
   {
+    id: "<id>",
     name: "Exotic Higgs Boson Decays to Merged Diphotons. A Novel CMS Analysis Using End-to-End Deep Learning. Doctoral Thesis accepted by Carnegie Mellon University, Pittsburgh, USA",
     translator: "Springer",
     author: "Michael Andrews",
@@ -231,6 +252,7 @@ export const books: bookType[] = [
     views: 10,
   },
   {
+    id: "<id>",
     name: "Ashoka: Questing for a Buddhist King from India to Thailand",
     translator: "She Writes Press",
     author: "Carole Bumpus",

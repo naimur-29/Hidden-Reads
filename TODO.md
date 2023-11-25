@@ -18,4 +18,6 @@
 
 ### Saturday, November 25
 
+- add Book Overview route from searched items ✅
+- design the Book Overview page
 - design the request books page

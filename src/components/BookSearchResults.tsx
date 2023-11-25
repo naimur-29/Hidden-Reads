@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Eye } from "lucide-react";
 
 import "./styles/BookSearchResults.css";
+
+// Components:
+import BookSearchItem from "./BookSearchItem";
 
 // Data:
 import { books, bookType } from "../pages/Home/books";
@@ -32,40 +34,10 @@ const BookSearchResults: React.FC<propTypes> = ({ searchedContext }) => {
       <div className="list-container">
         {filteredBooks.length ? (
           filteredBooks.map((b, index) => (
-            <a href="/" className="book-container" key={index}>
-              <div className="left">
-                <img className="cover" src={b.cover} alt={b.name} />
-              </div>
-              <div className="right">
-                <div className="title-container">
-                  <h3 className="name">{b.name}</h3>
-                  <p className="translator">{b.translator}</p>
-                  <p className="author">{b.author}</p>
-                </div>
-
-                <div className="info-container">
-                  <div className="info">
-                    {`Published: `}
-                    <span>{b.startedPublishing}</span>
-                  </div>
-                  <div className="info">
-                    {`Status: `}
-                    <span>{b.status}</span>
-                  </div>
-                  <div className="info">
-                    {`Volumes: `}
-                    <span>{b.volumes}</span>
-                  </div>
-                  <div className="info views">
-                    <Eye className="icon" size={20} />
-                    <span>{b.views}</span>
-                  </div>
-                </div>
-              </div>
-            </a>
+            <BookSearchItem book={b} key={index} />
           ))
         ) : (
-          <p>No Books Found!</p>
+          <p style={{ padding: "8px" }}>No Books Found!</p>
         )}
       </div>
     </div>

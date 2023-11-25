@@ -29,7 +29,7 @@ const Home: React.FC = () => {
               setHasSearched(false);
             }}
             type="text"
-            placeholder="Search for titles, authors.."
+            placeholder="Search for full titles, authors.."
           />
           <button className="search-btn" onClick={() => setHasSearched(true)}>
             Search
