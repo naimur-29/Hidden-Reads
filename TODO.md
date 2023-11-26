@@ -19,5 +19,10 @@
 ### Saturday, November 25
 
 - add Book Overview route from searched items ✅
+
+### Sunday, November 26
+
+- add URL state management for search query ✅
+- set Book Overview page and Author Overview page ✅
 - design the Book Overview page
 - design the request books page

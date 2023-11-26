@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 
 import "./Home.css";
 
 // Components:
 import BookSearchResults from "../../components/BookSearchResults";
 
-const Home: React.FC = () => {
-  // states:
+// Types:
+type propType = {
+  hasQuery?: boolean;
+};
+
+const Home: React.FC<propType> = ({ hasQuery = false }) => {
+  // States:
   const [searchInput, setSearchInput] = useState("");
-  const [hasSearched, setHasSearched] = useState(false);
+
+  // Hooks:
+  const { query } = useParams();
+
+  useEffect(() => {
+    if (hasQuery && query) {
+      setSearchInput(query);
+    }
+  }, [query, hasQuery]);
 
   return (
     <section className="home-page-container">
@@ -26,22 +40,18 @@ const Home: React.FC = () => {
             onChange={(e) => {
               e.preventDefault();
               setSearchInput(e.target.value.toLowerCase());
-              setHasSearched(false);
             }}
             type="text"
+            value={searchInput}
             placeholder="Search for full titles, authors.."
           />
-          <button className="search-btn" onClick={() => setHasSearched(true)}>
+          <Link to={`/${searchInput}`} className="search-btn">
             Search
-          </button>
+          </Link>
         </div>
       </div>
 
-      {hasSearched && searchInput ? (
-        <BookSearchResults searchedContext={searchInput} />
-      ) : (
-        <></>
-      )}
+      {hasQuery ? <BookSearchResults /> : <></>}
     </section>
   );
 };

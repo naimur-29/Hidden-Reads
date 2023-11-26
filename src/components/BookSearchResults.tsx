@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import "./styles/BookSearchResults.css";
 
@@ -8,25 +9,25 @@ import BookSearchItem from "./BookSearchItem";
 // Data:
 import { books, bookType } from "../pages/Home/books";
 
-// Types:
-type propTypes = {
-  searchedContext: string;
-};
-
-const BookSearchResults: React.FC<propTypes> = ({ searchedContext }) => {
+const BookSearchResults: React.FC = () => {
   // States:
   const [filteredBooks, setFilteredBooks] = useState<bookType[]>([]);
 
+  // hooks:
+  const { query } = useParams();
+
   useEffect(() => {
-    setFilteredBooks(
-      books.filter(
-        (b, index) =>
-          index < 20 &&
-          (b.name.toLowerCase().includes(searchedContext) ||
-            b.author.toLowerCase().includes(searchedContext))
-      )
-    );
-  }, []);
+    if (query) {
+      setFilteredBooks(
+        books.filter(
+          (b, index) =>
+            index < 20 &&
+            (b.name.toLowerCase().includes(query) ||
+              b.author.toLowerCase().includes(query))
+        )
+      );
+    }
+  }, [query]);
 
   return (
     <div className="books-list-container">

@@ -64,8 +64,14 @@
 }
 
 .home-page-container > .header-container > .search-container > .search-btn {
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #000;
   height: 40px;
   padding: 0 10px;
   font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 /* SEARCH BAR END */

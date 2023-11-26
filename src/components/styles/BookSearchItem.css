@@ -48,6 +48,27 @@
   > .book-container
   > .right
   > .title-container {
+  /* background-color: #0003; */
+}
+
+.books-list-container
+  > .list-container
+  > .book-container
+  > .right
+  > .title-container
+  > .title {
+  color: inherit;
+  font-size: 1.1rem;
+}
+
+.books-list-container
+  > .list-container
+  > .book-container
+  > .right
+  > .title-container
+  > .author {
+  color: inherit;
+  font-size: 1.1rem;
 }
 
 .books-list-container
