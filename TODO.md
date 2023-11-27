@@ -24,5 +24,9 @@
 
 - add URL state management for search query ✅
 - set Book Overview page and Author Overview page ✅
-- design the Book Overview page
+
+### Monday, November 27
+
+- design the Book Overview page 50% ✅
+- design rest of Book Overview Page
 - design the request books page

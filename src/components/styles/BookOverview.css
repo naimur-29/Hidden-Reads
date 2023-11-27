@@ -1,0 +1,80 @@
+.book-overview-container {
+  padding: 40px 0;
+}
+
+.book-overview-container > .inner-container {
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+}
+
+.book-overview-container > .inner-container > .cover-container {
+  min-width: 220px;
+  padding: 10px;
+}
+
+.book-overview-container > .inner-container > .cover-container > .cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.book-overview-container > .inner-container > .info-container {
+  padding: 10px;
+  width: 100%;
+}
+
+.book-overview-container > .inner-container > .info-container > .title {
+  font-weight: 500;
+  font-size: 1.7rem;
+}
+
+.book-overview-container > .inner-container > .info-container > .authors {
+  display: inline-block;
+  width: 100%;
+}
+
+.book-overview-container > .inner-container > .info-container > .stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.book-overview-container
+  > .inner-container
+  > .info-container
+  > .stats
+  > .views {
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.book-overview-container > .inner-container > .info-container > .description {
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-overview-container
+  > .inner-container
+  > .info-container
+  > .description
+  .item {
+  display: flex;
+  gap: 10px;
+}
+
+.book-overview-container
+  > .inner-container
+  > .info-container
+  > .description
+  .item
+  > span:first-child {
+  color: #0009;
+}
