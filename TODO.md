@@ -28,5 +28,5 @@
 ### Monday, November 27
 
 - design the Book Overview page 50% ✅
-- design rest of Book Overview Page
+- design rest of Book Overview Page ✅
 - design the request books page

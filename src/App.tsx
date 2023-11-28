@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import BuildPage from "./Layouts/BuildPage";
 import FilteredBooks from "./components/FilteredBooks";
 import BookOverview from "./components/BookOverview";
-import AuthorOverview from "./components/AuthorOverview";
+// import AuthorOverview from "./components/AuthorOverview";
 
 // Pages:
 import Home from "./pages/Home/Home";
@@ -79,14 +79,14 @@ const router = createBrowserRouter([
       </BuildPage>
     ),
   },
-  {
-    path: "/authors/:info",
-    element: (
-      <BuildPage>
-        <AuthorOverview />
-      </BuildPage>
-    ),
-  },
+  // {
+  //   path: "/authors/:info",
+  //   element: (
+  //     <BuildPage>
+  //       <AuthorOverview />
+  //     </BuildPage>
+  //   ),
+  // },
   {
     path: "*",
     element: <Error />,
