@@ -26,8 +26,8 @@
 }
 
 .most-popular-page-container > .books-container > .cover-container {
+  min-height: 280px;
   border: 2px solid #232323;
-  overflow: hidden;
 }
 
 .most-popular-page-container > .books-container > .cover-container > .cover {

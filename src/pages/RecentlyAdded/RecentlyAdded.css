@@ -26,6 +26,7 @@
 }
 
 .recently-added-page-container > .books-container > .cover-container {
+  min-height: 280px;
   border: 2px solid #232323;
 }
 

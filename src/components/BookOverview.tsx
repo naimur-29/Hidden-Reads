@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Eye, MessageSquare } from "lucide-react";
+import { Download } from "lucide-react";
 
 import "./styles/BookOverview.css";
 
@@ -9,6 +9,7 @@ const book = {
   id: "<id>",
   genres: "Isekai,Fantasy,Slice of Life,Action,Ecci,Harem,Horror",
   name: "86 - Eighty Six",
+  author: "John Smith",
   synopsis:
     "A War Without Casualties. The Republic of San Magnolia has long been under attack from the neighbouring Giadian Empire's army of unmanned drones known as the Legion. After years of painstaking research, the Republic finally developed autonomous drones of their own, turning the one-sided struggle int",
   infoLink: "https://www.novelupdates.com/series/86/",
@@ -86,9 +87,12 @@ const book = {
   ],
 };
 
-const commentsCount = 12;
+// const commentsCount = 12;
 
 const BookOverview: React.FC = () => {
+  // STATES:
+  const [isDownloadRevealed, setIsDownloadRevealed] = useState(false);
+
   // const { info } = useParams();
 
   return (
@@ -104,14 +108,16 @@ const BookOverview: React.FC = () => {
                 background: `linear-gradient(to bottom, ${book.coverShade}00 10%, ${book.coverShade} 80%)`,
               }}
             >
-              <p className="views">
-                <Eye />
-                {book.views}
-              </p>
-              <a href="#comments-container" className="comments">
+              <p className="views">{`Views: ${book.views}`}</p>
+              <p className="downloads">{`Downloads: ${book.views}`}</p>
+              {/* <a href="#comments-container" className="comments">
                 <MessageSquare />
                 {`${commentsCount} Comments`}
-              </a>
+              </a> */}
+              {/* <p className="comments">
+                <MessageSquare style={{ translate: "0px 3px" }} />
+                {`Comments Coming Soon...`}
+              </p> */}
             </div>
           </div>
 
@@ -128,19 +134,19 @@ const BookOverview: React.FC = () => {
             </div>
 
             <div className="bottom">
+              <div className="volumes item">
+                <span>Volumes:</span>
+                <span>{book.volumes}</span>
+              </div>
+
               <div className="status item">
                 <span>Status:</span>
                 <span>{book.status}</span>
               </div>
 
-              <div className="year item">
-                <span>Year:</span>
-                <span>{book.startedPublishing}</span>
-              </div>
-
-              <div className="volumes item">
-                <span>Volumes:</span>
-                <span>{book.volumes}</span>
+              <div className="author item">
+                <span>Author:</span>
+                <span>{book.author}</span>
               </div>
 
               <div className="genres item">
@@ -162,23 +168,44 @@ const BookOverview: React.FC = () => {
         </div>
 
         <div className="download-container">
-          <div className="epub-container">
-            EPUB
-            <div className="links-container">
-              {book.download.map((link) => (
-                <a href={link.epub}>{link.context}</a>
-              ))}
-            </div>
-          </div>
+          {!isDownloadRevealed ? (
+            <button
+              onClick={() => {
+                setIsDownloadRevealed(true);
+                const timeoutRef = setTimeout(() => {
+                  window.scrollTo({
+                    top: 1000,
+                    left: 0,
+                    behavior: "auto",
+                  });
+                  clearTimeout(timeoutRef);
+                }, 1);
+              }}
+              className="download-reveal-btn"
+            >
+              Download <Download size={27} />
+            </button>
+          ) : (
+            <>
+              <div className="epub-container">
+                EPUB
+                <div className="links-container">
+                  {book.download.map((link) => (
+                    <a href={link.epub}>{link.context}</a>
+                  ))}
+                </div>
+              </div>
 
-          <div className="pdf-container">
-            PDF
-            <div className="links-container">
-              {book.download.map((link) => (
-                <a href={link.pdf}>{link.context}</a>
-              ))}
-            </div>
-          </div>
+              <div className="pdf-container">
+                PDF
+                <div className="links-container">
+                  {book.download.map((link) => (
+                    <a href={link.pdf}>{link.context}</a>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
