@@ -9,6 +9,7 @@ const book = {
   id: "<id>",
   genres: "Isekai,Fantasy,Slice of Life,Action,Ecci,Harem,Horror",
   name: "86 - Eighty Six",
+  jp_title: "Japanese Title",
   author: "John Smith",
   synopsis:
     "A War Without Casualties. The Republic of San Magnolia has long been under attack from the neighbouring Giadian Empire's army of unmanned drones known as the Legion. After years of painstaking research, the Republic finally developed autonomous drones of their own, turning the one-sided struggle int",
@@ -124,6 +125,9 @@ const BookOverview: React.FC = () => {
           <div className="info-container">
             <div className="top">
               <h3 className="title">{book.name}</h3>
+              <h4 className="title" style={{ fontSize: "1.2rem" }}>
+                {book.jp_title}
+              </h4>
 
               <article className="synopsis">
                 {`${book.synopsis.slice(0, 300)}... `}

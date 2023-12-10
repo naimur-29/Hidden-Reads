@@ -1,15 +1,16 @@
 type books = [
   {
-    id: string;
+    id?: string;
     title: string;
+    og_title: string;
     author: string;
     synopsis: string;
     published: string;
     status: string;
     volumes: number;
     genres: string;
-    views: number;
-    downloads: number;
+    views?: number;
+    downloads?: number;
     info_link: string;
     cover_link: string;
     cover_shade: string;

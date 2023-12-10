@@ -34,4 +34,8 @@
 
 - set up firebase basic ✅
 - design the database structure ✅
+
+### Monday, December 11, 2023
+
+- add 'Add Book Page' (Admin) ✅
 - design the request books page

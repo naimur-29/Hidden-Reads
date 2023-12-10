@@ -12,6 +12,7 @@ import MostPopular from "./pages/MostPopular/MostPopular";
 import Genres from "./pages/Genres/Genres";
 import RecentlyAdded from "./pages/RecentlyAdded/RecentlyAdded";
 import RequestBooks from "./pages/RequestBooks/RequestBooks";
+import AddBook from "./components/AddBook";
 import Error from "./pages/Error/Error";
 
 const router = createBrowserRouter([
@@ -87,6 +88,11 @@ const router = createBrowserRouter([
   //     </BuildPage>
   //   ),
   // },
+
+  {
+    path: "/control/add-book",
+    element: <AddBook />,
+  },
   {
     path: "*",
     element: <Error />,
