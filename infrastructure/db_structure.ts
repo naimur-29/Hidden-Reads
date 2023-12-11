@@ -1,8 +1,6 @@
-type books = [
+export type books = [
   {
-    id?: string;
     title: string;
-    og_title: string;
     author: string;
     synopsis: string;
     published: string;
@@ -17,9 +15,8 @@ type books = [
   }
 ];
 
-type bookDownloads = [
+export type bookDownloads = [
   {
-    id: string;
     links: [
       {
         context: string;

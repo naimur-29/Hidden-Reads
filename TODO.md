@@ -38,4 +38,11 @@
 ### Monday, December 11, 2023
 
 - add 'Add Book Page' (Admin) ✅
+- get search data from the db ✅
+- use hooks to interact with db
+- use some kind of state management/cache to not load data from db again and again!
 - design the request books page
+- update views & downloads on visit and download
+- keep track of how many books are there
+- fix recently added books (implement a stack)
+- fix most popular books (don't have a solution for that yet!)

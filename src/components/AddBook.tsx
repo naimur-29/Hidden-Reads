@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { v4 as uuid4 } from "uuid";
 import { setDoc } from "firebase/firestore";
-import { getBooksRef, getBookDownloadsRef } from "../config/firebase";
+import {
+  getBooksRef,
+  getBookDownloadsRef,
+  // getStatsRef,
+} from "../config/firebase";
 
 // TYPES:
 type bookInfoType = {
   id?: string;
   title: string;
-  og_title: string;
   author: string;
   synopsis: string;
   published: string;
@@ -19,6 +22,7 @@ type bookInfoType = {
   info_link: string;
   cover_link: string;
   cover_shade: string;
+  searchme: string[];
 };
 
 type linksType = {
@@ -36,7 +40,6 @@ const AddBook: React.FC = () => {
   const [isBookSubmitLoading, setIsBookSubmitLoading] = useState(false);
   const [bookInfo, setBookInfo] = useState<bookInfoType>({
     title: "",
-    og_title: "",
     author: "",
     synopsis: "",
     published: "",
@@ -48,6 +51,7 @@ const AddBook: React.FC = () => {
     info_link: "",
     cover_link: "",
     cover_shade: "",
+    searchme: [],
   });
   const [linksInfo, setLinksInfo] = useState<linksType>({
     context: "",
@@ -111,7 +115,6 @@ const AddBook: React.FC = () => {
     const bookData = {
       ...bookInfo,
       title: bookInfo.title.trim(),
-      og_title: bookInfo.og_title.trim(),
       author: bookInfo.author.trim(),
       synopsis: bookInfo.synopsis.trim().slice(0, 310),
       published: bookInfo.published.trim(),
@@ -120,6 +123,17 @@ const AddBook: React.FC = () => {
       info_link: bookInfo.info_link.trim(),
       cover_link: bookInfo.cover_link.trim(),
       cover_shade: bookInfo.cover_shade.trim(),
+      searchme: [
+        ...bookInfo.title
+          .trim()
+          .toLowerCase()
+          .replace(/[^a-z\s]/g, "")
+          .split(" "),
+        bookInfo.published.trim(),
+        ...bookInfo.genres.trim().toLowerCase().split(","),
+        bookInfo.status.trim().toLowerCase(),
+        bookInfo.author.trim().toLowerCase(),
+      ],
     };
 
     // add new item to book database:
@@ -128,11 +142,13 @@ const AddBook: React.FC = () => {
       // add new book:
       console.log("adding book...");
       const id = uuid4();
+      console.log(id);
       const bookRef = getBooksRef(id);
       await setDoc(bookRef, bookData);
+      // const statsRef = getStatsRef("books");
+
       setBookInfo({
         title: "",
-        og_title: "",
         author: "",
         synopsis: "",
         published: "",
@@ -144,6 +160,7 @@ const AddBook: React.FC = () => {
         info_link: "",
         cover_link: "",
         cover_shade: "",
+        searchme: [],
       });
       console.log("book added!");
 
@@ -176,20 +193,6 @@ const AddBook: React.FC = () => {
               setBookInfo((prev) => ({
                 ...prev,
                 title: e.target.value,
-              }));
-            }}
-            type="text"
-          />
-        </div>
-        <div className="item">
-          <label htmlFor="">Original Title: </label>
-          <input
-            value={bookInfo.og_title}
-            onChange={(e) => {
-              e.preventDefault();
-              setBookInfo((prev) => ({
-                ...prev,
-                og_title: e.target.value,
               }));
             }}
             type="text"
@@ -255,7 +258,7 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Volumes: </label>
+          <label htmlFor="">Volumes/Chapters: </label>
           <input
             value={bookInfo.volumes}
             onChange={(e) => {

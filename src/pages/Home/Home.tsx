@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-// import { v4 as uuidv4, validate as uuidValidate } from "uuid";
 
 import "./Home.css";
 
@@ -18,6 +17,10 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
 
   // Hooks:
   const { query } = useParams();
+
+  useEffect(() => {
+    setSearchInput("");
+  }, []);
 
   useEffect(() => {
     if (hasQuery && query) {
@@ -38,12 +41,12 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
         <div className="search-container">
           <input
             className="search-field"
+            value={searchInput}
             onChange={(e) => {
               e.preventDefault();
-              setSearchInput(e.target.value.toLowerCase());
+              setSearchInput(e.target.value);
             }}
             type="text"
-            value={searchInput}
             placeholder="Search for full titles, authors.."
           />
           <Link to={`/${searchInput}`} className="search-btn">

@@ -4,8 +4,17 @@ import { Eye } from "lucide-react";
 
 import "./styles/BookSearchItem.css";
 
-// Types:
-import { bookType } from "../pages/Home/books";
+// TYPES:
+type bookType = {
+  id: string;
+  title: string;
+  author: string;
+  cover_link: string;
+  published: string;
+  status: string;
+  volumes: string;
+  views: number;
+};
 
 type propTypes = {
   book: bookType;
@@ -15,12 +24,15 @@ const BookSearchItem: React.FC<propTypes> = ({ book }) => {
   return (
     <div className="book-container">
       <div className="left">
-        <img className="cover" src={book.cover} alt={book.name} />
+        <img className="cover" src={book.cover_link} alt={book.title} />
       </div>
       <div className="right">
         <div className="title-container">
-          <Link to={`/overview/${book.name}_${book.id}`} className="title">
-            {book.name}
+          <Link
+            to={`/overview/${book.title.slice(0, 10).toLowerCase()}_${book.id}`}
+            className="title"
+          >
+            {book.title}
           </Link>
           {/* <p className="translator">{book.translator}</p> */}
           {/* <Link to={`/authors/${book.author}`} className="author">
@@ -33,7 +45,7 @@ const BookSearchItem: React.FC<propTypes> = ({ book }) => {
         <div className="info-container">
           <div className="info">
             {`Published: `}
-            <span>{book.startedPublishing}</span>
+            <span>{book.published}</span>
           </div>
           <div className="info">
             {`Status: `}
