@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Download } from "lucide-react";
 import { getBooksRef } from "../config/firebase";
-import { getDoc, DocumentData } from "firebase/firestore";
+import { getDoc, updateDoc, DocumentData } from "firebase/firestore";
 
 import "./styles/BookOverview.css";
 
@@ -36,7 +36,15 @@ const BookOverview: React.FC = () => {
         const bookSnapshot = await getDoc(bookRef);
         const res = bookSnapshot.data();
         if (res) {
-          setBook(res);
+          // update views:
+          console.log("updating views....");
+          const updatedViews = Number(res?.views) + 1;
+          await updateDoc(bookRef, {
+            views: updatedViews,
+          });
+          console.log("updated views!");
+
+          setBook({ ...res, views: updatedViews });
           console.log(res);
         }
         console.log("book Loaded!");
@@ -68,8 +76,20 @@ const BookOverview: React.FC = () => {
                 background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade} 80%)`,
               }}
             >
-              <p className="views">{`Views: ${book?.views}`}</p>
-              <p className="downloads">{`Downloads: ${book?.downloads}`}</p>
+              <p className="views">{`Views: ${
+                book.views < 10 && book.views > 0
+                  ? `0${book.views}`
+                  : book.views > 999
+                  ? `${(book.views / 1000).toFixed(2)}k`
+                  : book.views
+              }`}</p>
+              <p className="downloads">{`Downloads: ${
+                book.downloads < 10 && book.downloads > 0
+                  ? `0${book.downloads}`
+                  : book.downloads > 999
+                  ? `${(book.downloads / 1000).toFixed(2)}k`
+                  : book.downloads
+              }`}</p>
               {/* <a href="#comments-container" className="comments">
                 <MessageSquare />
                 {`${commentsCount} Comments`}

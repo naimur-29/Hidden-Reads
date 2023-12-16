@@ -12,7 +12,7 @@ type bookType = {
   cover_link: string;
   published: string;
   status: string;
-  volumes: string;
+  volumes: number;
   views: number;
 };
 
@@ -53,11 +53,23 @@ const BookSearchItem: React.FC<propTypes> = ({ book }) => {
           </div>
           <div className="info">
             {`Volumes: `}
-            <span>{book.volumes}</span>
+            <span>
+              {book.volumes < 10 && book.volumes > 0
+                ? `0${book.volumes}`
+                : book.volumes > 999
+                ? `${(book.volumes / 1000).toFixed(2)}k`
+                : book.volumes}
+            </span>
           </div>
           <div className="info views">
             <Eye className="icon" size={20} />
-            <span>{book.views}</span>
+            <span>
+              {book.views < 10 && book.views > 0
+                ? `0${book.views}`
+                : book.views > 999
+                ? `${(book.views / 1000).toFixed(2)}k`
+                : book.views}
+            </span>
           </div>
         </div>
       </div>

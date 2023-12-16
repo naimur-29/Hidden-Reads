@@ -39,6 +39,7 @@
 
 - add 'Add Book Page' (Admin) ✅
 - get search data from the db ✅
+- change database structure based on how the site will be visited (analyze the time and space complexity and then merge the 'books' & 'bookDownloads' field into one if needed)! ✅
 - use hooks to interact with db
 - use some kind of state management/cache to not load data from db again and again!
 - design the request books page

@@ -17,6 +17,8 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 export const db = getFirestore(app);
+
+// get refs:
 export const getBooksRef = (id: string) => doc(db, "books", id);
 export const getBookDownloadsRef = (id: string) => doc(db, "bookDownloads", id);
 export const getStatsRef = (id: string) => doc(db, "stats", id);

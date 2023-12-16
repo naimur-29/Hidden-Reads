@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { v4 as uuid4 } from "uuid";
-import { setDoc } from "firebase/firestore";
+import { getDoc, setDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import {
   getBooksRef,
   getBookDownloadsRef,
-  // getStatsRef,
+  getStatsRef,
 } from "../config/firebase";
 
 // TYPES:
@@ -23,6 +23,7 @@ type bookInfoType = {
   cover_link: string;
   cover_shade: string;
   searchme: string[];
+  createdAt: unknown;
 };
 
 type linksType = {
@@ -52,6 +53,7 @@ const AddBook: React.FC = () => {
     cover_link: "",
     cover_shade: "",
     searchme: [],
+    createdAt: serverTimestamp(),
   });
   const [linksInfo, setLinksInfo] = useState<linksType>({
     context: "",
@@ -111,7 +113,7 @@ const AddBook: React.FC = () => {
       return;
     }
 
-    // trim white spaces:
+    // trim white spaces for bookData:
     const bookData = {
       ...bookInfo,
       title: bookInfo.title.trim(),
@@ -136,6 +138,19 @@ const AddBook: React.FC = () => {
       ],
     };
 
+    // trim white spaces for bookDownloadsData:
+    const bookDownloadsData: bookDownloadsType = {
+      links: [],
+    };
+    bookDownloadsInfo.links.forEach((e) => {
+      const res = {
+        context: e.context.trim(),
+        epub_link: e.epub_link.trim(),
+        pdf_link: e.pdf_link.trim(),
+      };
+      bookDownloadsData.links.push(res);
+    });
+
     // add new item to book database:
     console.log(bookInfo);
     try {
@@ -145,7 +160,27 @@ const AddBook: React.FC = () => {
       console.log(id);
       const bookRef = getBooksRef(id);
       await setDoc(bookRef, bookData);
-      // const statsRef = getStatsRef("books");
+
+      // add new bookWithDownload:
+      console.log("adding bookDownload...");
+      const bookDownloadRef = getBookDownloadsRef(id);
+      await setDoc(bookDownloadRef, bookDownloadsData);
+      setBookDownloadsInfo({
+        links: [],
+      });
+      console.log("added bookDownload!");
+
+      const statsRef = getStatsRef("stats");
+      // get stats:
+      const prevStats = (await getDoc(statsRef)).data();
+      console.log("Updating stats...", prevStats);
+      // update stats:
+      const updatedStats = {
+        ...prevStats,
+        booksCount: Number(prevStats?.booksCount) + 1,
+      };
+      await updateDoc(statsRef, updatedStats);
+      console.log("Updated Stats", updatedStats);
 
       setBookInfo({
         title: "",
@@ -161,17 +196,9 @@ const AddBook: React.FC = () => {
         cover_link: "",
         cover_shade: "",
         searchme: [],
+        createdAt: serverTimestamp(),
       });
       console.log("book added!");
-
-      // add new bookDownload:
-      console.log("adding bookDownload...");
-      const bookDownloadRef = getBookDownloadsRef(id);
-      await setDoc(bookDownloadRef, bookDownloadsInfo);
-      setBookDownloadsInfo({
-        links: [],
-      });
-      console.log("added bookDownload!");
     } catch (error) {
       console.log(error);
     }
@@ -263,7 +290,10 @@ const AddBook: React.FC = () => {
             value={bookInfo.volumes}
             onChange={(e) => {
               e.preventDefault();
-              e.target.value = e.target.value.replace("0", "");
+              e.target.value =
+                Number(e.target.value) < 10
+                  ? e.target.value.replace("0", "")
+                  : e.target.value;
               setBookInfo((prev) => ({
                 ...prev,
                 volumes: Number(e.target.value),
