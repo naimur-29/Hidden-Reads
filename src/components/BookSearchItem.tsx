@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Eye } from "lucide-react";
+import { abbreviateNumberForStats } from "../misc/commonFunctions";
 
 import "./styles/BookSearchItem.css";
+
+// import icons:
+import { Eye } from "lucide-react";
 
 // TYPES:
 type bookType = {
@@ -53,23 +56,11 @@ const BookSearchItem: React.FC<propTypes> = ({ book }) => {
           </div>
           <div className="info">
             {`Volumes: `}
-            <span>
-              {book.volumes < 10 && book.volumes > 0
-                ? `0${book.volumes}`
-                : book.volumes > 999
-                ? `${(book.volumes / 1000).toFixed(2)}k`
-                : book.volumes}
-            </span>
+            <span>{abbreviateNumberForStats(book.volumes)}</span>
           </div>
           <div className="info views">
             <Eye className="icon" size={20} />
-            <span>
-              {book.views < 10 && book.views > 0
-                ? `0${book.views}`
-                : book.views > 999
-                ? `${(book.views / 1000).toFixed(2)}k`
-                : book.views}
-            </span>
+            <span>{abbreviateNumberForStats(book.views)}</span>
           </div>
         </div>
       </div>

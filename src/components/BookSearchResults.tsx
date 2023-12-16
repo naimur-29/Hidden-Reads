@@ -21,7 +21,7 @@ type bookType = {
   cover_link: string;
   published: string;
   status: string;
-  volumes: string;
+  volumes: number;
   views: number;
   searchme: string[];
 };
@@ -46,7 +46,7 @@ const BookSearchResults: React.FC = () => {
     );
 
     try {
-      console.log("data loading...");
+      console.log("book search data loading...");
       setFilteredBooks([]);
       const querySnapshot = await getDocs(q);
       const res: bookType[] = [];
@@ -79,7 +79,7 @@ const BookSearchResults: React.FC = () => {
       if (res.length) {
         setFilteredBooks(res);
       }
-      console.log("data loaded!");
+      console.log("book search data loaded!");
     } catch (error) {
       console.log(error);
     }

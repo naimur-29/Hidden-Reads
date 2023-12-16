@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Download } from "lucide-react";
-import { getBooksRef } from "../config/firebase";
+import { getBooksRef, getBookDownloadsRef } from "../config/firebase";
 import { getDoc, updateDoc, DocumentData } from "firebase/firestore";
+import { abbreviateNumberForStats } from "../misc/commonFunctions";
 
 import "./styles/BookOverview.css";
+
+// Types:
+type bookDownloadLinkType = {
+  context: string;
+  epub_link: string;
+  pdf_link: string;
+};
 
 const BookOverview: React.FC = () => {
   // STATES:
@@ -23,9 +31,68 @@ const BookOverview: React.FC = () => {
     cover_link: "",
     cover_shade: "",
   });
+  const [bookDownloadLinks, setBookDownloadLinks] = useState<
+    bookDownloadLinkType[]
+  >([]);
+  const [downloadLinksLoading, setDownloadLinksLoading] = useState(false);
 
   // HOOKS:
   const { info } = useParams();
+
+  // update downloads count:
+  const updateDownloadCounts = async (
+    info: string | undefined,
+    prevDownloadCount: number
+  ) => {
+    if (info) {
+      console.log("updating download counts....");
+      const id = info?.split("_")[1];
+      const bookRef = getBooksRef(id);
+      await updateDoc(bookRef, {
+        downloads: prevDownloadCount + 1,
+      });
+      console.log("updated updated download counts!");
+    } else {
+      console.log("Invalid info!");
+    }
+  };
+
+  // get downloads info:
+  const getDownloadsInfo = async (info: string | undefined) => {
+    if (info) {
+      console.log("fetching downloads info....");
+      const id = info?.split("_")[1];
+      const bookDownloadsRef = getBookDownloadsRef(id);
+      const snapshot = await getDoc(bookDownloadsRef);
+      const res = snapshot.data();
+      if (res && res?.links.length) {
+        await updateDownloadCounts(info, book.downloads);
+        setBookDownloadLinks([...res.links]);
+      }
+      console.log("fetched downloads info!");
+    } else {
+      console.log("Invalid info!");
+    }
+  };
+
+  // handle download button click:
+  const handleDownload = async () => {
+    setDownloadLinksLoading(true);
+
+    await getDownloadsInfo(info);
+
+    setIsDownloadRevealed(true);
+    const timeoutRef = setTimeout(() => {
+      window.scrollTo({
+        top: 1000,
+        left: 0,
+        behavior: "auto",
+      });
+      clearTimeout(timeoutRef);
+    }, 1);
+
+    setDownloadLinksLoading(true);
+  };
 
   // get book data:
   const getBook = async (id: string | undefined) => {
@@ -36,9 +103,9 @@ const BookOverview: React.FC = () => {
         const bookSnapshot = await getDoc(bookRef);
         const res = bookSnapshot.data();
         if (res) {
+          const updatedViews = Number(res.views) + 1;
           // update views:
           console.log("updating views....");
-          const updatedViews = Number(res?.views) + 1;
           await updateDoc(bookRef, {
             views: updatedViews,
           });
@@ -76,20 +143,12 @@ const BookOverview: React.FC = () => {
                 background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade} 80%)`,
               }}
             >
-              <p className="views">{`Views: ${
-                book.views < 10 && book.views > 0
-                  ? `0${book.views}`
-                  : book.views > 999
-                  ? `${(book.views / 1000).toFixed(2)}k`
-                  : book.views
-              }`}</p>
-              <p className="downloads">{`Downloads: ${
-                book.downloads < 10 && book.downloads > 0
-                  ? `0${book.downloads}`
-                  : book.downloads > 999
-                  ? `${(book.downloads / 1000).toFixed(2)}k`
-                  : book.downloads
-              }`}</p>
+              <p className="views">{`Views: ${abbreviateNumberForStats(
+                book.views
+              )}`}</p>
+              <p className="downloads">{`Downloads: ${abbreviateNumberForStats(
+                book.downloads
+              )}`}</p>
               {/* <a href="#comments-container" className="comments">
                 <MessageSquare />
                 {`${commentsCount} Comments`}
@@ -152,42 +211,49 @@ const BookOverview: React.FC = () => {
 
         <div className="download-container">
           {!isDownloadRevealed ? (
-            <button
-              onClick={() => {
-                setIsDownloadRevealed(true);
-                const timeoutRef = setTimeout(() => {
-                  window.scrollTo({
-                    top: 1000,
-                    left: 0,
-                    behavior: "auto",
-                  });
-                  clearTimeout(timeoutRef);
-                }, 1);
-              }}
-              className="download-reveal-btn"
-            >
-              Download <Download size={27} />
+            <button onClick={handleDownload} className="download-reveal-btn">
+              {downloadLinksLoading ? (
+                "Loading..."
+              ) : (
+                <>
+                  Download <Download size={27} />
+                </>
+              )}
             </button>
-          ) : (
+          ) : bookDownloadLinks.length ? (
             <>
               <div className="epub-container">
                 EPUB
-                {/* <div className="links-container">
-                  {book.download.map((link) => (
-                    <a href={link.epub}>{link.context}</a>
+                <div className="links-container">
+                  {bookDownloadLinks.map((link) => (
+                    <a
+                      key={link.context + "epub"}
+                      href={link.epub_link}
+                      target="_blank"
+                    >
+                      {link.context}
+                    </a>
                   ))}
-                </div> */}
+                </div>
               </div>
 
               <div className="pdf-container">
                 PDF
-                {/* <div className="links-container">
-                  {book.download.map((link) => (
-                    <a href={link.pdf}>{link.context}</a>
+                <div className="links-container">
+                  {bookDownloadLinks.map((link) => (
+                    <a
+                      key={link.context + "pdf"}
+                      href={link.pdf_link}
+                      target="_blank"
+                    >
+                      {link.context}
+                    </a>
                   ))}
-                </div> */}
+                </div>
               </div>
             </>
+          ) : (
+            <h2>Not Available!</h2>
           )}
         </div>
       </div>
