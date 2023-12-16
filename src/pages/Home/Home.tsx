@@ -47,7 +47,7 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
               setSearchInput(e.target.value);
             }}
             type="text"
-            placeholder="Search for full titles, authors.."
+            placeholder="titles, authors, status, year.."
           />
           <Link to={`/${searchInput}`} className="search-btn">
             Search

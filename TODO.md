@@ -44,10 +44,10 @@
 
 - change database structure based on how the site will be visited (analyze the time and space complexity and then merge the 'books' & 'bookDownloads' field into one if needed)! ✅
 - load and display download links on Download Button Click! ✅
+- update views & downloads on visit and download ✅
+- keep track of how many books are there ✅
+- fix most popular books ✅
 - use hooks to interact with db
 - use some kind of state management/cache to not load data from db again and again!
 - design the request books page
-- update views & downloads on visit and download
-- keep track of how many books are there
 - fix recently added books (implement a stack)
-- fix most popular books (don't have a solution for that yet!)

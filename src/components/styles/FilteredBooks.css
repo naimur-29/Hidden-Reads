@@ -1,4 +1,4 @@
-.most-popular-page-container {
+.filtered-books-container {
   max-width: 1040px;
   margin: 0 auto;
   padding: 40px 20px;
@@ -6,13 +6,13 @@
 }
 
 /* TITLE START */
-.most-popular-page-container > .title-container {
+.filtered-books-page-container > .title-container {
   margin-bottom: 20px;
   border-bottom: 2px solid #000;
   border-radius: 4px;
 }
 
-.most-popular-page-container > .title-container > .title {
+.filtered-books-page-container > .title-container > .title {
   font-size: 1.7rem;
   font-weight: 400;
   text-transform: uppercase;

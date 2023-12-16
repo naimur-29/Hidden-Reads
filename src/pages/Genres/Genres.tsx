@@ -50,11 +50,7 @@ const Genres: React.FC = () => {
         {GenresList.filter((g) =>
           g.name.toLowerCase().includes(searchInput)
         ).map((g) => (
-          <GenreLink
-            key={g.name + g.bookCount}
-            name={g.name}
-            bookCount={g.bookCount}
-          />
+          <GenreLink key={g.name.toLowerCase()} name={g.name} />
         ))}
       </div>
     </section>

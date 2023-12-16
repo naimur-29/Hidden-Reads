@@ -25,18 +25,16 @@ type propTypes = {
 
 const BookSearchItem: React.FC<propTypes> = ({ book }) => {
   return (
-    <div className="book-container">
+    <Link
+      to={`/overview/${book.title.slice(0, 10).toLowerCase()}_${book.id}`}
+      className="book-container"
+    >
       <div className="left">
         <img className="cover" src={book.cover_link} alt={book.title} />
       </div>
       <div className="right">
         <div className="title-container">
-          <Link
-            to={`/overview/${book.title.slice(0, 10).toLowerCase()}_${book.id}`}
-            className="title"
-          >
-            {book.title}
-          </Link>
+          <p className="title">{book.title}</p>
           {/* <p className="translator">{book.translator}</p> */}
           {/* <Link to={`/authors/${book.author}`} className="author">
             {book.author}
@@ -64,7 +62,7 @@ const BookSearchItem: React.FC<propTypes> = ({ book }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
