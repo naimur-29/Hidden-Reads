@@ -46,8 +46,8 @@
 - load and display download links on Download Button Click! ✅
 - update views & downloads on visit and download ✅
 - keep track of how many books are there ✅
-- fix most popular books ✅
+- fix most popular books page ✅
+- fix recently added book page ✅
 - use hooks to interact with db
 - use some kind of state management/cache to not load data from db again and again!
 - design the request books page
-- fix recently added books (implement a stack)

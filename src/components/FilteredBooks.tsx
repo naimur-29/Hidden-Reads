@@ -7,6 +7,7 @@ import {
   where,
   getDocs,
   limit,
+  orderBy,
 } from "firebase/firestore";
 import { abbreviateNumberForStats } from "../misc/commonFunctions";
 
@@ -38,6 +39,7 @@ const FilteredBooks: React.FC = () => {
     const q = fireStoreQuery(
       collection(db, "books"),
       limit(20),
+      orderBy("views", "desc"),
       where("searchme", "array-contains", query)
     );
 

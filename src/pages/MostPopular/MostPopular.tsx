@@ -77,7 +77,11 @@ const MostPopular: React.FC = () => {
         </h2>
       </div>
 
-      <BookByCoverContainer filteredBooks={filteredBooks} />
+      {!filteredBooks.length ? (
+        !isSearchResultLoading && <h2>No Books!</h2>
+      ) : (
+        <BookByCoverContainer filteredBooks={filteredBooks} />
+      )}
     </section>
   );
 };
