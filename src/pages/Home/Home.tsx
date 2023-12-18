@@ -55,7 +55,7 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
         </div>
       </div>
 
-      {hasQuery ? <BookSearchResults /> : <></>}
+      <BookSearchResults />
     </section>
   );
 };

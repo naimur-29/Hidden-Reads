@@ -133,7 +133,12 @@ const BookOverview: React.FC = () => {
   return (
     <div className="book-overview-container">
       <div className="inner-container">
-        <div className="book-container">
+        <div
+          className="book-container"
+          style={{
+            background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade}77 80%)`,
+          }}
+        >
           <div className="cover-container">
             <img src={book?.cover_link} alt={book?.title} className="cover" />
 
@@ -143,12 +148,14 @@ const BookOverview: React.FC = () => {
                 background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade} 80%)`,
               }}
             >
-              <p className="views">{`Views: ${abbreviateNumberForStats(
-                book.views
-              )}`}</p>
-              <p className="downloads">{`Downloads: ${abbreviateNumberForStats(
-                book.downloads
-              )}`}</p>
+              <p className="views">
+                <span>Views:</span>
+                {` ${abbreviateNumberForStats(book.views)}`}
+              </p>
+              <p className="downloads">
+                <span>Downloads:</span>
+                {` ${abbreviateNumberForStats(book.downloads)}`}
+              </p>
               {/* <a href="#comments-container" className="comments">
                 <MessageSquare />
                 {`${commentsCount} Comments`}
@@ -222,30 +229,32 @@ const BookOverview: React.FC = () => {
             </button>
           ) : bookDownloadLinks.length ? (
             <>
-              <div className="epub-container">
+              <div
+                className="epub-container"
+                style={{
+                  background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade}77 80%)`,
+                }}
+              >
                 EPUB
                 <div className="links-container">
-                  {bookDownloadLinks.map((link) => (
-                    <a
-                      key={link.context + "epub"}
-                      href={link.epub_link}
-                      target="_blank"
-                    >
+                  {bookDownloadLinks.map((link, i) => (
+                    <a key={i + "epub"} href={link.epub_link} target="_blank">
                       {link.context}
                     </a>
                   ))}
                 </div>
               </div>
 
-              <div className="pdf-container">
+              <div
+                className="pdf-container"
+                style={{
+                  background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade}77 80%)`,
+                }}
+              >
                 PDF
                 <div className="links-container">
-                  {bookDownloadLinks.map((link) => (
-                    <a
-                      key={link.context + "pdf"}
-                      href={link.pdf_link}
-                      target="_blank"
-                    >
+                  {bookDownloadLinks.map((link, i) => (
+                    <a key={i + "pdf"} href={link.pdf_link} target="_blank">
                       {link.context}
                     </a>
                   ))}

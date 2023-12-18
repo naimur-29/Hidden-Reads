@@ -13,6 +13,7 @@ type bookType = {
   title: string;
   author: string;
   cover_link: string;
+  cover_shade: string;
   published: string;
   status: string;
   volumes: number;
@@ -28,6 +29,10 @@ const BookSearchItem: React.FC<propTypes> = ({ book }) => {
     <Link
       to={`/overview/${book.title.slice(0, 10).toLowerCase()}_${book.id}`}
       className="book-container"
+      style={{
+        background: `linear-gradient(to left, ${book?.cover_shade}00 10%, ${book?.cover_shade}44 80%)`,
+        borderColor: book?.cover_shade,
+      }}
     >
       <div className="left">
         <img className="cover" src={book.cover_link} alt={book.title} />

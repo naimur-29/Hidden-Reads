@@ -30,6 +30,7 @@
 }
 
 .books-container > .cover-container > .cover {
+  border: 8px solid #eee;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -54,20 +55,12 @@
 }
 
 .books-container > .cover-container > .overlay2 {
-  scale: 10;
+  scale: 2;
   opacity: 0;
-  transition: all 0.7s ease-in-out;
+  transition: all 0.15s ease-in;
 }
 
 .books-container > .cover-container > .overlay1 > .content {
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
-  color: #fff;
-  transition: all 300ms;
-}
-
-.books-container > .cover-container > .overlay2 > .content {
   text-transform: uppercase;
   color: #fff;
   font-size: 1.1rem;
@@ -77,23 +70,21 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-  scale: 3;
-  transform: translateY(-100%);
-  transition: all 0.1s;
+  transition: all 0.25s;
+}
+
+.books-container > .cover-container > .overlay2 > .content {
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  transition: all 300ms;
 }
 
 @keyframes focus {
   0% {
-    scale: 1;
-    filter: blur(10px) brightness(150%);
-  }
-
-  40% {
-    scale: 1.5;
-  }
-
-  70% {
-    scale: 0.9;
+    filter: blur(10px) brightness(300%);
   }
 
   100% {
@@ -109,7 +100,7 @@
   .books-container > .cover-container:hover > .overlay1 {
     align-items: flex-start;
     transform: translateY(-100%);
-    background: linear-gradient(to top, #0000 30%, #fffb 80%) !important;
+    background: linear-gradient(to top, #0000 30%, #000b 80%) !important;
   }
 
   .books-container > .cover-container:hover > .overlay2 {
@@ -117,14 +108,9 @@
     opacity: 1;
   }
 
-  .books-container > .cover-container:hover > .overlay2 > .content {
-    scale: 1;
-    transform: translateY(0%);
-  }
-
   .books-container > .cover-container:hover > .overlay1 > .content {
-    opacity: 0;
-    scale: 3;
+    scale: 1.5;
+    transform: translateY(10%);
   }
 }
 

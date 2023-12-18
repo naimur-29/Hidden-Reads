@@ -6,7 +6,7 @@
 
 /* NOTICE START */
 .genres-page-container > .notice-container {
-  background-color: #ff03;
+  background-color: #f003;
   padding: 20px 12px;
   margin-bottom: 20px;
 }
@@ -15,6 +15,11 @@
   font-size: 1.15rem;
   font-weight: 400;
   text-align: center;
+}
+
+.genres-page-container > .notice-container > .notice > a {
+  color: inherit;
+  font-weight: bold;
 }
 /* NOTICE END */
 
@@ -41,11 +46,13 @@
 }
 
 .genres-page-container > .header-container > .search-bar {
+  background-color: #242424;
+  color: inherit;
   height: 40px;
   width: 320px;
   padding: 0 8px;
   font-size: 1rem;
-  border: 1px solid #434343;
+  border: 1px solid #eee;
 }
 
 @media (max-width: 540px) {

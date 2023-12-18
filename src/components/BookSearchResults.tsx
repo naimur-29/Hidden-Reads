@@ -19,6 +19,7 @@ type bookType = {
   title: string;
   author: string;
   cover_link: string;
+  cover_shade: string;
   published: string;
   status: string;
   volumes: number;
@@ -68,6 +69,7 @@ const BookSearchResults: React.FC = () => {
             title: data.title || "",
             author: data.author || "",
             cover_link: data.cover_link || "",
+            cover_shade: data.cover_shade || "",
             published: data.published || "",
             status: data.status || "",
             volumes: data.volumes || 0,
@@ -100,6 +102,7 @@ const BookSearchResults: React.FC = () => {
         {filteredBooks.length ? (
           filteredBooks
             .slice(0, 20)
+            .sort((a, b) => b.views - a.views)
             .map((b, index) => <BookSearchItem book={b} key={index} />)
         ) : (
           <p style={{ padding: "8px" }}>

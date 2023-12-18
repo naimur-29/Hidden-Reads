@@ -37,9 +37,8 @@ const BooksByCoverContainer: React.FC<propType> = ({ filteredBooks }) => {
             }}
           >
             <h3 className="content">
-              {book.title.length > 50
-                ? book.title.slice(0, 50).trim() + "..."
-                : book.title}
+              {abbreviateNumberForStats(book.views)}
+              <Eye />
             </h3>
           </div>
 
@@ -50,8 +49,9 @@ const BooksByCoverContainer: React.FC<propType> = ({ filteredBooks }) => {
             }}
           >
             <h3 className="content">
-              {abbreviateNumberForStats(book.views)}
-              <Eye />
+              {book.title.length > 50
+                ? book.title.slice(0, 50).trim() + "..."
+                : book.title}
             </h3>
           </div>
         </Link>

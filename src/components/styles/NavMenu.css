@@ -4,8 +4,8 @@
   cursor: pointer;
 }
 
-.menu-container[data-active="true"] {
-  background-color: #0003;
+.menu-container[data-active="true"] > .menu-icon > .line {
+  background-color: #eee;
 }
 
 .menu-container > .menu-icon {
@@ -21,43 +21,46 @@
   cursor: pointer;
 }
 
-@media (hover: hover) {
-  /* .menu-container > .menu-icon:first-child {
-      background-color: red;
-    }
-  } */
-
-  .menu-container > .menu-icon:hover > .line {
-    background-color: #232323;
-  }
-}
-
 .menu-container > .menu-icon > .line {
-  background-color: #4e4e4e;
+  /* background-color: #4e4e4e; */
+  background-color: #fff7;
   width: 32px;
   height: 5px;
   border-radius: 4px;
+  transition: background-color 150ms;
+}
+
+@media (hover: hover) {
+  /* .menu-container > .menu-icon:first-child {
+    background-color: red;
+  }
+} */
+
+  .menu-container > .menu-icon:hover > .line {
+    background-color: #fff;
+    transition: background-color 150ms;
+  }
 }
 
 .menu-container > .menu-list {
-  background-color: #fff;
+  background-color: #232323;
   position: absolute;
   right: 0;
   top: 100%;
   width: 200px;
   padding: 4px;
-  border: 1px solid #0009;
+  border: 1px solid #eee9;
   list-style: none;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .menu-container > .menu-list > .menu-item {
-  border: 2px solid #eee;
+  border: 2px solid #eee3;
 }
 
 @media (hover: hover) {
   .menu-container > .menu-list > .menu-item:hover {
-    border: 2px solid #232323;
+    border: 2px solid #eee;
   }
 }
 

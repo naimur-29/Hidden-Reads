@@ -1,5 +1,5 @@
 .navbar-container {
-  background-color: #fff;
+  background-color: #242424;
   position: fixed;
   top: 0;
   left: 0;
@@ -20,7 +20,7 @@
 }
 
 .navbar-container > .left-container > .books-count {
-  background-color: #0003;
+  background-color: #121212;
   padding: 8px;
   height: 60%;
   display: flex;
