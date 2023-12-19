@@ -1,4 +1,5 @@
 .home-page-container {
+  position: relative;
 }
 
 .home-page-container > .header-container {
@@ -57,13 +58,20 @@
 }
 
 .home-page-container > .header-container > .search-container > .search-field {
-  background-color: #323232;
+  background-color: #323232bb;
   border: 1px solid #eee3;
   color: inherit;
   width: 100%;
   height: 50px;
   padding: 8px;
   font-size: 1.2rem;
+}
+
+.home-page-container
+  > .header-container
+  > .search-container
+  > .search-field:focus {
+  outline: 1px solid #eee;
 }
 
 .home-page-container > .header-container > .search-container > .search-btn {
@@ -79,6 +87,13 @@
   align-items: center;
   justify-content: center;
   transition: border-color 150ms;
+}
+
+.home-page-container
+  > .header-container
+  > .search-container
+  > .search-btn:focus {
+  outline: 1px solid #eee;
 }
 
 @media (hover: hover) {

@@ -27,6 +27,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* temp start */
+:root::before {
+  background-image: url("./assets/bg.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100vw - 10px);
+  height: 100%;
+  opacity: 0.2;
+  z-index: -100;
+}
+/* temp end */
+
 @media (max-width: 820px) {
   :root {
     width: calc(100vw - 6px);

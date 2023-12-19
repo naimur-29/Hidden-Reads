@@ -234,6 +234,13 @@
 /* INFO START */
 
 /* DOWNLOAD START */
+.book-overview-container > .inner-container > .download-container {
+  background-color: #12121277;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
 .book-overview-container
   > .inner-container
@@ -261,14 +268,6 @@
     > .download-reveal-btn:hover {
     border-color: #eee;
   }
-}
-
-.book-overview-container > .inner-container > .download-container {
-  background-color: #121212;
-  font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
 .book-overview-container > .inner-container > .download-container > div {

@@ -247,7 +247,9 @@ const BookOverview: React.FC = () => {
                 </>
               )}
             </button>
-          ) : bookDownloadLinks.length ? (
+          ) : bookDownloadLinks.length === 0 ? (
+            <p className="download-reveal-btn">Not Available!</p>
+          ) : (
             <>
               <div
                 className="epub-container"
@@ -281,8 +283,6 @@ const BookOverview: React.FC = () => {
                 </div>
               </div>
             </>
-          ) : (
-            <h2>Not Available!</h2>
           )}
         </div>
       </div>

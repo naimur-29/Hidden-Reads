@@ -13,6 +13,7 @@
 
 .books-list-container > .main-title {
   /* background-color: #fff; */
+  /* background-color: #12121277; */
   border: 1px solid #4e4e4e;
   border-bottom: transparent;
   border-radius: 4px 4px 0px 0px;
@@ -27,6 +28,7 @@
 }
 
 .books-list-container > .list-container {
+  /* background-color: #12121277; */
   display: flex;
   flex-direction: column;
   padding: 20px 0 0 0;
