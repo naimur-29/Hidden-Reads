@@ -101,8 +101,8 @@ const BookSearchResults: React.FC = () => {
       <div className="list-container">
         {filteredBooks.length ? (
           filteredBooks
-            .slice(0, 20)
             .sort((a, b) => b.views - a.views)
+            .slice(0, 20)
             .map((b, index) => <BookSearchItem book={b} key={index} />)
         ) : (
           <p style={{ padding: "8px" }}>

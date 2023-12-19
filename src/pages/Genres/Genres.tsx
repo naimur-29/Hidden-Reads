@@ -48,7 +48,7 @@ const Genres: React.FC = () => {
         }
       >
         {GenresList.filter((g) =>
-          g.name.toLowerCase().includes(searchInput)
+          g.name.toLowerCase().startsWith(searchInput)
         ).map((g) => (
           <GenreLink key={g.name.toLowerCase()} name={g.name} />
         ))}

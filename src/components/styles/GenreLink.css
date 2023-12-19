@@ -1,0 +1,52 @@
+.genre-link-container {
+  padding: 8px 12px;
+  background-color: #23232377;
+  border-radius: 4px;
+}
+
+.genre-link-container > .link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: #eee;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background-color: #3333;
+}
+
+.genre-link-container > .link::before {
+  background-color: #eeeb;
+  position: absolute;
+  content: "";
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  transition: all 0.15s;
+}
+
+@media (hover: hover) {
+  .genre-link-container {
+    padding: 4px 12px;
+    background-color: transparent;
+  }
+
+  .genre-link-container:hover {
+    background-color: #23232377;
+  }
+
+  .genre-link-container > .link {
+    color: #eee7;
+  }
+
+  .genre-link-container:hover > .link {
+    color: #eee;
+  }
+
+  .genre-link-container > .link::before {
+    width: 0%;
+  }
+
+  .genre-link-container:hover > .link::before {
+    width: 100%;
+  }
+}

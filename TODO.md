@@ -48,6 +48,10 @@
 - keep track of how many books are there ✅
 - fix most popular books page ✅
 - fix recently added book page ✅
+
+### Tuesday, December 19
+
+- fix dark mode on genre page ✅
 - use hooks to interact with db
 - use some kind of state management/cache to not load data from db again and again!
 - design the request books page

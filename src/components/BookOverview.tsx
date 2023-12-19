@@ -23,10 +23,10 @@ const BookOverview: React.FC = () => {
     synopsis: "",
     published: "",
     status: "",
-    volumes: 0,
+    volumes: null,
     genres: "",
-    views: 0,
-    downloads: 0,
+    views: null,
+    downloads: null,
     info_link: "",
     cover_link: "",
     cover_shade: "",
@@ -35,6 +35,7 @@ const BookOverview: React.FC = () => {
     bookDownloadLinkType[]
   >([]);
   const [downloadLinksLoading, setDownloadLinksLoading] = useState(false);
+  const [isBookLoading, setIsBookLoading] = useState(false);
 
   // HOOKS:
   const { info } = useParams();
@@ -97,6 +98,7 @@ const BookOverview: React.FC = () => {
   // get book data:
   const getBook = async (id: string | undefined) => {
     if (id) {
+      setIsBookLoading(true);
       try {
         console.log("book loading...");
         const bookRef = getBooksRef(id);
@@ -118,6 +120,7 @@ const BookOverview: React.FC = () => {
       } catch (error) {
         console.log(error);
       }
+      setIsBookLoading(false);
     } else {
       console.log("Invalid ID!", id);
     }
@@ -148,14 +151,23 @@ const BookOverview: React.FC = () => {
                 background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade} 80%)`,
               }}
             >
-              <p className="views">
-                <span>Views:</span>
-                {` ${abbreviateNumberForStats(book.views)}`}
-              </p>
-              <p className="downloads">
-                <span>Downloads:</span>
-                {` ${abbreviateNumberForStats(book.downloads)}`}
-              </p>
+              {isBookLoading ? (
+                <></>
+              ) : (
+                <p className="views">
+                  <span>Views:</span>
+                  {` ${abbreviateNumberForStats(book.views)}`}
+                </p>
+              )}
+
+              {isBookLoading ? (
+                <></>
+              ) : (
+                <p className="downloads">
+                  <span>Downloads:</span>
+                  {` ${abbreviateNumberForStats(book.downloads)}`}
+                </p>
+              )}
               {/* <a href="#comments-container" className="comments">
                 <MessageSquare />
                 {`${commentsCount} Comments`}
@@ -167,53 +179,61 @@ const BookOverview: React.FC = () => {
             </div>
           </div>
 
-          <div className="info-container">
-            <div className="top">
-              <h3 className="title">{book?.title}</h3>
-              {/* <h4 className="title" style={{ fontSize: "1.2rem" }}>
+          {isBookLoading ? (
+            <h3
+              style={{ fontSize: "2.2rem", width: "100%", textAlign: "center" }}
+            >
+              Loading...
+            </h3>
+          ) : (
+            <div className="info-container">
+              <div className="top">
+                <h3 className="title">{book?.title}</h3>
+                {/* <h4 className="title" style={{ fontSize: "1.2rem" }}>
                 {book?.og_title}
               </h4> */}
 
-              <article className="synopsis">
-                {`${book?.synopsis.slice(0, 300)}... `}
-                <a href={book?.info_link} target="_blank">
-                  See more
-                </a>
-              </article>
+                <article className="synopsis">
+                  {`${book?.synopsis.slice(0, 300)}... `}
+                  <a href={book?.info_link} target="_blank">
+                    See more
+                  </a>
+                </article>
+              </div>
+
+              <div className="bottom">
+                <div className="status item">
+                  <span>Status:</span>
+                  <span>{book?.status}</span>
+                </div>
+
+                <div className="author item">
+                  <span>Author:</span>
+                  <span>{book?.author}</span>
+                </div>
+
+                <div className="volumes item">
+                  <span>Volumes/Chapters:</span>
+                  <span>{abbreviateNumberForStats(book?.volumes)}</span>
+                </div>
+
+                <div className="genres item">
+                  <span>Genres: </span>
+                  <span>
+                    {book?.genres.split(",").map((g: string) => (
+                      <Link
+                        className="link"
+                        key={g.toLowerCase()}
+                        to={`/genres/${g.toLowerCase()}`}
+                      >
+                        {g}
+                      </Link>
+                    ))}
+                  </span>
+                </div>
+              </div>
             </div>
-
-            <div className="bottom">
-              <div className="status item">
-                <span>Status:</span>
-                <span>{book?.status}</span>
-              </div>
-
-              <div className="author item">
-                <span>Author:</span>
-                <span>{book?.author}</span>
-              </div>
-
-              <div className="volumes item">
-                <span>Volumes/Chapters:</span>
-                <span>{book?.volumes}</span>
-              </div>
-
-              <div className="genres item">
-                <span>Genres: </span>
-                <span>
-                  {book?.genres.split(",").map((g: string) => (
-                    <Link
-                      className="link"
-                      key={g.toLowerCase()}
-                      to={`/genres/${g.toLowerCase()}`}
-                    >
-                      {g}
-                    </Link>
-                  ))}
-                </span>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
 
         <div className="download-container">

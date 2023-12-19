@@ -1,12 +1,13 @@
 .genres-page-container {
   max-width: 1040px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 20px;
 }
 
 /* NOTICE START */
 .genres-page-container > .notice-container {
-  background-color: #f003;
+  background-color: #f444;
+  color: #f44;
   padding: 20px 12px;
   margin-bottom: 20px;
 }
@@ -55,6 +56,10 @@
   border: 1px solid #eee;
 }
 
+.genres-page-container > .header-container > .search-bar:focus {
+  outline: 1px solid #eee;
+}
+
 @media (max-width: 540px) {
   .genres-page-container > .header-container > .search-bar {
     width: 220px;
@@ -78,6 +83,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, 1fr);
   grid-gap: 4px;
+  padding-top: 20px;
+  cursor: pointer;
 }
 
 .genres-page-container > .genres-container[data-split="true"] {
