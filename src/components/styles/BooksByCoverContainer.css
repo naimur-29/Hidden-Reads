@@ -25,7 +25,7 @@
 
 .books-container > .cover-container {
   position: relative;
-  border: 2px solid #232323;
+  border: 2px solid #eee;
   overflow: hidden;
 }
 

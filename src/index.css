@@ -27,7 +27,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* temp start */
+/* Background Image Start */
 :root::before {
   background-image: url("./assets/bg.webp");
   background-position: center;
@@ -42,7 +42,7 @@
   opacity: 0.2;
   z-index: -100;
 }
-/* temp end */
+/* Background Image End */
 
 @media (max-width: 820px) {
   :root {

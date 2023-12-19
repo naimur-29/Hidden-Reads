@@ -56,6 +56,8 @@
 ### Wednesday, December 20
 
 - add background image/cover ✅
+
 - use hooks to interact with db
 - use some kind of state management/cache to not load data from db again and again!
 - design the request books page
+- highlight active menu from navigation menu list

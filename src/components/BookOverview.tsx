@@ -136,12 +136,7 @@ const BookOverview: React.FC = () => {
   return (
     <div className="book-overview-container">
       <div className="inner-container">
-        <div
-          className="book-container"
-          style={{
-            background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade}77 80%)`,
-          }}
-        >
+        <div className="book-container">
           <div className="cover-container">
             <img src={book?.cover_link} alt={book?.title} className="cover" />
 
