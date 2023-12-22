@@ -57,6 +57,11 @@
 
 - add background image/cover ✅
 
+### Friday, December 21
+
+- implement a loading skeleton for 'BookByCover' in filtered books ✅
+
+- implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'
 - use hooks to interact with db
 - use some kind of state management/cache to not load data from db again and again!
 - design the request books page

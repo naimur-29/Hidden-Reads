@@ -73,11 +73,10 @@ const RecentlyAdded: React.FC = () => {
         </h2>
       </div>
 
-      {!filteredBooks.length ? (
-        !isSearchResultLoading && <h2>No Books!</h2>
-      ) : (
-        <BookByCoverContainer filteredBooks={filteredBooks} />
-      )}
+      <BookByCoverContainer
+        filteredBooks={filteredBooks}
+        isLoading={isSearchResultLoading}
+      />
     </section>
   );
 };

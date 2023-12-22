@@ -27,15 +27,70 @@
   position: relative;
   border: 2px solid #eee;
   overflow: hidden;
+  background-color: #fff3;
+}
+
+.books-container > .cover-container.loading {
+  min-height: 320px;
+}
+
+@media (max-width: 920px) {
+  .books-container > .cover-container.loading {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 812px) {
+  .books-container > .cover-container.loading {
+    min-height: 320px;
+  }
+}
+
+@media (max-width: 720px) {
+  .books-container > .cover-container.loading {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 620px) {
+  .books-container > .cover-container.loading {
+    min-height: 250px;
+  }
+}
+
+@media (max-width: 580px) {
+  .books-container > .cover-container.loading {
+    min-height: 340px;
+  }
+}
+
+@media (max-width: 520px) {
+  .books-container > .cover-container.loading {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 440px) {
+  .books-container > .cover-container.loading {
+    min-height: 240px;
+  }
 }
 
 .books-container > .cover-container > .cover {
   border: 8px solid #eee;
   width: 100%;
   height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   object-fit: cover;
   scale: 1;
   transition: all 0.3s;
+}
+
+@media (max-width: 280px) {
+  .books-container > .cover-container > .cover {
+    min-height: 300px;
+  }
 }
 
 .books-container > .cover-container > .overlay1,
@@ -93,11 +148,11 @@
 }
 
 @media (hover: hover) {
-  .books-container > .cover-container:hover > .cover {
+  .books-container > .cover-container:not(.loading):hover > .cover {
     animation: focus 1s ease-out;
   }
 
-  .books-container > .cover-container:hover > .overlay1 {
+  .books-container > .cover-container:not(.loading):hover > .overlay1 {
     align-items: flex-start;
     transform: translateY(-100%);
     background: linear-gradient(to top, #0000 30%, #000b 80%) !important;
