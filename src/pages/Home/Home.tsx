@@ -27,6 +27,8 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
       let searchString = query;
       searchString = searchString.slice(2);
       setSearchInput(searchString);
+    } else {
+      setSearchInput("");
     }
   }, [query, hasQuery]);
 
@@ -51,7 +53,10 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
             type="text"
             placeholder="titles, authors, status, year.."
           />
-          <Link to={`/q=${searchInput}`} className="search-btn">
+          <Link
+            to={searchInput.length <= 0 ? "/" : `/q=${searchInput}`}
+            className="search-btn"
+          >
             Search
           </Link>
         </div>

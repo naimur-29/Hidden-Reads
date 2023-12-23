@@ -89,9 +89,12 @@ const BookSearchResults: React.FC = () => {
   };
 
   useEffect(() => {
-    if (query) {
+    if (query?.slice(2).length) {
       const queryText = query.toLowerCase().slice(2);
       getSearchData(queryText);
+    } else {
+      setFilteredBooks([]);
+      console.log("Invalid Query!");
     }
   }, [query]);
 
