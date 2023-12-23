@@ -314,4 +314,37 @@
     border-color: #eee;
   }
 }
+
+/* NOTICE Start */
+.book-overview-container
+  > .inner-container
+  > .download-container
+  > .notice-container {
+  background-color: #23232344;
+  font-size: 1.4rem;
+  border: 2px solid #eeeb;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.book-overview-container
+  > .inner-container
+  > .download-container
+  > .notice-container
+  > .notice {
+  font-size: 1.15rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.book-overview-container
+  > .inner-container
+  > .download-container
+  > .notice-container
+  > .notice
+  > a {
+  color: inherit;
+  font-weight: bold;
+}
+/* NOTICE END */
 /* DOWNLOAD END */

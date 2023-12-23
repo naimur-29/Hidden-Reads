@@ -64,6 +64,7 @@
 ### Saturday, December 23
 
 - fix the search query text in URL✅
+- fix the book download links error (Handle Invalid Link) ✅
 
 - implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'
 - use hooks to interact with db

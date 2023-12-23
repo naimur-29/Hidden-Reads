@@ -90,7 +90,14 @@ const BookSearchResults: React.FC = () => {
 
   useEffect(() => {
     if (query?.slice(2).length) {
-      const queryText = query.toLowerCase().slice(2);
+      const queryText = query
+        .trim()
+        .toLowerCase()
+        .slice(2)
+        .replace(/[^a-z\s]/g, "")
+        .split(" ")
+        .filter((e) => e !== "")
+        .join(" ");
       getSearchData(queryText);
     } else {
       setFilteredBooks([]);

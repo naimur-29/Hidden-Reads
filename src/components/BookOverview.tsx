@@ -7,6 +7,9 @@ import { abbreviateNumberForStats } from "../misc/commonFunctions";
 
 import "./styles/BookOverview.css";
 
+// ASSETS:
+import BookLoadingGif from "../assets/bookLoading.gif";
+
 // Types:
 type bookDownloadLinkType = {
   context: string;
@@ -133,12 +136,30 @@ const BookOverview: React.FC = () => {
     getBook(id);
   }, [info]);
 
+  if (!isBookLoading && book.title.length <= 0) {
+    return (
+      <h2
+        style={{
+          width: "100%",
+          textAlign: "center",
+          padding: "20px 0",
+        }}
+      >
+        404 Error! Book Not Found!
+      </h2>
+    );
+  }
+
   return (
     <div className="book-overview-container">
       <div className="inner-container">
         <div className="book-container">
           <div className="cover-container">
-            <img src={book?.cover_link} alt={book?.title} className="cover" />
+            <img
+              src={isBookLoading ? BookLoadingGif : book?.cover_link}
+              alt={book?.title}
+              className="cover"
+            />
 
             <div
               className="stats"
@@ -254,11 +275,15 @@ const BookOverview: React.FC = () => {
               >
                 EPUB
                 <div className="links-container">
-                  {bookDownloadLinks.map((link, i) => (
-                    <a key={i + "epub"} href={link.epub_link} target="_blank">
-                      {link.context}
-                    </a>
-                  ))}
+                  {bookDownloadLinks.map((link, i) =>
+                    !link.epub_link.includes("http") ? (
+                      <></>
+                    ) : (
+                      <a key={i + "epub"} href={link.epub_link} target="_blank">
+                        {link.context}
+                      </a>
+                    )
+                  )}
                 </div>
               </div>
 
@@ -270,12 +295,32 @@ const BookOverview: React.FC = () => {
               >
                 PDF
                 <div className="links-container">
-                  {bookDownloadLinks.map((link, i) => (
-                    <a key={i + "pdf"} href={link.pdf_link} target="_blank">
-                      {link.context}
-                    </a>
-                  ))}
+                  {bookDownloadLinks.map((link, i) =>
+                    !link.pdf_link.includes("http") ? (
+                      <></>
+                    ) : (
+                      <a key={i + "pdf"} href={link.pdf_link} target="_blank">
+                        {link.context}
+                      </a>
+                    )
+                  )}
                 </div>
+              </div>
+
+              <div
+                className="notice-container"
+                style={{
+                  background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade}77 80%)`,
+                }}
+              >
+                <article className="notice">
+                  Please note that some download links may not work properly.
+                  So, if you face the issue, request an update in{" "}
+                  <Link className="link" to="/request-books">
+                    Request Books Page
+                  </Link>
+                  !
+                </article>
               </div>
             </>
           )}

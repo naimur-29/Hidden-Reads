@@ -59,7 +59,18 @@
   > .title-container
   > .title {
   color: inherit;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
+}
+
+@media (max-width: 720px) {
+  .books-list-container
+    > .list-container
+    > .book-container
+    > .right
+    > .title-container
+    > .title {
+    font-size: 1.2rem;
+  }
 }
 
 .books-list-container

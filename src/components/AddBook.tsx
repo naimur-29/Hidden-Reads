@@ -130,11 +130,12 @@ const AddBook: React.FC = () => {
           .trim()
           .toLowerCase()
           .replace(/[^a-z\s]/g, "")
-          .split(" "),
+          .split(" ")
+          .filter((e) => e !== ""),
         bookInfo.published.trim(),
         ...bookInfo.genres.trim().toLowerCase().split(","),
         bookInfo.status.trim().toLowerCase(),
-        bookInfo.author.trim().toLowerCase(),
+        ...bookInfo.author.trim().toLowerCase().split(" "),
       ],
     };
 
