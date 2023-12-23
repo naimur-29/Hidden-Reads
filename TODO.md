@@ -61,6 +61,10 @@
 
 - implement a loading skeleton for 'BookByCover' in filtered books ✅
 
+### Saturday, December 23
+
+- fix the search query text in URL✅
+
 - implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'
 - use hooks to interact with db
 - use some kind of state management/cache to not load data from db again and again!

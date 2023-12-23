@@ -23,8 +23,10 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
   }, []);
 
   useEffect(() => {
-    if (hasQuery && query) {
-      setSearchInput(query);
+    if (hasQuery && query?.startsWith("q=")) {
+      let searchString = query;
+      searchString = searchString.slice(2);
+      setSearchInput(searchString);
     }
   }, [query, hasQuery]);
 
@@ -49,7 +51,7 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
             type="text"
             placeholder="titles, authors, status, year.."
           />
-          <Link to={`/${searchInput}`} className="search-btn">
+          <Link to={`/q=${searchInput}`} className="search-btn">
             Search
           </Link>
         </div>

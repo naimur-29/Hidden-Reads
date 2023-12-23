@@ -90,7 +90,7 @@ const BookSearchResults: React.FC = () => {
 
   useEffect(() => {
     if (query) {
-      const queryText = query.toLowerCase();
+      const queryText = query.toLowerCase().slice(2);
       getSearchData(queryText);
     }
   }, [query]);
