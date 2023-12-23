@@ -65,6 +65,11 @@
 
 - fix the search query text in URL✅
 - fix the book download links error (Handle Invalid Link) ✅
+- fix non-hover devices not showing book title in 'BookByCover' ✅
+
+- add the manage books page (admin)
+- add the manage book download-links page
+- design the add book page
 
 - implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'
 - use hooks to interact with db

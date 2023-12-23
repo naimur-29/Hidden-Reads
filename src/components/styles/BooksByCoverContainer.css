@@ -169,4 +169,30 @@
   }
 }
 
+@media (hover: none) {
+  .books-container > .cover-container:not(.loading) > .cover {
+    animation: focus 0.5s ease-out;
+  }
+
+  .books-container > .cover-container:not(.loading) > .overlay1 {
+    align-items: flex-start;
+    transform: translateY(-100%);
+    background: linear-gradient(to top, #0000 30%, #000b 80%) !important;
+  }
+
+  .books-container > .cover-container > .overlay2 {
+    scale: 1;
+    opacity: 1;
+  }
+
+  .books-container > .cover-container > .overlay2 > .content {
+    font-size: 0.7rem;
+  }
+
+  .books-container > .cover-container > .overlay1 > .content {
+    scale: 1.15;
+    transform: translateY(10%);
+  }
+}
+
 /* BOOKS LIST END */
