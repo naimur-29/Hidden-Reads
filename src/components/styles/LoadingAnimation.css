@@ -42,10 +42,10 @@
   letter-spacing: 10px;
   color: #484848;
   text-shadow: 0 0 7px #fff, 0, 0, 20px #fff900;
-  animation: animate 1s infinite linear;
+  animation: flicker 1s infinite linear;
 }
 
-@keyframes animate {
+@keyframes flicker {
   0% {
     color: #484848;
     text-shadow: none;

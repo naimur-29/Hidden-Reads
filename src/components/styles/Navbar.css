@@ -10,6 +10,7 @@
   height: 50px;
   width: 100%;
   padding: 0 10px;
+  padding-right: 0;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   z-index: 999;
 }
@@ -33,7 +34,6 @@
 
 /* RIGHT SECTION START */
 .navbar-container > .right-container {
-  /* background-color: #0003; */
   display: flex;
   align-items: center;
   justify-content: center;

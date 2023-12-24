@@ -29,6 +29,8 @@
 .home-page-container > .header-container > .title-container > .title {
   text-align: center;
   font-size: 4rem;
+  cursor: pointer;
+  user-select: none;
 }
 
 @media (max-width: 720px) {
