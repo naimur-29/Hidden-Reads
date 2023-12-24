@@ -15,6 +15,8 @@ import RecentlyAdded from "./pages/RecentlyAdded/RecentlyAdded";
 import RequestBooks from "./pages/RequestBooks/RequestBooks";
 import AddBook from "./components/AddBook";
 import Error from "./pages/Error/Error";
+import ManageBooks from "./components/ManageBooks";
+import ManageBookItem from "./components/ManageBookEdit";
 
 function buildPage(Page: ReactNode) {
   return <BuildPage>{Page}</BuildPage>;
@@ -63,8 +65,16 @@ const router = createBrowserRouter([
   // },
 
   {
-    path: "/control/add-book",
+    path: "/control/add",
     element: buildPage(<AddBook />),
+  },
+  {
+    path: "/control/manage",
+    element: buildPage(<ManageBooks />),
+  },
+  {
+    path: "/control/manage/:id",
+    element: buildPage(<ManageBookItem />),
   },
   {
     path: "*",

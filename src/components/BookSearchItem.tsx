@@ -8,7 +8,7 @@ import "./styles/BookSearchItem.css";
 import { Eye } from "lucide-react";
 
 // TYPES:
-type bookType = {
+export type bookType = {
   id: string;
   title: string;
   author: string;
@@ -22,13 +22,14 @@ type bookType = {
 
 type propTypes = {
   book: bookType;
+  linkTo: string;
 };
 
-const BookSearchItem: React.FC<propTypes> = ({ book }) => {
+const BookSearchItem: React.FC<propTypes> = ({ book, linkTo }) => {
   return (
     <Link
-      to={`/overview/${book.title.slice(0, 10).toLowerCase()}_${book.id}`}
-      className="book-container"
+      to={`/${linkTo}/${book.title.slice(0, 10).toLowerCase()}_${book.id}`}
+      className="book-search-item-container"
       style={{
         background: `linear-gradient(to left, ${book?.cover_shade}00 10%, ${book?.cover_shade}44 80%)`,
         borderColor: book?.cover_shade,

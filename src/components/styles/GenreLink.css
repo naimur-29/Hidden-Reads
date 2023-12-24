@@ -14,6 +14,12 @@
   background-color: #3333;
 }
 
+.genre-link-container.link-to > .link {
+  width: 100%;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
 .genre-link-container > .link::before {
   background-color: #eeeb;
   position: absolute;
@@ -22,6 +28,10 @@
   width: 100%;
   height: 3px;
   transition: all 0.15s;
+}
+
+.genre-link-container.link-to > .link::before {
+  content: none;
 }
 
 @media (hover: hover) {
@@ -36,6 +46,10 @@
 
   .genre-link-container > .link {
     color: #eee7;
+  }
+
+  .genre-link-container.link-to > .link {
+    text-decoration: none;
   }
 
   .genre-link-container:hover > .link {

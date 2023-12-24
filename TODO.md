@@ -70,10 +70,11 @@
 ### Sunday, December 24
 
 - create a main loading page animation ✅
+- add the manage books page (admin) ✅
 
-- add the manage books page (admin)
 - add the manage book download-links page
 - design the add book page
+- migrate genres list to server side and add new genres as books are added
 
 - implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'
 - use hooks to interact with db

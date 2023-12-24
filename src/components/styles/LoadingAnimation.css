@@ -42,10 +42,10 @@
   letter-spacing: 10px;
   color: #484848;
   text-shadow: 0 0 7px #fff, 0, 0, 20px #fff900;
-  animation: flicker 1s infinite linear;
+  animation: animate 1s infinite linear;
 }
 
-@keyframes flicker {
+@keyframes animate {
   0% {
     color: #484848;
     text-shadow: none;
@@ -82,4 +82,39 @@
     color: #484848;
     text-shadow: none;
   }
+}
+
+.loading-animation-container > .list1 > li:nth-child(1) {
+  animation-delay: 200ms;
+}
+.loading-animation-container > .list1 > li:nth-child(2) {
+  animation-delay: 400ms;
+}
+.loading-animation-container > .list1 > li:nth-child(3) {
+  animation-delay: 300ms;
+}
+.loading-animation-container > .list1 > li:nth-child(4) {
+  animation-delay: 500ms;
+}
+.loading-animation-container > .list1 > li:nth-child(5) {
+  animation-delay: 150ms;
+}
+.loading-animation-container > .list1 > li:nth-child(6) {
+  animation-delay: 450ms;
+}
+
+.loading-animation-container > .list2 > li:nth-child(1) {
+  animation-delay: 250ms;
+}
+.loading-animation-container > .list2 > li:nth-child(2) {
+  animation-delay: 350ms;
+}
+.loading-animation-container > .list2 > li:nth-child(3) {
+  animation-delay: 100ms;
+}
+.loading-animation-container > .list2 > li:nth-child(4) {
+  animation-delay: 300ms;
+}
+.loading-animation-container > .list2 > li:nth-child(5) {
+  animation-delay: 500ms;
 }

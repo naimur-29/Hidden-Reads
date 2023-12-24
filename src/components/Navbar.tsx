@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { getDoc } from "firebase/firestore";
 import { getStatsRef } from "../config/firebase";
 
@@ -11,6 +11,9 @@ import NavMenu from "./NavMenu";
 const Navbar: React.FC = () => {
   // States:
   const [booksCount, setBooksCount] = useState(null);
+
+  // HOOKS:
+  const firstLoadRef = useRef(false);
 
   // get books Count:
   const getBooksCount = async () => {
@@ -26,7 +29,10 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    getBooksCount();
+    if (firstLoadRef.current === false) {
+      getBooksCount();
+      firstLoadRef.current = true;
+    }
   }, []);
 
   return (

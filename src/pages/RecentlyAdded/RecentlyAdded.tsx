@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { db } from "../../config/firebase";
 import {
   collection,
@@ -26,6 +26,9 @@ const RecentlyAdded: React.FC = () => {
   // States:
   const [filteredBooks, setFilteredBooks] = useState<bookType[]>([]);
   const [isSearchResultLoading, setIsSearchResultLoading] = useState(false);
+
+  // HOOKS:
+  const firstLoadRef = useRef(false);
 
   // get data:
   const getSearchData = async () => {
@@ -62,7 +65,10 @@ const RecentlyAdded: React.FC = () => {
   };
 
   useEffect(() => {
-    getSearchData();
+    if (firstLoadRef.current === false) {
+      getSearchData();
+      firstLoadRef.current = true;
+    }
   }, []);
 
   return (
