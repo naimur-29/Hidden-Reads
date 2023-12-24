@@ -1,0 +1,85 @@
+.loading-animation-container {
+  background-color: #262626;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  z-index: 999;
+}
+
+.loading-animation-container::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: calc(100% - 10px);
+  height: 100%;
+  background-image: url("../../assets/bg.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.1;
+}
+
+.loading-animation-container > .list1,
+.loading-animation-container > .list2 {
+  display: flex;
+  z-index: 10;
+  translate: 0 -10%;
+}
+
+.loading-animation-container > .list1 > li,
+.loading-animation-container > .list2 > li {
+  list-style: none;
+  font-size: 17vw;
+  font-weight: bolder;
+  letter-spacing: 10px;
+  color: #484848;
+  text-shadow: 0 0 7px #fff, 0, 0, 20px #fff900;
+  animation: animate 1s infinite linear;
+}
+
+@keyframes animate {
+  0% {
+    color: #484848;
+    text-shadow: none;
+  }
+  10% {
+    color: #484848;
+    text-shadow: none;
+  }
+  20% {
+    color: #fff;
+    text-shadow: 0 0 7px #fff, 0, 0, 20px #fff900;
+  }
+  30% {
+    color: #484848;
+    text-shadow: none;
+  }
+  35% {
+    color: #fff;
+    text-shadow: 0 0 7px #fff, 0, 0, 20px #fff900;
+  }
+  70% {
+    color: #484848;
+    text-shadow: none;
+  }
+  85% {
+    color: #fff;
+    text-shadow: 0 0 7px #fff, 0, 0, 20px #fff900;
+  }
+  90% {
+    color: #484848;
+    text-shadow: none;
+  }
+  100% {
+    color: #484848;
+    text-shadow: none;
+  }
+}

@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import LoadingAnimation from "../../components/LoadingAnimation";
 
 const RequestBooks: React.FC = () => {
+  // States:
+  const [pageLoading, setPageLoading] = useState(true);
+
+  // hooks:
+  const pageLoadingTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    // handle page loading animation:
+    if (pageLoadingTimeoutRef.current !== null) {
+      window.clearTimeout(pageLoadingTimeoutRef.current);
+    }
+    pageLoadingTimeoutRef.current = window.setTimeout(() => {
+      setPageLoading(false);
+    }, 1000);
+  }, []);
+
+  // Display Loading Animation:
+  if (pageLoading) {
+    return <LoadingAnimation />;
+  }
+
   return (
     <section
       className="request-books-page-container"

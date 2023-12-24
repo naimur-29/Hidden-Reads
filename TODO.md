@@ -67,6 +67,10 @@
 - fix the book download links error (Handle Invalid Link) ✅
 - fix non-hover devices not showing book title in 'BookByCover' ✅
 
+### Sunday, December 24
+
+- create a main loading page animation ✅
+
 - add the manage books page (admin)
 - add the manage book download-links page
 - design the add book page
@@ -76,3 +80,4 @@
 - use some kind of state management/cache to not load data from db again and again!
 - design the request books page
 - highlight active menu from navigation menu list
+- host it!

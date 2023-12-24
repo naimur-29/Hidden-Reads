@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./Genres.css";
@@ -8,10 +8,32 @@ import GenreLink from "../../components/GenreLink";
 
 // Data:
 import { GenresList } from "./GenresList";
+import LoadingAnimation from "../../components/LoadingAnimation";
 
 const Genres: React.FC = () => {
   // States:
   const [searchInput, setSearchInput] = useState("");
+  const [pageLoading, setPageLoading] = useState(true);
+
+  // hooks:
+  const pageLoadingTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    console.log("loading...");
+
+    // handle page loading animation:
+    if (pageLoadingTimeoutRef.current !== null) {
+      window.clearTimeout(pageLoadingTimeoutRef.current);
+    }
+    pageLoadingTimeoutRef.current = window.setTimeout(() => {
+      setPageLoading(false);
+    }, 1000);
+  }, []);
+
+  // Display Loading Animation:
+  if (pageLoading) {
+    return <LoadingAnimation />;
+  }
 
   return (
     <section className="genres-page-container">

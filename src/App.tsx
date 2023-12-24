@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // components:
@@ -15,70 +16,42 @@ import RequestBooks from "./pages/RequestBooks/RequestBooks";
 import AddBook from "./components/AddBook";
 import Error from "./pages/Error/Error";
 
+function buildPage(Page: ReactNode) {
+  return <BuildPage>{Page}</BuildPage>;
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <BuildPage>
-        <Home />
-      </BuildPage>
-    ),
+    element: buildPage(<Home />),
   },
   {
     path: "/:query",
-    element: (
-      <BuildPage>
-        <Home hasQuery={true} />
-      </BuildPage>
-    ),
+    element: buildPage(<Home hasQuery />),
   },
   {
     path: "/most-popular",
-    element: (
-      <BuildPage>
-        <MostPopular />
-      </BuildPage>
-    ),
+    element: buildPage(<MostPopular />),
   },
   {
     path: "/genres",
-    element: (
-      <BuildPage>
-        <Genres />
-      </BuildPage>
-    ),
+    element: buildPage(<Genres />),
   },
   {
     path: "/genres/:genre",
-    element: (
-      <BuildPage>
-        <FilteredBooks />
-      </BuildPage>
-    ),
+    element: buildPage(<FilteredBooks />),
   },
   {
     path: "/recently-added",
-    element: (
-      <BuildPage>
-        <RecentlyAdded />
-      </BuildPage>
-    ),
+    element: buildPage(<RecentlyAdded />),
   },
   {
     path: "/request-books",
-    element: (
-      <BuildPage>
-        <RequestBooks />
-      </BuildPage>
-    ),
+    element: buildPage(<RequestBooks />),
   },
   {
     path: "/overview/:info",
-    element: (
-      <BuildPage>
-        <BookOverview />
-      </BuildPage>
-    ),
+    element: buildPage(<BookOverview />),
   },
   // {
   //   path: "/authors/:info",
@@ -91,7 +64,7 @@ const router = createBrowserRouter([
 
   {
     path: "/control/add-book",
-    element: <AddBook />,
+    element: buildPage(<AddBook />),
   },
   {
     path: "*",

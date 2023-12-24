@@ -43,7 +43,7 @@
 }
 
 .menu-container > .menu-list {
-  background-color: #232323;
+  background-color: #191919;
   position: absolute;
   right: 0;
   top: 100%;
@@ -55,7 +55,7 @@
 }
 
 .menu-container > .menu-list > .menu-item {
-  border: 2px solid #eee3;
+  border: 2px solid #323232;
 }
 
 @media (hover: hover) {

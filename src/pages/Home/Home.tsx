@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 
 import "./Home.css";
 
 // Components:
 import BookSearchResults from "../../components/BookSearchResults";
+import LoadingAnimation from "../../components/LoadingAnimation";
 
 // Types:
 type propType = {
@@ -13,12 +14,22 @@ type propType = {
 
 const Home: React.FC<propType> = ({ hasQuery = false }) => {
   // States:
+  const [pageLoading, setPageLoading] = useState(true);
   const [searchInput, setSearchInput] = useState("");
 
   // Hooks:
+  const pageLoadingTimeoutRef = useRef<number | null>(null);
   const { query } = useParams();
 
   useEffect(() => {
+    // handle page loading animation:
+    if (pageLoadingTimeoutRef.current !== null) {
+      window.clearTimeout(pageLoadingTimeoutRef.current);
+    }
+    pageLoadingTimeoutRef.current = window.setTimeout(() => {
+      setPageLoading(false);
+    }, 1000);
+
     setSearchInput("");
   }, []);
 
@@ -31,6 +42,11 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
       setSearchInput("");
     }
   }, [query, hasQuery]);
+
+  // Display Loading Animation:
+  if (pageLoading) {
+    return <LoadingAnimation />;
+  }
 
   return (
     <section className="home-page-container">

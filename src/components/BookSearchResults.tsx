@@ -94,7 +94,7 @@ const BookSearchResults: React.FC = () => {
         .trim()
         .toLowerCase()
         .slice(2)
-        .replace(/[^a-z\s]/g, "")
+        .replace(/[^a-z0-9\s]/g, "")
         .split(" ")
         .filter((e) => e !== "")
         .join(" ");

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Download } from "lucide-react";
 import { getBooksRef, getBookDownloadsRef } from "../config/firebase";
@@ -9,6 +9,7 @@ import "./styles/BookOverview.css";
 
 // ASSETS:
 import BookLoadingGif from "../assets/bookLoading.gif";
+import LoadingAnimation from "./LoadingAnimation";
 
 // Types:
 type bookDownloadLinkType = {
@@ -19,6 +20,7 @@ type bookDownloadLinkType = {
 
 const BookOverview: React.FC = () => {
   // STATES:
+  const [pageLoading, setPageLoading] = useState(true);
   const [isDownloadRevealed, setIsDownloadRevealed] = useState(false);
   const [book, setBook] = useState<DocumentData>({
     title: "",
@@ -41,6 +43,7 @@ const BookOverview: React.FC = () => {
   const [isBookLoading, setIsBookLoading] = useState(false);
 
   // HOOKS:
+  const pageLoadingTimeoutRef = useRef<number | null>(null);
   const { info } = useParams();
 
   // update downloads count:
@@ -134,6 +137,14 @@ const BookOverview: React.FC = () => {
     console.log(info, id);
 
     getBook(id);
+
+    // handle page loading animation:
+    if (pageLoadingTimeoutRef.current !== null) {
+      window.clearTimeout(pageLoadingTimeoutRef.current);
+    }
+    pageLoadingTimeoutRef.current = window.setTimeout(() => {
+      setPageLoading(false);
+    }, 1000);
   }, [info]);
 
   if (!isBookLoading && book.title.length <= 0) {
@@ -148,6 +159,11 @@ const BookOverview: React.FC = () => {
         404 Error! Book Not Found!
       </h2>
     );
+  }
+
+  // Display Loading Animation:
+  if (pageLoading) {
+    return <LoadingAnimation />;
   }
 
   return (

@@ -129,7 +129,7 @@ const AddBook: React.FC = () => {
         ...bookInfo.title
           .trim()
           .toLowerCase()
-          .replace(/[^a-z\s]/g, "")
+          .replace(/[^a-z0-9\s]/g, "")
           .split(" ")
           .filter((e) => e !== ""),
         bookInfo.published.trim(),
