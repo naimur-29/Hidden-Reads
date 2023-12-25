@@ -5,7 +5,7 @@ import {
   getBooksRef,
   getBookDownloadsRef,
   getStatsRef,
-} from "../config/firebase";
+} from "../../config/firebase";
 
 // TYPES:
 type bookInfoType = {
@@ -33,6 +33,7 @@ type linksType = {
 };
 
 type bookDownloadsType = {
+  title: string;
   links: linksType[];
 };
 
@@ -62,6 +63,7 @@ const AddBook: React.FC = () => {
   });
   const [bookDownloadsInfo, setBookDownloadsInfo] = useState<bookDownloadsType>(
     {
+      title: "",
       links: [],
     }
   );
@@ -84,6 +86,7 @@ const AddBook: React.FC = () => {
 
     // add new volume:
     setBookDownloadsInfo((prev) => ({
+      title: "",
       links: [...prev.links, linkData],
     }));
     // clear that volume info:
@@ -121,6 +124,7 @@ const AddBook: React.FC = () => {
       synopsis: bookInfo.synopsis.trim().slice(0, 310),
       published: bookInfo.published.trim(),
       status: bookInfo.status.trim(),
+      volumes: bookDownloadsInfo.links.length,
       genres: bookInfo.genres.trim(),
       info_link: bookInfo.info_link.trim(),
       cover_link: bookInfo.cover_link.trim(),
@@ -141,6 +145,7 @@ const AddBook: React.FC = () => {
 
     // trim white spaces for bookDownloadsData:
     const bookDownloadsData: bookDownloadsType = {
+      title: bookInfo.title.trim(),
       links: [],
     };
     bookDownloadsInfo.links.forEach((e) => {
@@ -167,6 +172,7 @@ const AddBook: React.FC = () => {
       const bookDownloadRef = getBookDownloadsRef(id);
       await setDoc(bookDownloadRef, bookDownloadsData);
       setBookDownloadsInfo({
+        title: "",
         links: [],
       });
       console.log("added bookDownload!");
@@ -283,24 +289,6 @@ const AddBook: React.FC = () => {
               }));
             }}
             type="text"
-          />
-        </div>
-        <div className="item">
-          <label htmlFor="">Volumes/Chapters: </label>
-          <input
-            value={bookInfo.volumes}
-            onChange={(e) => {
-              e.preventDefault();
-              e.target.value =
-                Number(e.target.value) < 10
-                  ? e.target.value.replace("0", "")
-                  : e.target.value;
-              setBookInfo((prev) => ({
-                ...prev,
-                volumes: Number(e.target.value),
-              }));
-            }}
-            type="number"
           />
         </div>
         <div className="item">

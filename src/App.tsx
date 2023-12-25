@@ -13,10 +13,10 @@ import MostPopular from "./pages/MostPopular/MostPopular";
 import Genres from "./pages/Genres/Genres";
 import RecentlyAdded from "./pages/RecentlyAdded/RecentlyAdded";
 import RequestBooks from "./pages/RequestBooks/RequestBooks";
-import AddBook from "./components/AddBook";
+import AddBook from "./pages/AdminPages/AddBook";
 import Error from "./pages/Error/Error";
-import ManageBooks from "./components/ManageBooks";
-import ManageBookItem from "./components/ManageBookEdit";
+import ManageBooks from "./pages/AdminPages/ManageBooks";
+import ManageBookItem from "./pages/AdminPages/ManageBookEdit";
 
 function buildPage(Page: ReactNode) {
   return <BuildPage>{Page}</BuildPage>;

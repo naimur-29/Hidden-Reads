@@ -6,14 +6,16 @@ import {
   DocumentData,
   orderBy,
 } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { db } from "../../config/firebase";
 
 import "./styles/ManageBooks.css";
 
+// COMPONENTS:
+import LoadingAnimation from "../../components/LoadingAnimation";
+import LinkTo from "../../components/LinkTo";
+
 // TYPES:
-import { bookType } from "./BookSearchItem";
-import LoadingAnimation from "./LoadingAnimation";
-import LinkTo from "./LinkTo";
+import { bookType } from "../../components/BookSearchItem";
 
 const ManageBooks: React.FC = () => {
   // STATES:

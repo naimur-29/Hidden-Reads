@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Download } from "lucide-react";
 import { getBooksRef, getBookDownloadsRef } from "../config/firebase";
@@ -20,7 +20,6 @@ type bookDownloadLinkType = {
 
 const BookOverview: React.FC = () => {
   // STATES:
-  const [pageLoading, setPageLoading] = useState(true);
   const [isDownloadRevealed, setIsDownloadRevealed] = useState(false);
   const [book, setBook] = useState<DocumentData>({
     title: "",
@@ -43,7 +42,6 @@ const BookOverview: React.FC = () => {
   const [isBookLoading, setIsBookLoading] = useState(false);
 
   // HOOKS:
-  const pageLoadingTimeoutRef = useRef<number | null>(null);
   const { info } = useParams();
 
   // update downloads count:
@@ -137,14 +135,6 @@ const BookOverview: React.FC = () => {
     console.log(info, id);
 
     getBook(id);
-
-    // handle page loading animation:
-    if (pageLoadingTimeoutRef.current !== null) {
-      window.clearTimeout(pageLoadingTimeoutRef.current);
-    }
-    pageLoadingTimeoutRef.current = window.setTimeout(() => {
-      setPageLoading(false);
-    }, 1000);
   }, [info]);
 
   if (!isBookLoading && book.title.length <= 0) {
@@ -162,7 +152,7 @@ const BookOverview: React.FC = () => {
   }
 
   // Display Loading Animation:
-  if (pageLoading) {
+  if (isBookLoading) {
     return <LoadingAnimation />;
   }
 
@@ -293,7 +283,7 @@ const BookOverview: React.FC = () => {
                 <div className="links-container">
                   {bookDownloadLinks.map((link, i) =>
                     !link.epub_link.includes("http") ? (
-                      <></>
+                      <React.Fragment key={i + "epub"} />
                     ) : (
                       <a key={i + "epub"} href={link.epub_link} target="_blank">
                         {link.context}
@@ -313,7 +303,7 @@ const BookOverview: React.FC = () => {
                 <div className="links-container">
                   {bookDownloadLinks.map((link, i) =>
                     !link.pdf_link.includes("http") ? (
-                      <></>
+                      <React.Fragment key={i + "pdf"} />
                     ) : (
                       <a key={i + "pdf"} href={link.pdf_link} target="_blank">
                         {link.context}

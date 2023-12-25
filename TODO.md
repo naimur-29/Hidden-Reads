@@ -72,7 +72,11 @@
 - create a main loading page animation ✅
 - add the manage books page (admin) ✅
 
-- add the manage book download-links page
+### Monday, December 25
+
+- add the manage book download-links page ✅
+
+- add a login page for the admin section
 - design the add book page
 - migrate genres list to server side and add new genres as books are added
 

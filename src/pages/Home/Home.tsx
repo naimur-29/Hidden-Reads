@@ -28,7 +28,7 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
     }
     pageLoadingTimeoutRef.current = window.setTimeout(() => {
       setPageLoading(false);
-    }, 1000);
+    }, 2000);
 
     setSearchInput("");
   }, []);

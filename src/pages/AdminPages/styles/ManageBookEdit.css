@@ -1,0 +1,265 @@
+.manage-book-edit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 1140px;
+  min-height: calc(100vh - 50px);
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* TITLE START*/
+.manage-book-edit-container > .title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+/* TITLE END*/
+
+/* UPDATE BOOK INFO START */
+.manage-book-edit-container > .update-book-info-container {
+  background-color: #323232;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 720px;
+  border: 4px dashed #fff;
+  width: 100%;
+  padding: 10px;
+}
+
+.manage-book-edit-container > .update-book-info-container > .info-container {
+  width: 100%;
+}
+
+.manage-book-edit-container
+  > .update-book-info-container
+  > .info-container
+  > .context {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+.manage-book-edit-container
+  > .update-book-info-container
+  > .info-container
+  > .item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.manage-book-edit-container
+  > .update-book-info-container
+  > .info-container
+  > .item
+  > label {
+  font-size: 1.1rem;
+}
+
+.manage-book-edit-container
+  > .update-book-info-container
+  > .info-container
+  > .item
+  > input {
+  outline-color: #000;
+  font-size: 1.1rem;
+  width: 100%;
+  height: 30px;
+  padding: 2px 4px;
+}
+
+.manage-book-edit-container
+  > .update-book-info-container
+  > .update-book-info-btn {
+  padding: 4px 12px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/* UPDATE BOOK INFO END */
+
+/* INITIAL BUTTONS START */
+.manage-book-edit-container > .edit-download-info-btn,
+.manage-book-edit-container > .delete-book-btn {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.7rem;
+  padding: 8px 12px;
+  width: 100%;
+  max-width: 720px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/* INITIAL BUTTONS END */
+
+/* EDIT DOWNLOAD INFO START */
+.manage-book-edit-container > .edit-download-info-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .download-items-container {
+  background-color: #323232;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  border: 4px solid #fff;
+  padding: 10px;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .download-items-container
+  > .info-container {
+  width: 100%;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .download-items-container
+  > .info-container
+  > .context {
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .download-items-container
+  > .info-container
+  > .link-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .download-items-container
+  > .info-container
+  > .link-item
+  > label {
+  font-size: 1.1rem;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .download-items-container
+  > .info-container
+  > .link-item
+  > input {
+  outline-color: #000;
+  font-size: 1.1rem;
+  width: 80%;
+  height: 30px;
+  padding: 2px 4px;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .download-items-container
+  > .remove-link-btn {
+  background-color: #fff;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #232323;
+  cursor: pointer;
+}
+
+/* ADD NEW LINK START */
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .add-new-link-container {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .add-new-link-container
+  > .context {
+  font-size: 1.7rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .add-new-link-container
+  > .new-link-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .add-new-link-container
+  > .new-link-item
+  > label {
+  font-size: 1.1rem;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .add-new-link-container
+  > .new-link-item
+  > input {
+  outline-color: #000;
+  font-size: 1.1rem;
+  width: 80%;
+  height: 30px;
+  padding: 2px 4px;
+}
+
+/* UPDATE BUTTONS START */
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .update-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .update-btn-container
+  > button {
+  width: 100%;
+  padding: 4px 12px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/* UPDATE BUTTONS END */
+/* ADD NEW LINK END */
+/* EDIT DOWNLOAD INFO END */
+
+@media (hover: hover) {
+  button:hover {
+    transform: scale(0.98);
+    transition: all 100ms;
+  }
+}

@@ -1,5 +1,5 @@
 .loading-animation-container {
-  background-color: #262626;
+  background-color: #191919;
   position: fixed;
   top: 0;
   left: 0;
@@ -42,7 +42,7 @@
   letter-spacing: 10px;
   color: #484848;
   text-shadow: 0 0 7px #fff, 0, 0, 20px #fff900;
-  animation: animate 1s infinite linear;
+  animation: animate 2s infinite linear;
 }
 
 @keyframes animate {
