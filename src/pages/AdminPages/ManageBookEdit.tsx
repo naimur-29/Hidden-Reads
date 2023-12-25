@@ -245,8 +245,6 @@ const ManageBookEdit: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log("loading...");
-
     // handle page loading animation:
     if (pageLoadingTimeoutRef.current !== null) {
       window.clearTimeout(pageLoadingTimeoutRef.current);

@@ -17,9 +17,15 @@ import AddBook from "./pages/AdminPages/AddBook";
 import Error from "./pages/Error/Error";
 import ManageBooks from "./pages/AdminPages/ManageBooks";
 import ManageBookItem from "./pages/AdminPages/ManageBookEdit";
+import AdminLogin from "./pages/AdminPages/AdminLogin";
+import CheckAdmin from "./pages/AdminPages/CheckAdmin";
 
 function buildPage(Page: ReactNode) {
   return <BuildPage>{Page}</BuildPage>;
+}
+
+function checkAdmin(page: ReactNode) {
+  return <CheckAdmin>{page}</CheckAdmin>;
 }
 
 const router = createBrowserRouter([
@@ -65,16 +71,20 @@ const router = createBrowserRouter([
   // },
 
   {
+    path: "/control",
+    element: buildPage(<AdminLogin />),
+  },
+  {
     path: "/control/add",
-    element: buildPage(<AddBook />),
+    element: checkAdmin(buildPage(<AddBook />)),
   },
   {
     path: "/control/manage",
-    element: buildPage(<ManageBooks />),
+    element: checkAdmin(buildPage(<ManageBooks />)),
   },
   {
     path: "/control/manage/:id",
-    element: buildPage(<ManageBookItem />),
+    element: checkAdmin(buildPage(<ManageBookItem />)),
   },
   {
     path: "*",
