@@ -1,0 +1,238 @@
+.add-book-page {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 20px 20px 40px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-book-page > .title {
+  text-transform: uppercase;
+  width: 100%;
+  font-size: 1.9rem;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+@media (min-width: 576px) {
+  .add-book-page > .title {
+    margin-bottom: 20px;
+  }
+}
+
+.add-book-page > .form-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.add-book-page > .form-container > .item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@media (min-width: 576px) {
+  .add-book-page > .form-container > .item {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.add-book-page > .form-container > .item > label {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+@media (min-width: 576px) {
+  .add-book-page > .form-container > .item > label {
+    width: 20%;
+  }
+}
+
+.add-book-page > .form-container > .item > input,
+.add-book-page > .form-container > .item > textarea {
+  resize: none;
+  width: 100%;
+  min-height: 40px;
+  outline: #232323;
+  padding: 2px 4px;
+  font-size: 1.1rem;
+}
+
+.add-book-page > .form-container > .item > input::placeholder,
+.add-book-page > .form-container > .item > textarea::placeholder {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  width: 100%;
+  font-size: 1.1rem;
+  color: #232323bb;
+  transition: all 500ms;
+}
+
+.add-book-page > .form-container > .item > input:focus::placeholder,
+.add-book-page > .form-container > .item > textarea:focus::placeholder {
+  opacity: 0;
+}
+
+@media (min-width: 576px) {
+  .add-book-page > .form-container > .item > input,
+  .add-book-page > .form-container > .item > textarea {
+    width: 80%;
+  }
+}
+
+/* ADD VOLUMES START */
+.add-book-page > .form-container > .volumes-added-container {
+  margin: 40px 0 0 0;
+  font-size: 1.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-book-page > .form-container > .volumes-added-container > .context {
+  background-color: #eee2;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.add-book-page > .form-container > .add-volumes-container {
+  margin: 20px 0;
+}
+
+.add-book-page > .form-container > .add-volumes-container > .title {
+  text-transform: uppercase;
+  border-top: 2px solid #eee;
+  border-bottom: 2px solid #eee;
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.add-book-page > .form-container > .add-volumes-container > .item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@media (min-width: 576px) {
+  .add-book-page > .form-container > .add-volumes-container > .item {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.add-book-page > .form-container > .add-volumes-container > .item > label {
+  width: 100%;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+@media (min-width: 576px) {
+  .add-book-page > .form-container > .add-volumes-container > .item > label {
+    width: 20%;
+  }
+}
+
+.add-book-page > .form-container > .add-volumes-container > .item > input {
+  width: 100%;
+  min-height: 40px;
+  outline: #232323;
+  padding: 2px 4px;
+  font-size: 1.1rem;
+}
+
+.add-book-page
+  > .form-container
+  > .add-volumes-container
+  > .item
+  > input::placeholder {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  width: 100%;
+  font-size: 1.1rem;
+  color: #232323bb;
+  transition: all 500ms;
+}
+
+.add-book-page
+  > .form-container
+  > .add-volumes-container
+  > .item
+  > input:focus::placeholder {
+  opacity: 0;
+}
+
+@media (min-width: 576px) {
+  .add-book-page > .form-container > .add-volumes-container > .item > input {
+    width: 80%;
+  }
+}
+
+.add-book-page > .form-container > .add-volumes-container > .add-volume-btn {
+  text-transform: uppercase;
+  width: 100%;
+  padding: 8px 12px;
+  background-color: #eee7;
+  color: inherit;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  outline: #eee;
+}
+
+@media (hover: hover) {
+  .add-book-page > .form-container > .add-volumes-container > .add-volume-btn {
+    background-color: #eee3;
+    transition: all 150ms ease;
+  }
+
+  .add-book-page
+    > .form-container
+    > .add-volumes-container
+    > .add-volume-btn:hover {
+    background-color: #eee5;
+    transition: all 150ms ease;
+  }
+}
+/* ADD VOLUMES END */
+
+.add-book-page > .book-submit-btn {
+  text-transform: uppercase;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px 12px;
+  background-color: #eee7;
+  color: inherit;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  outline: #eee;
+}
+
+@media (hover: hover) {
+  .add-book-page > .book-submit-btn {
+    background-color: #eee3;
+    transition: all 150ms ease;
+  }
+
+  .add-book-page > .book-submit-btn:hover {
+    background-color: #eee5;
+    transition: all 150ms ease;
+  }
+}

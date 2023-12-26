@@ -23,7 +23,7 @@
 
 .menu-container > .menu-icon > .line {
   /* background-color: #4e4e4e; */
-  background-color: #fff7;
+  background-color: #fff;
   width: 32px;
   height: 5px;
   border-radius: 4px;
@@ -49,6 +49,10 @@
 }
 
 @media (hover: hover) {
+  .menu-container > .menu-icon > .line {
+    background-color: #fff7;
+  }
+
   .menu-container > .menu-icon:hover > .line {
     background-color: #fff;
     box-shadow: 0, 0, 20px #fff900;

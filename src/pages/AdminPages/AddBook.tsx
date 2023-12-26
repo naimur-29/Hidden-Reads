@@ -7,6 +7,8 @@ import {
   getStatsRef,
 } from "../../config/firebase";
 
+import "./styles/AddBook.css";
+
 // TYPES:
 type bookInfoType = {
   id?: string;
@@ -71,8 +73,19 @@ const AddBook: React.FC = () => {
   // handle add volume download links:
   const handleAddVolume = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    let alreadyExists = false;
+    bookDownloadsInfo.links.map((ele) => {
+      if (ele.context === linksInfo.context.trim()) {
+        alreadyExists = true;
+        return;
+      }
+    });
+
     // check data validity:
-    if (!(linksInfo.context && linksInfo.epub_link && linksInfo.pdf_link)) {
+    if (
+      !(linksInfo.context && linksInfo.epub_link && linksInfo.pdf_link) ||
+      alreadyExists
+    ) {
       console.log("Invalid Volume Data!");
       return;
     }
@@ -212,15 +225,18 @@ const AddBook: React.FC = () => {
     setIsBookSubmitLoading(false);
   };
 
+  // show loading animation:
+
   return (
     <section className="add-book-page">
-      <h1>Add Book</h1>
+      <h1 className="title">Add Book</h1>
 
       {/* Add Book Infos */}
       <div className="form-container">
         <div className="item">
-          <label htmlFor="">Title: </label>
+          <label htmlFor="">Title </label>
           <input
+            placeholder="book title.."
             value={bookInfo.title}
             onChange={(e) => {
               e.preventDefault();
@@ -233,8 +249,9 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Author: </label>
+          <label htmlFor="">Author </label>
           <input
+            placeholder="author name.."
             value={bookInfo.author}
             onChange={(e) => {
               e.preventDefault();
@@ -247,8 +264,9 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Synopsis: </label>
+          <label htmlFor="">Synopsis </label>
           <textarea
+            placeholder="short description.."
             value={bookInfo.synopsis}
             onChange={(e) => {
               e.preventDefault();
@@ -259,13 +277,13 @@ const AddBook: React.FC = () => {
             }}
             name=""
             id=""
-            cols={50}
-            rows={10}
+            rows={4}
           ></textarea>
         </div>
         <div className="item">
-          <label htmlFor="">Published: </label>
+          <label htmlFor="">Published </label>
           <input
+            placeholder="ex: 2023.."
             value={bookInfo.published}
             onChange={(e) => {
               e.preventDefault();
@@ -278,8 +296,9 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Status: </label>
+          <label htmlFor="">Status </label>
           <input
+            placeholder="ex: ongoing.."
             value={bookInfo.status}
             onChange={(e) => {
               e.preventDefault();
@@ -292,8 +311,9 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Genres: </label>
+          <label htmlFor="">Genres </label>
           <input
+            placeholder="ex: comedy,school life,sci-fi.."
             value={bookInfo.genres}
             onChange={(e) => {
               e.preventDefault();
@@ -306,8 +326,9 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Info Link: </label>
+          <label htmlFor="">Info Link </label>
           <input
+            placeholder="ex: https://something.com.."
             value={bookInfo.info_link}
             onChange={(e) => {
               e.preventDefault();
@@ -320,8 +341,9 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Cover Link: </label>
+          <label htmlFor="">Cover Link </label>
           <input
+            placeholder="ex: https://something.com.."
             value={bookInfo.cover_link}
             onChange={(e) => {
               e.preventDefault();
@@ -334,8 +356,9 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Cover Shade: </label>
+          <label htmlFor="">Cover Shade </label>
           <input
+            placeholder="ex: #ff7f38.."
             value={bookInfo.cover_shade}
             onChange={(e) => {
               e.preventDefault();
@@ -349,19 +372,24 @@ const AddBook: React.FC = () => {
         </div>
 
         {/* Added Volumes */}
-        <div className="volumes-added-container">
-          <span>Download Links: </span>
-          {bookDownloadsInfo.links.map((e, i) => (
-            <span key={`e-${i}`}>{`${e.context}, `}</span>
-          ))}
-        </div>
+        {bookDownloadsInfo.links.length === 0 ? (
+          <></>
+        ) : (
+          <div className="volumes-added-container">
+            <span>Download Links: </span>
+            {bookDownloadsInfo.links.map((e, i) => (
+              <span className="context" key={`e-${i}`}>{`${e.context}`}</span>
+            ))}
+          </div>
+        )}
 
         {/* Add Volumes */}
         <div className="add-volumes-container">
-          <h3>Add Book Download Links</h3>
+          <h3 className="title">Add Book Download Links</h3>
           <div className="item">
-            <label htmlFor="">Context: </label>
+            <label htmlFor="">Context </label>
             <input
+              placeholder="ex: Volume 1.."
               value={linksInfo.context}
               onChange={(e) => {
                 e.preventDefault();
@@ -374,8 +402,9 @@ const AddBook: React.FC = () => {
             />
           </div>
           <div className="item">
-            <label htmlFor="">EPUB Link: </label>
+            <label htmlFor="">EPUB Link </label>
             <input
+              placeholder="ex: https://something.com.."
               value={linksInfo.epub_link}
               onChange={(e) => {
                 e.preventDefault();
@@ -388,8 +417,9 @@ const AddBook: React.FC = () => {
             />
           </div>
           <div className="item">
-            <label htmlFor="">PDF Link: </label>
+            <label htmlFor="">PDF Link </label>
             <input
+              placeholder="ex: https://something.com.."
               value={linksInfo.pdf_link}
               onChange={(e) => {
                 e.preventDefault();
@@ -401,11 +431,13 @@ const AddBook: React.FC = () => {
               type="text"
             />
           </div>
-          <button onClick={handleAddVolume}>Add Volume</button>
+          <button className="add-volume-btn" onClick={handleAddVolume}>
+            Add
+          </button>
         </div>
       </div>
 
-      <button onClick={handleBookSubmit}>
+      <button className="book-submit-btn" onClick={handleBookSubmit}>
         {isBookSubmitLoading ? "Loading..." : "Submit Book"}
       </button>
     </section>

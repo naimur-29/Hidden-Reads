@@ -22,19 +22,33 @@
   margin-bottom: 10px;
 }
 
+@media (max-width: 480px) {
+  .admin-login-container > .inner-container > .input-field {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 .admin-login-container > .inner-container > .input-field > label {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .admin-login-container > .inner-container > .input-field > input {
   width: 70%;
-  height: 30px;
+  height: 40px;
   font-size: 1.1rem;
   padding: 2px 4px;
   outline-color: #323232;
 }
 
-.admin-login-container > .inner-container > button {
+@media (max-width: 480px) {
+  .admin-login-container > .inner-container > .input-field > input {
+    width: 100%;
+  }
+}
+
+.admin-login-container > .inner-container > .login-btn {
   margin-top: 10px;
   text-transform: uppercase;
   font-weight: bold;

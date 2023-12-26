@@ -65,7 +65,9 @@ const Admin: React.FC = () => {
           />
         </div>
 
-        <button onClick={handleLogin}>Login</button>
+        <button className="login-btn" onClick={handleLogin}>
+          Login/Logout
+        </button>
       </div>
     </div>
   );

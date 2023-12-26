@@ -258,7 +258,7 @@
 /* EDIT DOWNLOAD INFO END */
 
 @media (hover: hover) {
-  button:hover {
+  .manage-book-edit-container > button:hover {
     transform: scale(0.98);
     transition: all 100ms;
   }
