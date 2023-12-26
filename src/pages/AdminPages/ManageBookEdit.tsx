@@ -66,7 +66,7 @@ const ManageBookEdit: React.FC = () => {
   const updateBookInfo = async (id: string, context: string) => {
     let data;
     if (context === "COVER") {
-      if (!bookInfo.cover_link.includes("http")) {
+      if (bookInfo.cover_link.trim().length === 0) {
         console.log("Invalid Cover Link!");
         return;
       } else
@@ -75,7 +75,7 @@ const ManageBookEdit: React.FC = () => {
           cover_shade: bookInfo.cover_shade,
         };
     } else if (context === "INFO") {
-      if (!bookInfo.info_link.includes("http")) {
+      if (bookInfo.cover_link.trim().length === 0) {
         console.log("Invalid Info Link!");
         return;
       } else
@@ -235,9 +235,9 @@ const ManageBookEdit: React.FC = () => {
     // check exceptions:
     if (
       alreadyExists ||
-      link.context.length === 0 ||
-      !link.epub_link.includes("http") ||
-      !link.pdf_link.includes("http")
+      link.context.trim().length === 0 ||
+      link.epub_link.trim().length === 0 ||
+      link.pdf_link.trim().length === 0
     ) {
       console.log("Link Already Exists or Invalid Info!");
       return;
