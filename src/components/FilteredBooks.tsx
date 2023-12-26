@@ -28,14 +28,13 @@ type bookType = {
 const FilteredBooks: React.FC = () => {
   // States:
   const [filteredBooks, setFilteredBooks] = useState<bookType[]>([]);
-  const [isSearchResultLoading, setIsSearchResultLoading] = useState(false);
+  const [isSearchResultLoading, setIsSearchResultLoading] = useState(true);
 
   // hooks:
   const { genre } = useParams();
 
   // get search data:
   const getSearchData = async (query: string) => {
-    setIsSearchResultLoading(true);
     const q = fireStoreQuery(
       collection(db, "books"),
       limit(20),

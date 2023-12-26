@@ -25,14 +25,13 @@ type bookType = {
 const MostPopular: React.FC = () => {
   // States:
   const [filteredBooks, setFilteredBooks] = useState<bookType[]>([]);
-  const [isSearchResultLoading, setIsSearchResultLoading] = useState(false);
+  const [isSearchResultLoading, setIsSearchResultLoading] = useState(true);
 
   // HOOKS:
   const firstLoadRef = useRef(false);
 
   // get data:
   const getSearchData = async () => {
-    setIsSearchResultLoading(true);
     const q = fireStoreQuery(
       collection(db, "books"),
       limit(20),
