@@ -235,7 +235,7 @@ const AddBook: React.FC = () => {
   };
 
   // show loading animation:
-  if (isBookSubmitLoading) <LoadingAnimation />;
+  if (isBookSubmitLoading) return <LoadingAnimation />;
 
   return (
     <section className="add-book-page">
@@ -448,7 +448,7 @@ const AddBook: React.FC = () => {
       </div>
 
       <button className="book-submit-btn" onClick={handleBookSubmit}>
-        {isBookSubmitLoading ? "Loading..." : "Submit Book"}
+        Submit Book
       </button>
     </section>
   );

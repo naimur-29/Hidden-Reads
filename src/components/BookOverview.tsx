@@ -118,7 +118,6 @@ const BookOverview: React.FC = () => {
           console.log("updated views!");
 
           setBook({ ...res, views: updatedViews });
-          console.log(res);
         }
         console.log("book Loaded!");
       } catch (error) {

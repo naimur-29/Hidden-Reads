@@ -113,7 +113,7 @@ const ManageBookEdit: React.FC = () => {
         links: snapshot.data()?.links || [],
       } as bookDownloadInfoType;
 
-      if (res.title) setBookDownloadInfo(res);
+      if (res) setBookDownloadInfo(res);
     } catch (error) {
       console.log(error);
     }
@@ -121,11 +121,6 @@ const ManageBookEdit: React.FC = () => {
   };
 
   const updateBookDownloadInfo = async (id: string) => {
-    if (bookDownloadInfo.links.length === 0) {
-      console.log("Invalid Update!");
-      return;
-    }
-
     try {
       setPageLoading(true);
       setNewLink({
@@ -187,11 +182,29 @@ const ManageBookEdit: React.FC = () => {
     setIsEditDownloadInfoRevealed(true);
   };
 
-  const handleChangeDownloadLink = (
+  const handleChangeEPUBLink = (
     event: React.ChangeEvent<HTMLInputElement>,
     linkContext: string
   ) => {
     event.preventDefault();
+
+    setBookDownloadInfo((prev) => {
+      const res: linkType[] = [];
+      prev.links.forEach((element) => {
+        if (element.context === linkContext) {
+          res.push({ ...element, epub_link: event.target.value });
+        } else res.push(element);
+      });
+      return { ...prev, links: res };
+    });
+  };
+
+  const handleChangePDFLink = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    linkContext: string
+  ) => {
+    event.preventDefault();
+
     setBookDownloadInfo((prev) => {
       const res: linkType[] = [];
       prev.links.forEach((element) => {
@@ -280,6 +293,7 @@ const ManageBookEdit: React.FC = () => {
 
               <div className="item">
                 <input
+                  placeholder="ex: https://something.com.."
                   type="text"
                   onChange={(event) => {
                     event.preventDefault();
@@ -313,6 +327,7 @@ const ManageBookEdit: React.FC = () => {
 
               <div className="item">
                 <input
+                  placeholder="ex: https://something.com.."
                   type="text"
                   onChange={(event) => {
                     event.preventDefault();
@@ -325,6 +340,7 @@ const ManageBookEdit: React.FC = () => {
               </div>
               <div className="item">
                 <input
+                  placeholder="ex: #002302.."
                   type="text"
                   onChange={(event) => {
                     event.preventDefault();
@@ -371,22 +387,20 @@ const ManageBookEdit: React.FC = () => {
                 <div className="link-item">
                   <label htmlFor="Epub Link">EPUB </label>
                   <input
+                    placeholder="ex: https://something.com.."
                     type="text"
                     value={l.epub_link}
-                    onChange={(event) =>
-                      handleChangeDownloadLink(event, l.context)
-                    }
+                    onChange={(event) => handleChangeEPUBLink(event, l.context)}
                   />
                 </div>
                 {/* PDF LINK */}
                 <div className="link-item">
                   <label htmlFor="PDF">PDF </label>
                   <input
+                    placeholder="ex: https://something.com.."
                     type="text"
                     value={l.pdf_link}
-                    onChange={(event) =>
-                      handleChangeDownloadLink(event, l.context)
-                    }
+                    onChange={(event) => handleChangePDFLink(event, l.context)}
                   />
                 </div>
               </div>
@@ -409,6 +423,7 @@ const ManageBookEdit: React.FC = () => {
             <div className="new-link-item">
               <label htmlFor="Context">Context </label>
               <input
+                placeholder="ex: Volume 1.."
                 type="text"
                 value={newLink.context}
                 onChange={(event) => {
@@ -425,6 +440,7 @@ const ManageBookEdit: React.FC = () => {
             <div className="new-link-item">
               <label htmlFor="EPUB">EPUB </label>
               <input
+                placeholder="ex: https://something.com.."
                 type="text"
                 value={newLink.epub_link}
                 onChange={(event) => {
@@ -441,6 +457,7 @@ const ManageBookEdit: React.FC = () => {
             <div className="new-link-item">
               <label htmlFor="PDF">PDF </label>
               <input
+                placeholder="ex: https://something.com.."
                 type="text"
                 value={newLink.pdf_link}
                 onChange={(event) => {
