@@ -12,7 +12,6 @@ interface propType {
 const CheckAdmin: React.FC<propType> = ({ children }) => {
   // STATES:
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isPageLoading, setIsPageLoading] = useState(false);
 
   // HOOKS:
   const firstLoadRef = useRef(false);
@@ -27,7 +26,6 @@ const CheckAdmin: React.FC<propType> = ({ children }) => {
       }
 
       try {
-        setIsPageLoading(true);
         console.log("logging...");
         // get stats:
         const statsRef = getStatsRef("admin");
@@ -45,7 +43,6 @@ const CheckAdmin: React.FC<propType> = ({ children }) => {
       } catch (error) {
         console.log(error);
       }
-      setIsPageLoading(false);
     };
 
     if (firstLoadRef.current === false) {
@@ -55,7 +52,7 @@ const CheckAdmin: React.FC<propType> = ({ children }) => {
   }, [navigate]);
 
   if (isAdmin) return <>{children}</>;
-  if (isPageLoading) return <LoadingAnimation />;
+  else return <LoadingAnimation />;
 };
 
 export default CheckAdmin;

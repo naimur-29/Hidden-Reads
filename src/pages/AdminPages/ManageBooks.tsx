@@ -21,7 +21,7 @@ const ManageBooks: React.FC = () => {
   // STATES:
   const [books, setBooks] = useState<DocumentData[]>([]);
   const [searchInput, setSearchInput] = useState("");
-  const [isBooksLoading, setIsBooksLoading] = useState(false);
+  const [isBooksLoading, setIsBooksLoading] = useState(true);
 
   // HOOKS:
   const firstCallRef = useRef(false);
@@ -33,7 +33,6 @@ const ManageBooks: React.FC = () => {
       .includes(searchInput.trim().toLowerCase());
 
   const getBooks = async () => {
-    setIsBooksLoading(true);
     const q = query(collection(db, "books"), orderBy("title"));
 
     try {
@@ -86,7 +85,7 @@ const ManageBooks: React.FC = () => {
       </div>
 
       <div className="books-list">
-        {books.length === 0 ? (
+        {!isBooksLoading && books.length === 0 ? (
           <h2 style={{ textAlign: "center" }}>No Books!</h2>
         ) : (
           books

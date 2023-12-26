@@ -25,53 +25,51 @@
 
 .books-container > .cover-container {
   position: relative;
+  height: 100%;
+  min-height: 320px;
   border: 2px solid #eee;
   overflow: hidden;
   background-color: #fff3;
 }
 
-.books-container > .cover-container.loading {
-  min-height: 320px;
-}
-
 @media (max-width: 920px) {
-  .books-container > .cover-container.loading {
+  .books-container > .cover-container {
     min-height: 280px;
   }
 }
 
 @media (max-width: 812px) {
-  .books-container > .cover-container.loading {
+  .books-container > .cover-container {
     min-height: 320px;
   }
 }
 
 @media (max-width: 720px) {
-  .books-container > .cover-container.loading {
+  .books-container > .cover-container {
     min-height: 280px;
   }
 }
 
 @media (max-width: 620px) {
-  .books-container > .cover-container.loading {
+  .books-container > .cover-container {
     min-height: 250px;
   }
 }
 
 @media (max-width: 580px) {
-  .books-container > .cover-container.loading {
+  .books-container > .cover-container {
     min-height: 340px;
   }
 }
 
 @media (max-width: 520px) {
-  .books-container > .cover-container.loading {
+  .books-container > .cover-container {
     min-height: 300px;
   }
 }
 
 @media (max-width: 440px) {
-  .books-container > .cover-container.loading {
+  .books-container > .cover-container {
     min-height: 240px;
   }
 }

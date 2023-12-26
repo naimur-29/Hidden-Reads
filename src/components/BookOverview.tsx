@@ -242,7 +242,7 @@ const BookOverview: React.FC = () => {
                 <div className="genres item">
                   <span>Genres: </span>
                   <span>
-                    {book?.genres.split(",").map((g: string) => (
+                    {book?.genres.split(", ").map((g: string) => (
                       <Link
                         className="link"
                         key={g.toLowerCase()}

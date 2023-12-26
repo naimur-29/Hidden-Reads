@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { v4 as uuid4 } from "uuid";
-import { getDoc, setDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import {
+  setDoc,
+  updateDoc,
+  serverTimestamp,
+  arrayUnion,
+  increment,
+} from "firebase/firestore";
 import {
   getBooksRef,
   getBookDownloadsRef,
@@ -150,7 +156,7 @@ const AddBook: React.FC = () => {
           .split(" ")
           .filter((e) => e !== ""),
         bookInfo.published.trim(),
-        ...bookInfo.genres.trim().toLowerCase().split(","),
+        ...bookInfo.genres.trim().toLowerCase().split(", "),
         bookInfo.status.trim().toLowerCase(),
         ...bookInfo.author.trim().toLowerCase().split(" "),
       ],
@@ -190,17 +196,17 @@ const AddBook: React.FC = () => {
       });
       console.log("added bookDownload!");
 
+      // updating stats:
+      console.log("updating Stats...");
       const statsRef = getStatsRef("stats");
-      // get stats:
-      const prevStats = (await getDoc(statsRef)).data();
-      console.log("Updating stats...", prevStats);
-      // update stats:
-      const updatedStats = {
-        ...prevStats,
-        booksCount: Number(prevStats?.booksCount) + 1,
-      };
-      await updateDoc(statsRef, updatedStats);
-      console.log("Updated Stats", updatedStats);
+      await updateDoc(statsRef, {
+        booksCount: increment(1),
+      });
+
+      const genresRef = getStatsRef("genres");
+      const genresList = bookInfo.genres.trim().toLowerCase().split(", ");
+      await updateDoc(genresRef, { genres: arrayUnion(...genresList) });
+      console.log("Updated Stats");
 
       setBookInfo({
         title: "",

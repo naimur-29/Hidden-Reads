@@ -16,21 +16,25 @@ const Navbar: React.FC = () => {
   const firstLoadRef = useRef(false);
 
   // get books Count:
-  const getBooksCount = async () => {
-    console.log("----GETTING BOOKS COUNT----");
-    const statsRef = getStatsRef("stats");
-    const snapshot = await getDoc(statsRef);
-    const res = snapshot.data();
+  const getPreload = async () => {
+    try {
+      console.log("----GETTING BOOKS COUNT----");
+      const statsRef = getStatsRef("stats");
+      const statsSnapshot = await getDoc(statsRef);
+      const statsRes = statsSnapshot.data();
 
-    if (res) {
-      setBooksCount(res.booksCount || 0);
+      if (statsRes) {
+        setBooksCount(statsRes.booksCount || 0);
+      }
+      console.log("----GOT BOOKS COUNT----");
+    } catch (error) {
+      console.log(error);
     }
-    console.log("----GOT BOOKS COUNT----");
   };
 
   useEffect(() => {
     if (firstLoadRef.current === false) {
-      getBooksCount();
+      getPreload();
       firstLoadRef.current = true;
     }
   }, []);

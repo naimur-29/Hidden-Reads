@@ -1,25 +1,48 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { getDoc } from "firebase/firestore";
+import { getStatsRef } from "../../config/firebase";
 
 import "./Genres.css";
 
 // Components:
 import GenreLink from "../../components/GenreLink";
-
-// Data:
-import { GenresList } from "./GenresList";
 import LoadingAnimation from "../../components/LoadingAnimation";
+import { capitalizeEachWord } from "../../misc/commonFunctions";
 
 const Genres: React.FC = () => {
   // States:
   const [searchInput, setSearchInput] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
+  const [genres, setGenres] = useState<string[]>([]);
 
-  // hooks:
+  // HOOKS:
+  const firstLoadRef = useRef(false);
   const pageLoadingTimeoutRef = useRef<number | null>(null);
+
+  // get books Count:
+  const getPreload = async () => {
+    try {
+      console.log("----GETTING BOOKS GENRES----");
+      const genresRef = getStatsRef("genres");
+      const genresSnapshot = await getDoc(genresRef);
+      const genresRes = genresSnapshot.data();
+
+      if (genresRes) {
+        setGenres(genresRes.genres || []);
+      }
+      console.log("----GOT BOOKS GENRES----");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     console.log("loading...");
+    if (firstLoadRef.current === false) {
+      getPreload();
+      firstLoadRef.current = true;
+    }
 
     // handle page loading animation:
     if (pageLoadingTimeoutRef.current !== null) {
@@ -65,15 +88,20 @@ const Genres: React.FC = () => {
       <div
         className="genres-container"
         data-split={
-          GenresList.filter((g) => g.name.toLowerCase().includes(searchInput))
-            .length > 16
+          genres.filter((g) => g.toLowerCase().includes(searchInput)).length >
+          16
         }
       >
-        {GenresList.filter((g) =>
-          g.name.toLowerCase().startsWith(searchInput)
-        ).map((g) => (
-          <GenreLink key={g.name.toLowerCase()} name={g.name} />
-        ))}
+        {genres
+          .sort((a, b) => {
+            if (a > b) return 1;
+            else if (a < b) return -1;
+            return 0;
+          })
+          .filter((g) => g.toLowerCase().startsWith(searchInput))
+          .map((g) => (
+            <GenreLink key={g.toLowerCase()} name={capitalizeEachWord(g)} />
+          ))}
       </div>
     </section>
   );

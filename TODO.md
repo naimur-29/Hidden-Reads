@@ -81,8 +81,8 @@
 ### Tuesday, December 26
 
 - design the add book page ✅
+- migrate genres list to server side and add new genres as books are added ✅
 
-- migrate genres list to server side and add new genres as books are added
 - implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'
 - use hooks to interact with db
 - use some kind of state management/cache to not load data from db again and again!

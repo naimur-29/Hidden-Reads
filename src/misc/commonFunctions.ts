@@ -7,3 +7,12 @@ export const abbreviateNumberForStats = (num: number): string => {
     return String(num);
   }
 };
+
+export const capitalizeEachWord = (text: string): string => {
+  const newText: string[] = [];
+  text.split(" ").forEach((word) => {
+    newText.push(word[0].toUpperCase() + word.toLowerCase().slice(1));
+  });
+
+  return newText.join(" ");
+};

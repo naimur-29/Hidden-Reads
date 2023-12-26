@@ -5,7 +5,13 @@ import {
   getBookDownloadsRef,
   getStatsRef,
 } from "../../config/firebase";
-import { DocumentData, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  DocumentData,
+  deleteDoc,
+  getDoc,
+  increment,
+  updateDoc,
+} from "firebase/firestore";
 
 import "./styles/ManageBookEdit.css";
 
@@ -157,17 +163,13 @@ const ManageBookEdit: React.FC = () => {
       await deleteDoc(bookDownloadRef);
       console.log("bookDownloads deleted!");
 
-      const statsRef = getStatsRef("stats");
-      // get stats:
-      const prevStats = (await getDoc(statsRef)).data();
-      console.log("Updating stats...", prevStats);
       // update stats:
-      const updatedStats = {
-        ...prevStats,
-        booksCount: Number(prevStats?.booksCount) - 1,
-      };
-      await updateDoc(statsRef, updatedStats);
-      console.log("Updated Stats", updatedStats);
+      console.log("Updating Stats...");
+      const statsRef = getStatsRef("stats");
+      await updateDoc(statsRef, {
+        booksCount: increment(-1),
+      });
+      console.log("Updated Stats");
 
       navigate(-1);
     } catch (error) {
@@ -245,6 +247,11 @@ const ManageBookEdit: React.FC = () => {
   };
 
   useEffect(() => {
+    // return back if no id:
+    if (!id) {
+      navigate("/control/manage");
+    }
+
     // handle page loading animation:
     if (pageLoadingTimeoutRef.current !== null) {
       window.clearTimeout(pageLoadingTimeoutRef.current);
@@ -252,7 +259,7 @@ const ManageBookEdit: React.FC = () => {
     pageLoadingTimeoutRef.current = window.setTimeout(() => {
       setPageLoading(false);
     }, 1000);
-  }, []);
+  }, [navigate, id]);
 
   // show loading animation if something is loading:
   if (pageLoading) {
