@@ -257,9 +257,17 @@
 /* ADD NEW LINK END */
 /* EDIT DOWNLOAD INFO END */
 
-@media (hover: hover) {
-  .manage-book-edit-container > button:hover {
-    transform: scale(0.98);
-    transition: all 100ms;
-  }
+.manage-book-edit-container
+  > .update-book-info-container
+  > .update-book-info-btn:active,
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .download-items-container
+  > .remove-link-btn:active,
+.manage-book-edit-container
+  > .edit-download-info-container
+  > .update-btn-container
+  > button:active,
+.manage-book-edit-container > button:active {
+  transform: scale(0.98);
 }
