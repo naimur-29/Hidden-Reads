@@ -66,6 +66,7 @@ const RecentlyAdded: React.FC = () => {
   useEffect(() => {
     if (firstLoadRef.current === false) {
       getSearchData();
+      window.scrollTo(0, 0);
       firstLoadRef.current = true;
     }
   }, []);

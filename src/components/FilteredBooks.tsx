@@ -71,6 +71,7 @@ const FilteredBooks: React.FC = () => {
     if (genre) {
       const queryText = genre.toLowerCase();
       getSearchData(queryText);
+      window.scrollTo(0, 0);
     }
   }, [genre]);
 

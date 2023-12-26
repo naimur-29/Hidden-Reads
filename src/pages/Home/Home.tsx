@@ -31,6 +31,7 @@ const Home: React.FC<propType> = ({ hasQuery = false }) => {
     }, 2000);
 
     setSearchInput("");
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
