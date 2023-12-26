@@ -112,7 +112,7 @@ const BookSearchResults: React.FC = () => {
         {filteredBooks.length ? (
           filteredBooks
             .sort((a, b) => b.views - a.views)
-            .slice(0, 20)
+            .slice(0, 100)
             .map((b, index) => (
               <BookSearchItem book={b} key={index} linkTo="overview" />
             ))

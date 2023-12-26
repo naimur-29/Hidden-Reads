@@ -34,7 +34,7 @@ const RecentlyAdded: React.FC = () => {
   const getSearchData = async () => {
     const q = fireStoreQuery(
       collection(db, "books"),
-      limit(20),
+      limit(100),
       orderBy("createdAt", "desc")
     );
 
