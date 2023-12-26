@@ -74,7 +74,7 @@ const ManageBookEdit: React.FC = () => {
         return;
       } else
         data = {
-          cover_info: bookInfo.cover_link,
+          cover_link: bookInfo.cover_link,
           cover_shade: bookInfo.cover_shade,
         };
     } else if (context === "INFO") {
