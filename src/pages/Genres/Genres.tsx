@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getDoc } from "firebase/firestore";
-import { getStatsRef } from "../../config/firebase";
 
 import "./Genres.css";
 
@@ -10,40 +8,20 @@ import GenreLink from "../../components/GenreLink";
 import LoadingAnimation from "../../components/LoadingAnimation";
 import { capitalizeEachWord } from "../../misc/commonFunctions";
 
-const Genres: React.FC = () => {
+// TYPES:
+interface propType {
+  genres: string[];
+}
+
+const Genres: React.FC<propType> = ({ genres }) => {
   // States:
   const [searchInput, setSearchInput] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
-  const [genres, setGenres] = useState<string[]>([]);
 
   // HOOKS:
-  const firstLoadRef = useRef(false);
   const pageLoadingTimeoutRef = useRef<number | null>(null);
 
-  // get books Count:
-  const getPreload = async () => {
-    try {
-      console.log("----GETTING BOOKS GENRES----");
-      const genresRef = getStatsRef("genres");
-      const genresSnapshot = await getDoc(genresRef);
-      const genresRes = genresSnapshot.data();
-
-      if (genresRes) {
-        setGenres(genresRes.genres || []);
-      }
-      console.log("----GOT BOOKS GENRES----");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    console.log("loading...");
-    if (firstLoadRef.current === false) {
-      getPreload();
-      firstLoadRef.current = true;
-    }
-
     // handle page loading animation:
     if (pageLoadingTimeoutRef.current !== null) {
       window.clearTimeout(pageLoadingTimeoutRef.current);

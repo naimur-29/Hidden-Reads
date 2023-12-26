@@ -82,10 +82,11 @@
 
 - design the add book page ✅
 - migrate genres list to server side and add new genres as books are added ✅
+- fix genres loading on every visit to genres page ✅
 
-- implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'
-- use hooks to interact with db
-- use some kind of state management/cache to not load data from db again and again!
-- design the request books page
-- highlight active menu from navigation menu list
 - host it!
+- use hooks to interact with db
+- design the request books page
+- implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'
+- use some kind of state management/cache to not load data from db again and again!
+- highlight active menu from navigation menu list
