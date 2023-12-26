@@ -26,18 +26,6 @@ const NavMenu: React.FC = () => {
       }
     >
       <ul className="menu-list">
-        <MenuItem
-          setMenuState={setIsMenuActive}
-          linkTo="/recently-added"
-          context="Recently Added"
-        />
-
-        <MenuItem
-          setMenuState={setIsMenuActive}
-          linkTo="/most-popular"
-          context="Most Popular"
-        />
-
         <MenuItem setMenuState={setIsMenuActive} linkTo="/" context="Home" />
 
         <MenuItem
@@ -48,8 +36,20 @@ const NavMenu: React.FC = () => {
 
         <MenuItem
           setMenuState={setIsMenuActive}
+          linkTo="/most-popular"
+          context="Most Popular"
+        />
+
+        <MenuItem
+          setMenuState={setIsMenuActive}
           linkTo="/request-books"
           context="Request Books"
+        />
+
+        <MenuItem
+          setMenuState={setIsMenuActive}
+          linkTo="/recently-added"
+          context="Recently Added"
         />
       </ul>
     </ToggleModal>
