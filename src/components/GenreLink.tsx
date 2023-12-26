@@ -11,7 +11,7 @@ type propTypes = {
 const GenreLink: React.FC<propTypes> = ({ name }) => {
   return (
     <div className="genre-link-container">
-      <Link to={name} className="link">
+      <Link to={`/genres/${name}`} className="link">
         {name}
       </Link>
     </div>

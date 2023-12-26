@@ -22,13 +22,12 @@ export type bookType = {
 
 type propTypes = {
   book: bookType;
-  linkTo: string;
 };
 
-const BookSearchItem: React.FC<propTypes> = ({ book, linkTo }) => {
+const BookSearchItem: React.FC<propTypes> = ({ book }) => {
   return (
     <Link
-      to={`/${linkTo}/${book.title.slice(0, 10).toLowerCase()}_${book.id}`}
+      to={`/overview/${book.title.slice(0, 10).toLowerCase()}_${book.id}`}
       className="book-search-item-container"
       style={{
         background: `linear-gradient(to left, ${book?.cover_shade}00 10%, ${book?.cover_shade}44 80%)`,

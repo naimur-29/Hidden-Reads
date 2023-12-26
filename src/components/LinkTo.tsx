@@ -12,7 +12,7 @@ type propTypes = {
 const LinkTo: React.FC<propTypes> = ({ context, link }) => {
   return (
     <div className="genre-link-container link-to">
-      <Link to={`${context.slice(0, 10)}===${link}`} className="link">
+      <Link to={`/control/manage/${link}`} className="link">
         {context}
       </Link>
     </div>

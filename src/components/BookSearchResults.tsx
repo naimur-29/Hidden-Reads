@@ -113,9 +113,7 @@ const BookSearchResults: React.FC = () => {
           filteredBooks
             .sort((a, b) => b.views - a.views)
             .slice(0, 100)
-            .map((b, index) => (
-              <BookSearchItem book={b} key={index} linkTo="overview" />
-            ))
+            .map((b, index) => <BookSearchItem book={b} key={index} />)
         ) : (
           <p style={{ padding: "8px" }}>
             {isSearchResultLoading ? "Books Loading..." : "No Books Found!"}

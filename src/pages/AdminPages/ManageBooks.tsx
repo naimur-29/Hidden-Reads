@@ -94,7 +94,7 @@ const ManageBooks: React.FC = () => {
               <LinkTo
                 key={b.id}
                 context={b.title}
-                link={`${b.id}`}
+                link={`${b.title.slice(0, 10)}===${b.id}`}
               />
             ))
         )}
