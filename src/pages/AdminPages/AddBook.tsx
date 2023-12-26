@@ -15,6 +15,9 @@ import {
 
 import "./styles/AddBook.css";
 
+// COMPONENTS:
+import LoadingAnimation from "../../components/LoadingAnimation";
+
 // TYPES:
 type bookInfoType = {
   id?: string;
@@ -232,6 +235,7 @@ const AddBook: React.FC = () => {
   };
 
   // show loading animation:
+  if (isBookSubmitLoading) <LoadingAnimation />;
 
   return (
     <section className="add-book-page">

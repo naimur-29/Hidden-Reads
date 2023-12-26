@@ -91,7 +91,11 @@ const ManageBooks: React.FC = () => {
           books
             .filter((b) => filterBooksBySearchInput(b as bookType))
             .map((b) => (
-              <LinkTo key={b.id} context={b.title} link={`${b.id}`} />
+              <LinkTo
+                key={b.id}
+                context={b.title.slice(0, 10)}
+                link={`${b.id}`}
+              />
             ))
         )}
       </div>

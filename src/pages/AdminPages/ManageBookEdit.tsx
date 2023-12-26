@@ -60,7 +60,6 @@ const ManageBookEdit: React.FC = () => {
 
   // HOOKS:
   const id = useParams().id?.split("===")[1];
-  const title = useParams().id?.split("===")[0];
   const navigate = useNavigate();
   const pageLoadingTimeoutRef = useRef<null | number>(null);
 
@@ -268,7 +267,7 @@ const ManageBookEdit: React.FC = () => {
 
   return (
     <div className="manage-book-edit-container">
-      <h2 className="title">{title}</h2>
+      <h2 className="title">{bookDownloadInfo.title || "Update Book"}</h2>
 
       {isEditDownloadInfoRevealed ? (
         <></>
