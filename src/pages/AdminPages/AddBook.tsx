@@ -323,7 +323,7 @@ const AddBook: React.FC = () => {
         <div className="item">
           <label htmlFor="">Genres </label>
           <input
-            placeholder="ex: comedy,school life,sci-fi.."
+            placeholder="ex: comedy, school life, sci-fi.."
             value={bookInfo.genres}
             onChange={(e) => {
               e.preventDefault();

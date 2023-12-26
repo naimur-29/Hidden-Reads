@@ -66,7 +66,10 @@ const ManageBookEdit: React.FC = () => {
   const updateBookInfo = async (id: string, context: string) => {
     let data;
     if (context === "COVER") {
-      if (bookInfo.cover_link.trim().length === 0) {
+      if (
+        bookInfo.cover_link.trim().length === 0 ||
+        bookInfo.cover_shade.trim().length === 0
+      ) {
         console.log("Invalid Cover Link!");
         return;
       } else
@@ -75,7 +78,7 @@ const ManageBookEdit: React.FC = () => {
           cover_shade: bookInfo.cover_shade,
         };
     } else if (context === "INFO") {
-      if (bookInfo.cover_link.trim().length === 0) {
+      if (bookInfo.info_link.trim().length === 0) {
         console.log("Invalid Info Link!");
         return;
       } else
