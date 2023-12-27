@@ -284,7 +284,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  cursor: pointer;
 }
 
 .book-overview-container
@@ -300,6 +299,7 @@
   font-weight: 600;
   border: 2px solid #eee7;
   padding: 4px 12px;
+  cursor: pointer;
   transition: all 300ms;
 }
 
