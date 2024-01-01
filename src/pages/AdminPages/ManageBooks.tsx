@@ -30,7 +30,12 @@ const ManageBooks: React.FC = () => {
     b.title
       .toLowerCase()
       .replace(/[^a-z0-9\s]/g, "")
-      .includes(searchInput.trim().toLowerCase());
+      .includes(
+        searchInput
+          .trim()
+          .toLowerCase()
+          .replace(/[^a-z0-9\s]/g, "")
+      );
 
   const getBooks = async () => {
     const q = query(collection(db, "books"), orderBy("title"));

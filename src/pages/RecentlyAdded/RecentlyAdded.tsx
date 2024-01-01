@@ -39,6 +39,7 @@ const RecentlyAdded: React.FC = () => {
     );
 
     try {
+      setIsSearchResultLoading(true);
       console.log("book search data loading...");
       setFilteredBooks([]);
       const querySnapshot = await getDocs(q);
