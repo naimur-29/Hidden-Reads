@@ -16,8 +16,16 @@ const BookByCover: React.FC<propType> = ({ book }) => {
     <Link
       to={`/overview/${book.title.slice(0, 10).toLowerCase()}_${book.id}`}
       className="cover-container"
+      style={{
+        backgroundImage: `linear-gradient(0deg, ${book.cover_shade}99, ${book.cover_shade}00, ${book.cover_shade}99)`,
+      }}
     >
-      <img className="cover" src={book.cover_link} alt={book.title} />
+      <img
+        className="cover"
+        src={book.cover_link}
+        loading="lazy"
+        alt={book.title}
+      />
       <div
         className="overlay1"
         style={{

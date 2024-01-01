@@ -164,6 +164,9 @@ const BookOverview: React.FC = () => {
               src={isBookLoading ? BookLoadingGif : book?.cover_link}
               alt={book?.title}
               className="cover"
+              style={{
+                backgroundImage: `linear-gradient(0deg, ${book.cover_shade}99, ${book.cover_shade}00, ${book.cover_shade}99)`,
+              }}
             />
 
             <div
@@ -175,19 +178,17 @@ const BookOverview: React.FC = () => {
               {isBookLoading ? (
                 <></>
               ) : (
-                <p className="views">
-                  <span>Views:</span>
-                  {` ${abbreviateNumberForStats(book.views)}`}
-                </p>
-              )}
+                <>
+                  <p className="views">
+                    <span>Views:</span>
+                    {` ${abbreviateNumberForStats(book.views)}`}
+                  </p>
 
-              {isBookLoading ? (
-                <></>
-              ) : (
-                <p className="downloads">
-                  <span>Downloads:</span>
-                  {` ${abbreviateNumberForStats(book.downloads)}`}
-                </p>
+                  <p className="downloads">
+                    <span>Downloads:</span>
+                    {` ${abbreviateNumberForStats(book.downloads)}`}
+                  </p>
+                </>
               )}
               {/* <a href="#comments-container" className="comments">
                 <MessageSquare />
@@ -320,11 +321,18 @@ const BookOverview: React.FC = () => {
               >
                 <article className="notice">
                   Please note that some download links may not work properly.
-                  So, if you face the issue, request an update in{" "}
+                  So, if you face the issue, kindly request an update in{" "}
                   <Link className="link" to="/request-books">
                     Request Books Page
                   </Link>
-                  !
+                  ! For further information contact{" "}
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61553805444489"
+                    target="_blank"
+                    className="link"
+                  >
+                    @jack
+                  </a>
                 </article>
               </div>
             </>

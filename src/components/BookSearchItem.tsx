@@ -35,7 +35,12 @@ const BookSearchItem: React.FC<propTypes> = ({ book }) => {
       }}
     >
       <div className="left">
-        <img className="cover" src={book.cover_link} alt={book.title} />
+        <img
+          className="cover"
+          src={book.cover_link}
+          loading="lazy"
+          alt={book.title}
+        />
       </div>
       <div className="right">
         <div className="title-container">
