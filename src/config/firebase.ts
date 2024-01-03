@@ -19,6 +19,8 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 // get refs:
+export const getRef = (collectionName: string, id: string) =>
+  doc(db, collectionName, id);
 export const getBooksRef = (id: string) => doc(db, "books", id);
 export const getBookDownloadsRef = (id: string) => doc(db, "bookDownloads", id);
 export const getStatsRef = (id: string) => doc(db, "stats", id);

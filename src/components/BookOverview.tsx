@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Download } from "lucide-react";
-import { getBooksRef, getBookDownloadsRef } from "../config/firebase";
-import { getDoc, updateDoc, DocumentData } from "firebase/firestore";
+import { increment } from "firebase/firestore";
 import { abbreviateNumberForStats } from "../misc/commonFunctions";
 
 import "./styles/BookOverview.css";
@@ -10,6 +9,10 @@ import "./styles/BookOverview.css";
 // ASSETS:
 import BookLoadingGif from "../assets/bookLoading.gif";
 import LoadingAnimation from "./LoadingAnimation";
+
+// CUSTOM HOOKS:
+import useGetDoc from "../hooks/useGetDoc";
+import useUpdateDoc from "../hooks/useUpdateDoc";
 
 // Types:
 type bookDownloadLinkType = {
@@ -21,122 +24,66 @@ type bookDownloadLinkType = {
 const BookOverview: React.FC = () => {
   // STATES:
   const [isDownloadRevealed, setIsDownloadRevealed] = useState(false);
-  const [book, setBook] = useState<DocumentData>({
-    title: "",
-    author: "",
-    synopsis: "",
-    published: "",
-    status: "",
-    volumes: null,
-    genres: "",
-    views: null,
-    downloads: null,
-    info_link: "",
-    cover_link: "",
-    cover_shade: "",
-  });
-  const [bookDownloadLinks, setBookDownloadLinks] = useState<
-    bookDownloadLinkType[]
-  >([]);
-  const [downloadLinksLoading, setDownloadLinksLoading] = useState(false);
-  const [isBookLoading, setIsBookLoading] = useState(false);
 
   // HOOKS:
   const { info } = useParams();
-
-  // update downloads count:
-  const updateDownloadCounts = async (
-    info: string | undefined,
-    prevDownloadCount: number
-  ) => {
-    if (info) {
-      console.log("updating download counts....");
-      const id = info?.split("_")[1];
-      const bookRef = getBooksRef(id);
-      await updateDoc(bookRef, {
-        downloads: prevDownloadCount + 1,
-      });
-      console.log("updated updated download counts!");
-    } else {
-      console.log("Invalid info!");
-    }
-  };
-
-  // get downloads info:
-  const getDownloadsInfo = async (info: string | undefined) => {
-    if (info) {
-      console.log("fetching downloads info....");
-      const id = info?.split("_")[1];
-      const bookDownloadsRef = getBookDownloadsRef(id);
-      const snapshot = await getDoc(bookDownloadsRef);
-      const res = snapshot.data();
-      if (res && res?.links.length) {
-        await updateDownloadCounts(info, book.downloads);
-        setBookDownloadLinks([...res.links]);
-      }
-      console.log("fetched downloads info!");
-    } else {
-      console.log("Invalid info!");
-    }
-  };
+  const bookInfoLoaded = useRef(false);
+  const viewsUpdated = useRef(false);
+  const downloadsCountUpdated = useRef(false);
+  const [getBookInfo, bookInfo, isBookInfoLoading] = useGetDoc();
+  const [getBookDownloadLinks, bookDownloadLinks, isBookDownloadLinksLoading] =
+    useGetDoc();
+  const [updateBookInfo] = useUpdateDoc();
 
   // handle download button click:
   const handleDownload = async () => {
-    setDownloadLinksLoading(true);
-
-    await getDownloadsInfo(info);
-
+    const id = info?.split("_")[1];
+    await getBookDownloadLinks("bookDownloads", id);
     setIsDownloadRevealed(true);
+
     const timeoutRef = setTimeout(() => {
       window.scrollTo({
-        top: 1000,
+        top: 2000,
         left: 0,
         behavior: "auto",
       });
       clearTimeout(timeoutRef);
     }, 1);
-
-    setDownloadLinksLoading(true);
   };
 
-  // get book data:
-  const getBook = async (id: string | undefined) => {
-    if (id) {
-      setIsBookLoading(true);
-      try {
-        console.log("book loading...");
-        const bookRef = getBooksRef(id);
-        const bookSnapshot = await getDoc(bookRef);
-        const res = bookSnapshot.data();
-        if (res) {
-          const updatedViews = Number(res.views) + 1;
-          // update views:
-          console.log("updating views....");
-          await updateDoc(bookRef, {
-            views: updatedViews,
-          });
-          console.log("updated views!");
-
-          setBook({ ...res, views: updatedViews });
-        }
-        console.log("book Loaded!");
-      } catch (error) {
-        console.log(error);
-      }
-      setIsBookLoading(false);
-    } else {
-      console.log("Invalid ID!", id);
-    }
-  };
-
+  // get book info on page load:
   useEffect(() => {
-    const id = info?.split("_")[1];
-    console.log(info, id);
+    if (!bookInfoLoaded.current) {
+      const id = info?.split("_")[1];
+      getBookInfo("books", id);
+      bookInfoLoaded.current = true;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    getBook(id);
-  }, [info]);
+  // update book views and downloads on action:
+  useEffect(() => {
+    if (!viewsUpdated.current && bookInfo.title?.length) {
+      const id = info?.split("_")[1];
+      updateBookInfo("books", id, {
+        views: increment(1),
+      });
+      viewsUpdated.current = true;
+    }
 
-  if (!isBookLoading && book.title.length <= 0) {
+    if (!downloadsCountUpdated.current && bookDownloadLinks.links?.length) {
+      const id = info?.split("_")[1];
+      updateBookInfo("books", id, {
+        downloads: increment(1),
+      });
+      downloadsCountUpdated.current = true;
+    }
+  }, [info, bookInfo, bookDownloadLinks, updateBookInfo]);
+
+  // Display Loading Animation:
+  if (isBookInfoLoading) {
+    return <LoadingAnimation />;
+  } else if (!bookInfo?.title) {
     return (
       <h2
         style={{
@@ -150,43 +97,38 @@ const BookOverview: React.FC = () => {
     );
   }
 
-  // Display Loading Animation:
-  if (isBookLoading) {
-    return <LoadingAnimation />;
-  }
-
   return (
     <div className="book-overview-container">
       <div className="inner-container">
         <div className="book-container">
           <div className="cover-container">
             <img
-              src={isBookLoading ? BookLoadingGif : book?.cover_link}
-              alt={book?.title}
+              src={isBookInfoLoading ? BookLoadingGif : bookInfo?.cover_link}
+              alt={bookInfo?.title}
               className="cover"
               style={{
-                backgroundImage: `linear-gradient(0deg, ${book.cover_shade}99, ${book.cover_shade}00, ${book.cover_shade}99)`,
+                backgroundImage: `linear-gradient(0deg, ${bookInfo.cover_shade}99, ${bookInfo.cover_shade}00, ${bookInfo.cover_shade}99)`,
               }}
             />
 
             <div
               className="stats"
               style={{
-                background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade} 80%)`,
+                background: `linear-gradient(to bottom, ${bookInfo?.cover_shade}00 10%, ${bookInfo?.cover_shade} 80%)`,
               }}
             >
-              {isBookLoading ? (
+              {isBookInfoLoading ? (
                 <></>
               ) : (
                 <>
                   <p className="views">
                     <span>Views:</span>
-                    {` ${abbreviateNumberForStats(book.views)}`}
+                    {` ${abbreviateNumberForStats(bookInfo.views)}`}
                   </p>
 
                   <p className="downloads">
                     <span>Downloads:</span>
-                    {` ${abbreviateNumberForStats(book.downloads)}`}
+                    {` ${abbreviateNumberForStats(bookInfo.downloads)}`}
                   </p>
                 </>
               )}
@@ -201,7 +143,7 @@ const BookOverview: React.FC = () => {
             </div>
           </div>
 
-          {isBookLoading ? (
+          {isBookInfoLoading ? (
             <h3
               style={{ fontSize: "2.2rem", width: "100%", textAlign: "center" }}
             >
@@ -210,14 +152,14 @@ const BookOverview: React.FC = () => {
           ) : (
             <div className="info-container">
               <div className="top">
-                <h3 className="title">{book?.title}</h3>
+                <h3 className="title">{bookInfo?.title}</h3>
                 {/* <h4 className="title" style={{ fontSize: "1.2rem" }}>
-                {book?.og_title}
+                {bookInfo?.og_title}
               </h4> */}
 
                 <article className="synopsis">
-                  {`${book?.synopsis.slice(0, 300)}... `}
-                  <a href={book?.info_link} target="_blank">
+                  {`${bookInfo?.synopsis?.slice(0, 300)}... `}
+                  <a href={bookInfo?.info_link} target="_blank">
                     See more
                   </a>
                 </article>
@@ -226,23 +168,23 @@ const BookOverview: React.FC = () => {
               <div className="bottom">
                 <div className="status item">
                   <span>Status:</span>
-                  <span>{book?.status}</span>
+                  <span>{bookInfo?.status}</span>
                 </div>
 
                 <div className="author item">
                   <span>Author:</span>
-                  <span>{book?.author}</span>
+                  <span>{bookInfo?.author}</span>
                 </div>
 
                 <div className="volumes item">
                   <span>Volumes/Chapters:</span>
-                  <span>{abbreviateNumberForStats(book?.volumes)}</span>
+                  <span>{abbreviateNumberForStats(bookInfo?.volumes)}</span>
                 </div>
 
                 <div className="genres item">
                   <span>Genres: </span>
                   <span>
-                    {book?.genres.split(", ").map((g: string) => (
+                    {bookInfo?.genres?.split(", ").map((g: string) => (
                       <Link
                         className="link"
                         key={g.toLowerCase()}
@@ -261,7 +203,7 @@ const BookOverview: React.FC = () => {
         <div className="download-container">
           {!isDownloadRevealed ? (
             <button onClick={handleDownload} className="download-reveal-btn">
-              {downloadLinksLoading ? (
+              {isBookDownloadLinksLoading ? (
                 "Loading..."
               ) : (
                 <>
@@ -269,26 +211,31 @@ const BookOverview: React.FC = () => {
                 </>
               )}
             </button>
-          ) : bookDownloadLinks.length === 0 ? (
+          ) : bookDownloadLinks.links?.length === 0 ? (
             <p className="download-reveal-btn">Not Available!</p>
           ) : (
             <>
               <div
                 className="epub-container"
                 style={{
-                  background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade}77 80%)`,
+                  background: `linear-gradient(to bottom, ${bookInfo?.cover_shade}00 10%, ${bookInfo?.cover_shade}77 80%)`,
                 }}
               >
                 EPUB
                 <div className="links-container">
-                  {bookDownloadLinks.map((link, i) =>
-                    !link.epub_link.includes("http") ? (
-                      <React.Fragment key={i + "epub"} />
-                    ) : (
-                      <a key={i + "epub"} href={link.epub_link} target="_blank">
-                        {link.context}
-                      </a>
-                    )
+                  {bookDownloadLinks.links?.map(
+                    (link: bookDownloadLinkType, i: number) =>
+                      !link.epub_link.includes("http") ? (
+                        <React.Fragment key={i + "epub"} />
+                      ) : (
+                        <a
+                          key={i + "epub"}
+                          href={link.epub_link}
+                          target="_blank"
+                        >
+                          {link.context}
+                        </a>
+                      )
                   )}
                 </div>
               </div>
@@ -296,19 +243,20 @@ const BookOverview: React.FC = () => {
               <div
                 className="pdf-container"
                 style={{
-                  background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade}77 80%)`,
+                  background: `linear-gradient(to bottom, ${bookInfo?.cover_shade}00 10%, ${bookInfo?.cover_shade}77 80%)`,
                 }}
               >
                 PDF
                 <div className="links-container">
-                  {bookDownloadLinks.map((link, i) =>
-                    !link.pdf_link.includes("http") ? (
-                      <React.Fragment key={i + "pdf"} />
-                    ) : (
-                      <a key={i + "pdf"} href={link.pdf_link} target="_blank">
-                        {link.context}
-                      </a>
-                    )
+                  {bookDownloadLinks.links?.map(
+                    (link: bookDownloadLinkType, i: number) =>
+                      !link.pdf_link.includes("http") ? (
+                        <React.Fragment key={i + "pdf"} />
+                      ) : (
+                        <a key={i + "pdf"} href={link.pdf_link} target="_blank">
+                          {link.context}
+                        </a>
+                      )
                   )}
                 </div>
               </div>
@@ -316,7 +264,7 @@ const BookOverview: React.FC = () => {
               <div
                 className="notice-container"
                 style={{
-                  background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade}77 80%)`,
+                  background: `linear-gradient(to bottom, ${bookInfo?.cover_shade}00 10%, ${bookInfo?.cover_shade}77 80%)`,
                 }}
               >
                 <article className="notice">

@@ -84,7 +84,9 @@
 - migrate genres list to server side and add new genres as books are added ✅
 - fix genres loading on every visit to genres page ✅
 
-- host it!
+### Wednesday, January 3
+
+- host it! ✅
 - use hooks to interact with db
 - design the request books page
 - implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'
