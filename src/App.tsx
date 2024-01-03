@@ -1,7 +1,5 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { getDoc } from "firebase/firestore";
-import { getStatsRef } from "./config/firebase";
 
 // components:
 import BuildPage from "./Layouts/BuildPage";
@@ -9,6 +7,9 @@ import FilteredBooks from "./components/FilteredBooks";
 import BookOverview from "./components/BookOverview";
 // import AuthorOverview from "./components/AuthorOverview";
 import CheckAdmin from "./pages/AdminPages/CheckAdmin";
+
+// HOOKS:
+import useGetDoc from "./hooks/useGetDoc";
 
 // Pages:
 import Home from "./pages/Home/Home";
@@ -31,8 +32,9 @@ function checkAdmin(page: ReactNode) {
 }
 
 function App() {
-  // STATES:
-  const [genres, setGenres] = useState<string[]>([]);
+  // HOOKS:
+  const firstLoadRef = useRef(false);
+  const [getBookGenres, bookGenres, isBookGenresLoading] = useGetDoc();
 
   const router = createBrowserRouter([
     {
@@ -49,7 +51,12 @@ function App() {
     },
     {
       path: "/genres",
-      element: buildPage(<Genres genres={genres} />),
+      element: buildPage(
+        <Genres
+          genres={bookGenres.genres}
+          isBookGenresLoading={isBookGenresLoading}
+        />
+      ),
     },
     {
       path: "/genres/:genre",
@@ -98,30 +105,14 @@ function App() {
     },
   ]);
 
-  const getPreload = async () => {
-    try {
-      console.log("----GETTING BOOKS GENRES----");
-      const genresRef = getStatsRef("genres");
-      const genresSnapshot = await getDoc(genresRef);
-      const genresRes = genresSnapshot.data();
-
-      if (genresRes) {
-        setGenres(genresRes.genres || []);
-      }
-      console.log("----GOT BOOKS GENRES----");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // HOOKS:
-  const firstLoadRef = useRef(false);
-
   useEffect(() => {
     if (firstLoadRef.current === false) {
-      getPreload();
+      console.log("----GETTING BOOKS GENRES----");
+      getBookGenres("stats", "genres");
       firstLoadRef.current = true;
+      console.log("----GOT BOOKS GENRES----");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <RouterProvider router={router} />;

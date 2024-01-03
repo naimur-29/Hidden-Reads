@@ -8,7 +8,9 @@ export const abbreviateNumberForStats = (num: number): string => {
   }
 };
 
-export const capitalizeEachWord = (text: string): string => {
+export const capitalizeEachWord = (text: string): string | null => {
+  if (!text) return null;
+
   const newText: string[] = [];
   text.split(" ").forEach((word) => {
     newText.push(word[0].toUpperCase() + word.toLowerCase().slice(1));

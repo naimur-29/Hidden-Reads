@@ -3,8 +3,9 @@ import React, { useEffect, useRef } from "react";
 import "./styles/Navbar.css";
 
 // Components:
-// import SearchBar from "./SearchBar";
 import NavMenu from "./NavMenu";
+
+// HOOKS:
 import useGetDoc from "../hooks/useGetDoc";
 
 const Navbar: React.FC = () => {

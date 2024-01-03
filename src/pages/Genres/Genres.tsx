@@ -11,9 +11,10 @@ import { capitalizeEachWord } from "../../misc/commonFunctions";
 // TYPES:
 interface propType {
   genres: string[];
+  isBookGenresLoading: boolean;
 }
 
-const Genres: React.FC<propType> = ({ genres }) => {
+const Genres: React.FC<propType> = ({ genres, isBookGenresLoading }) => {
   // States:
   const [searchInput, setSearchInput] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
@@ -32,7 +33,7 @@ const Genres: React.FC<propType> = ({ genres }) => {
   }, []);
 
   // Display Loading Animation:
-  if (pageLoading) {
+  if (pageLoading || isBookGenresLoading) {
     return <LoadingAnimation />;
   }
 
@@ -66,12 +67,12 @@ const Genres: React.FC<propType> = ({ genres }) => {
       <div
         className="genres-container"
         data-split={
-          genres.filter((g) => g.toLowerCase().includes(searchInput)).length >
+          genres?.filter((g) => g.toLowerCase().includes(searchInput)).length >
           16
         }
       >
         {genres
-          .sort((a, b) => {
+          ?.sort((a, b) => {
             if (a > b) return 1;
             else if (a < b) return -1;
             return 0;
