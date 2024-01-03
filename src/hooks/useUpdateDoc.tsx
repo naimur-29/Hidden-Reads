@@ -23,6 +23,7 @@ const useUpdateDoc = () => {
     } catch (error) {
       setError(error);
     }
+    setIsLoading(false);
   };
 
   return [update, isLoading, error] as const;

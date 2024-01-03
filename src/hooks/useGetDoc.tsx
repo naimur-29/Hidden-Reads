@@ -26,7 +26,7 @@ const useGetDoc = () => {
     setIsLoading(false);
   };
 
-  return [getData, data, isLoading, error] as const;
+  return [getData, data, isLoading, error, setData] as const;
 };
 
 export default useGetDoc;

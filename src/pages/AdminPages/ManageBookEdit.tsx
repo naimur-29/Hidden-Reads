@@ -1,33 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  getBooksRef,
-  getBookDownloadsRef,
-  getStatsRef,
-} from "../../config/firebase";
-import {
-  DocumentData,
-  deleteDoc,
-  getDoc,
-  increment,
-  updateDoc,
-} from "firebase/firestore";
+import { DocumentData, increment } from "firebase/firestore";
 
 import "./styles/ManageBookEdit.css";
 
 // COMPONENTS:
 import LoadingAnimation from "../../components/LoadingAnimation";
 
+// HOOKS:
+import useGetDoc from "../../hooks/useGetDoc";
+import useUpdateDoc from "../../hooks/useUpdateDoc";
+import useDeleteDoc from "../../hooks/useDeleteDoc";
+
 // TYPES:
 interface linkType {
   context: string;
   epub_link: string;
   pdf_link: string;
-}
-
-interface bookDownloadInfoType {
-  title: string;
-  links: linkType[];
 }
 
 interface bookInfoType {
@@ -38,11 +27,7 @@ interface bookInfoType {
 
 const ManageBookEdit: React.FC = () => {
   // STATES:
-  const [bookDownloadInfo, setBookDownloadInfo] =
-    useState<bookDownloadInfoType>({
-      title: "",
-      links: [],
-    });
+  const [isPageLoading, setIsPageLoading] = useState(true);
   const [newLink, setNewLink] = useState<linkType>({
     context: "",
     epub_link: "",
@@ -50,7 +35,6 @@ const ManageBookEdit: React.FC = () => {
   });
   const [isEditDownloadInfoRevealed, setIsEditDownloadInfoRevealed] =
     useState(false);
-  const [pageLoading, setPageLoading] = useState(true);
   const [isDeleteBookConfirm, setIsDeleteBookConfirm] = useState(false);
   const [bookInfo, setBookInfo] = useState<bookInfoType>({
     cover_link: "",
@@ -62,8 +46,21 @@ const ManageBookEdit: React.FC = () => {
   const id = useParams().id?.split("===")[1];
   const navigate = useNavigate();
   const pageLoadingTimeoutRef = useRef<null | number>(null);
+  const [updateBookInfo, isUpdateBookInfoLoading] = useUpdateDoc();
+  const [
+    getBookDownloadsInfo,
+    bookDownloadsInfo,
+    isBookDownloadsInfoLoading,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _bookDownloadsInfoError,
+    setBookDownloadsInfo,
+  ] = useGetDoc();
+  const [updateBookDownloadsInfo, isUpdateBookDownloadsInfoLoading] =
+    useUpdateDoc();
+  const [deleteData, isDeleteDataLoading] = useDeleteDoc();
+  const [updateStats, isUpdateStatsLoading] = useUpdateDoc();
 
-  const updateBookInfo = async (id: string, context: string) => {
+  const handleUpdateBookInfo = async (id: string, context: string) => {
     let data;
     if (context === "COVER") {
       if (
@@ -87,101 +84,44 @@ const ManageBookEdit: React.FC = () => {
         };
     }
 
-    try {
-      setPageLoading(true);
-      console.log("updating book...");
-      const bookRef = getBooksRef(id);
-      await updateDoc(bookRef, data as DocumentData);
-      console.log("book updated!");
-
-      setBookInfo({
-        cover_link: "",
-        cover_shade: "",
-        info_link: "",
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    setPageLoading(false);
+    // update:
+    await updateBookInfo("books", id, data as DocumentData);
   };
 
-  const getBookDownloadInfo = async (id: string) => {
-    try {
-      setPageLoading(true);
-      const bookDownloadRef = getBookDownloadsRef(id);
-      const snapshot = await getDoc(bookDownloadRef);
+  const handleUpdateBookDownloadsInfo = async (id: string) => {
+    setNewLink({
+      context: "",
+      epub_link: "",
+      pdf_link: "",
+    });
 
-      const res = {
-        title: snapshot.data()?.title || "",
-        links: snapshot.data()?.links || [],
-      } as bookDownloadInfoType;
-
-      if (res) setBookDownloadInfo(res);
-    } catch (error) {
-      console.log(error);
-    }
-    setPageLoading(false);
+    await updateBookDownloadsInfo(
+      "bookDownloads",
+      id,
+      bookDownloadsInfo as DocumentData
+    );
+    await updateBookInfo("books", id, {
+      volumes: bookDownloadsInfo?.links?.length,
+    } as DocumentData);
   };
 
-  const updateBookDownloadInfo = async (id: string) => {
+  const handleDeleteBook = async () => {
     try {
-      setPageLoading(true);
-      setNewLink({
-        context: "",
-        epub_link: "",
-        pdf_link: "",
-      });
-      const bookDownloadRef = getBookDownloadsRef(id);
-      await updateDoc(bookDownloadRef, bookDownloadInfo as DocumentData);
-      console.log("Book Download Info Updated!");
-
-      console.log("updating book...");
-      const bookRef = getBooksRef(id);
-      await updateDoc(bookRef, {
-        volumes: bookDownloadInfo.links.length,
-      } as DocumentData);
-      console.log("book updated!");
-    } catch (error) {
-      console.log(error);
-    }
-    setPageLoading(false);
-  };
-
-  const deleteBook = async (id: string) => {
-    try {
-      setPageLoading(true);
-      console.log("deleting book...");
-      const bookRef = getBooksRef(id);
-      await deleteDoc(bookRef);
-      console.log("book deleted!");
-
-      console.log("deleting bookDownloads...");
-      const bookDownloadRef = getBookDownloadsRef(id);
-      await deleteDoc(bookDownloadRef);
-      console.log("bookDownloads deleted!");
-
+      await deleteData("books", id);
+      await deleteData("bookDownloads", id);
       // update stats:
-      console.log("Updating Stats...");
-      const statsRef = getStatsRef("stats");
-      await updateDoc(statsRef, {
+      await updateStats("stats", "stats", {
         booksCount: increment(-1),
       });
-      console.log("Updated Stats");
-
       navigate(-1);
     } catch (error) {
       console.log(error);
     }
-    setPageLoading(false);
     setIsDeleteBookConfirm(false);
   };
 
   const handleEditDownloadInfoBtn = async () => {
-    if (!id) {
-      console.log("Invalid ID!");
-      return;
-    }
-    await getBookDownloadInfo(id);
+    await getBookDownloadsInfo("bookDownloads", id);
     setIsEditDownloadInfoRevealed(true);
   };
 
@@ -191,9 +131,9 @@ const ManageBookEdit: React.FC = () => {
   ) => {
     event.preventDefault();
 
-    setBookDownloadInfo((prev) => {
+    setBookDownloadsInfo((prev) => {
       const res: linkType[] = [];
-      prev.links.forEach((element) => {
+      prev.links.forEach((element: linkType) => {
         if (element.context === linkContext) {
           res.push({ ...element, epub_link: event.target.value });
         } else res.push(element);
@@ -208,9 +148,9 @@ const ManageBookEdit: React.FC = () => {
   ) => {
     event.preventDefault();
 
-    setBookDownloadInfo((prev) => {
+    setBookDownloadsInfo((prev) => {
       const res: linkType[] = [];
-      prev.links.forEach((element) => {
+      prev.links.forEach((element: linkType) => {
         if (element.context === linkContext) {
           res.push({ ...element, pdf_link: event.target.value });
         } else res.push(element);
@@ -228,7 +168,7 @@ const ManageBookEdit: React.FC = () => {
 
     // check if link already exists:
     let alreadyExists = false;
-    bookDownloadInfo.links.map((ele) => {
+    bookDownloadsInfo?.links?.map((ele: linkType) => {
       if (ele.context === link.context) {
         alreadyExists = true;
         return;
@@ -246,7 +186,7 @@ const ManageBookEdit: React.FC = () => {
       return;
     }
 
-    setBookDownloadInfo((prev) => ({ ...prev, links: [...prev.links, link] }));
+    setBookDownloadsInfo((prev) => ({ ...prev, links: [...prev.links, link] }));
     setNewLink({
       context: "",
       epub_link: "",
@@ -255,7 +195,7 @@ const ManageBookEdit: React.FC = () => {
   };
 
   const handleRemoveLink = (context: string) => {
-    setBookDownloadInfo((prev) => ({
+    setBookDownloadsInfo((prev) => ({
       ...prev,
       links: [...prev.links].filter((ele) => ele.context !== context),
     }));
@@ -272,18 +212,24 @@ const ManageBookEdit: React.FC = () => {
       window.clearTimeout(pageLoadingTimeoutRef.current);
     }
     pageLoadingTimeoutRef.current = window.setTimeout(() => {
-      setPageLoading(false);
+      setIsPageLoading(false);
     }, 1000);
   }, [navigate, id]);
 
   // show loading animation if something is loading:
-  if (pageLoading) {
+  if (
+    isPageLoading ||
+    isUpdateBookInfoLoading ||
+    isUpdateBookDownloadsInfoLoading ||
+    isDeleteDataLoading ||
+    isUpdateStatsLoading
+  ) {
     return <LoadingAnimation />;
   }
 
   return (
     <div className="manage-book-edit-container">
-      <h2 className="title">{bookDownloadInfo.title || "Update Book"}</h2>
+      <h2 className="title">{bookDownloadsInfo?.title || "Update Book"}</h2>
 
       {isEditDownloadInfoRevealed ? (
         <></>
@@ -316,7 +262,7 @@ const ManageBookEdit: React.FC = () => {
                   console.log("Invalid ID!");
                   return;
                 }
-                await updateBookInfo(id, "INFO");
+                await handleUpdateBookInfo(id, "INFO");
               }}
             >
               Update
@@ -363,7 +309,7 @@ const ManageBookEdit: React.FC = () => {
                   console.log("Invalid ID!");
                   return;
                 }
-                await updateBookInfo(id, "COVER");
+                await handleUpdateBookInfo(id, "COVER");
               }}
             >
               Update
@@ -377,11 +323,11 @@ const ManageBookEdit: React.FC = () => {
           className="edit-download-info-btn"
           onClick={handleEditDownloadInfoBtn}
         >
-          Edit Download Info
+          {isBookDownloadsInfoLoading ? "Loading..." : "Edit Download Info"}
         </button>
       ) : (
         <div className="edit-download-info-container">
-          {bookDownloadInfo.links.map((l) => (
+          {bookDownloadsInfo?.links?.map((l: linkType) => (
             <div key={l.context} className="download-items-container">
               <div className="info-container">
                 <h3 className="context">{l.context}</h3>
@@ -488,7 +434,7 @@ const ManageBookEdit: React.FC = () => {
                   console.log("Invalid Id!");
                   return;
                 }
-                await updateBookDownloadInfo(id);
+                await handleUpdateBookDownloadsInfo(id);
               }}
             >
               Update Info
@@ -500,15 +446,11 @@ const ManageBookEdit: React.FC = () => {
       <button
         className="delete-book-btn"
         onClick={async () => {
-          if (!id) {
-            console.log("Invalid ID!");
-            return;
-          }
           if (!isDeleteBookConfirm) {
             setIsDeleteBookConfirm(true);
             return;
           }
-          await deleteBook(id);
+          await handleDeleteBook();
         }}
       >
         {isDeleteBookConfirm ? "Sure?" : "Delete Book"}

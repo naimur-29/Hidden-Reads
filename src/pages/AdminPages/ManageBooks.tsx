@@ -50,6 +50,7 @@ const ManageBooks: React.FC = () => {
         });
       });
 
+      console.log(booksData.length);
       if (booksData.length > 0) {
         setBooks(booksData);
       }
