@@ -1,50 +1,37 @@
-import React, { useState, useEffect, useRef } from "react";
-import { getDoc } from "firebase/firestore";
-import { getStatsRef } from "../config/firebase";
+import React, { useEffect, useRef } from "react";
 
 import "./styles/Navbar.css";
 
 // Components:
 // import SearchBar from "./SearchBar";
 import NavMenu from "./NavMenu";
+import useGetDoc from "../hooks/useGetDoc";
 
 const Navbar: React.FC = () => {
-  // States:
-  const [booksCount, setBooksCount] = useState(null);
-
   // HOOKS:
   const firstLoadRef = useRef(false);
-
-  // get books Count:
-  const getPreload = async () => {
-    try {
-      console.log("----GETTING BOOKS COUNT----");
-      const statsRef = getStatsRef("stats");
-      const statsSnapshot = await getDoc(statsRef);
-      const statsRes = statsSnapshot.data();
-
-      if (statsRes) {
-        setBooksCount(statsRes.booksCount || 0);
-      }
-      console.log("----GOT BOOKS COUNT----");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [getBookStats, bookStats, isBookStatsLoading] = useGetDoc();
 
   useEffect(() => {
     if (firstLoadRef.current === false) {
-      getPreload();
+      console.log("----GETTING BOOKS COUNT----");
+      getBookStats("stats", "stats");
       firstLoadRef.current = true;
+      console.log("----GOT BOOKS COUNT----");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <nav className="navbar-container">
       <section className="left-container">
-        {booksCount !== null ? (
+        {isBookStatsLoading ? (
+          <p className="books-count">loading...</p>
+        ) : bookStats?.booksCount !== null ? (
           <p className="books-count">
-            {booksCount < 10 && booksCount > 0 ? `0${booksCount}` : booksCount}{" "}
+            {bookStats?.booksCount < 10 && bookStats?.booksCount > 0
+              ? `0${bookStats?.booksCount}`
+              : bookStats?.booksCount}{" "}
             books
           </p>
         ) : (
