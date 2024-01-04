@@ -49,7 +49,7 @@ const BookSearchResults: React.FC = () => {
 
     const filterSearchResults = (
       snapshot: QuerySnapshot<DocumentData, DocumentData>
-    ): DocumentData[] => {
+    ) => {
       const res: bookType[] = [];
       snapshot.forEach((doc) => {
         const data = doc.data();

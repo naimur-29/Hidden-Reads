@@ -1,17 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
-import { db } from "../../config/firebase";
+import React, { useEffect, useRef } from "react";
 import {
   collection,
   query as fireStoreQuery,
   orderBy,
-  getDocs,
   limit,
+  QuerySnapshot,
+  DocumentData,
 } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 import "./RecentlyAdded.css";
 
 // COMPONENTS:
 import BookByCoverContainer from "../../components/BooksByCoverContainer";
+
+// HOOKS:
+import useGetDocs from "../../hooks/useGetDocs";
 
 // TYPES:
 type bookType = {
@@ -23,28 +27,27 @@ type bookType = {
 };
 
 const RecentlyAdded: React.FC = () => {
-  // States:
-  const [filteredBooks, setFilteredBooks] = useState<bookType[]>([]);
-  const [isSearchResultLoading, setIsSearchResultLoading] = useState(true);
-
   // HOOKS:
   const firstLoadRef = useRef(false);
+  const [
+    getRecentlyAddedBooks,
+    recentlyAddedBooks,
+    isRecentlyAddedBooksLoading,
+  ] = useGetDocs();
 
   // get data:
-  const getSearchData = async () => {
+  const handleGetRecentlyAddedBooks = async () => {
     const q = fireStoreQuery(
       collection(db, "books"),
       limit(20),
       orderBy("createdAt", "desc")
     );
 
-    try {
-      setIsSearchResultLoading(true);
-      console.log("book search data loading...");
-      setFilteredBooks([]);
-      const querySnapshot = await getDocs(q);
+    const filterBooks = (
+      snapshot: QuerySnapshot<DocumentData, DocumentData>
+    ) => {
       const res: bookType[] = [];
-      querySnapshot.forEach((doc) => {
+      snapshot.forEach((doc) => {
         const data = doc.data();
         res.push({
           id: doc.id || "",
@@ -54,35 +57,33 @@ const RecentlyAdded: React.FC = () => {
           views: data.views || 0,
         });
       });
-      if (res.length) {
-        setFilteredBooks(res);
-      }
-      console.log("book search data loaded!");
-    } catch (error) {
-      console.log(error);
-    }
-    setIsSearchResultLoading(false);
+
+      return res as DocumentData[];
+    };
+
+    await getRecentlyAddedBooks(q, filterBooks);
   };
 
   useEffect(() => {
     if (firstLoadRef.current === false) {
-      getSearchData();
+      handleGetRecentlyAddedBooks();
       window.scrollTo(0, 0);
       firstLoadRef.current = true;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <section className="most-popular-page-container">
       <div className="title-container">
         <h2 className="title">
-          {isSearchResultLoading ? "Loading..." : "Recently Added"}
+          {isRecentlyAddedBooksLoading ? "Loading..." : "Recently Added"}
         </h2>
       </div>
 
       <BookByCoverContainer
-        filteredBooks={filteredBooks}
-        isLoading={isSearchResultLoading}
+        filteredBooks={recentlyAddedBooks as bookType[]}
+        isLoading={isRecentlyAddedBooksLoading}
       />
     </section>
   );

@@ -13,6 +13,8 @@ import "./MostPopular.css";
 
 // COMPONENTS:
 import BookByCoverContainer from "../../components/BooksByCoverContainer";
+
+// HOOKS:
 import useGetDocs from "../../hooks/useGetDocs";
 
 // TYPES:
@@ -61,7 +63,6 @@ const MostPopular: React.FC = () => {
 
   useEffect(() => {
     if (firstLoadRef.current === false) {
-      console.log("running...");
       handleGetMostPopularBooks();
       window.scrollTo(0, 0);
       firstLoadRef.current = true;
