@@ -18,3 +18,11 @@ export const capitalizeEachWord = (text: string): string | null => {
 
   return newText.join(" ");
 };
+
+export function removeEmptyStringsFromArray(arr: string[]) {
+  return arr.filter((ele) => ele.trim() !== "");
+}
+
+export function removeDuplicateItemsFromArray<Type>(arr: Type[]) {
+  return [...new Set(arr)];
+}

@@ -6,7 +6,7 @@ import "./Genres.css";
 // Components:
 import GenreLink from "../../components/GenreLink";
 import LoadingAnimation from "../../components/LoadingAnimation";
-import { capitalizeEachWord } from "../../misc/commonFunctions";
+import { capitalizeEachWord } from "../../utility/commonFunctions";
 
 // TYPES:
 interface propType {

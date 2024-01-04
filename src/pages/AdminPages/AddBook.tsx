@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 import { v4 as uuid4 } from "uuid";
-import {
-  setDoc,
-  updateDoc,
-  serverTimestamp,
-  arrayUnion,
-  increment,
-} from "firebase/firestore";
-import {
-  getBooksRef,
-  getBookDownloadsRef,
-  getStatsRef,
-} from "../../config/firebase";
+import { serverTimestamp, arrayUnion, increment } from "firebase/firestore";
 
 import "./styles/AddBook.css";
 
 // COMPONENTS:
 import LoadingAnimation from "../../components/LoadingAnimation";
+
+// HOOKS:
+import useUpdateDoc from "../../hooks/useUpdateDoc";
+import useSetDoc from "../../hooks/useSetDoc";
+import {
+  removeDuplicateItemsFromArray,
+  removeEmptyStringsFromArray,
+} from "../../utility/commonFunctions";
 
 // TYPES:
 type bookInfoType = {
@@ -50,7 +47,6 @@ type bookDownloadsType = {
 
 const AddBook: React.FC = () => {
   // STATES:
-  const [isBookSubmitLoading, setIsBookSubmitLoading] = useState(false);
   const [bookInfo, setBookInfo] = useState<bookInfoType>({
     title: "",
     author: "",
@@ -79,6 +75,11 @@ const AddBook: React.FC = () => {
     }
   );
 
+  // HOOKS:
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [setDoc, isSetDocLoading, _setDocError, setSetDocError] = useSetDoc();
+  const [updateStats, isUpdateStatsLoading] = useUpdateDoc();
+
   // handle add volume download links:
   const handleAddVolume = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -95,7 +96,7 @@ const AddBook: React.FC = () => {
       !(linksInfo.context && linksInfo.epub_link && linksInfo.pdf_link) ||
       alreadyExists
     ) {
-      console.log("Invalid Volume Data!");
+      setSetDocError("Invalid Volume Data!");
       return;
     }
 
@@ -122,7 +123,6 @@ const AddBook: React.FC = () => {
   // handle bookInfo submit:
   const handleBookSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    setIsBookSubmitLoading(true);
 
     // check if all values are present:
     if (
@@ -134,7 +134,7 @@ const AddBook: React.FC = () => {
         bookInfo.status
       )
     ) {
-      console.log("Invalid Info!");
+      setSetDocError("Invalid Info!");
       return;
     }
 
@@ -151,18 +151,20 @@ const AddBook: React.FC = () => {
       info_link: bookInfo.info_link.trim(),
       cover_link: bookInfo.cover_link.trim(),
       cover_shade: bookInfo.cover_shade.trim(),
-      searchme: [
-        ...bookInfo.title
-          .trim()
-          .toLowerCase()
-          .replace(/[^a-z0-9\s]/g, "")
-          .split(" ")
-          .filter((e) => e !== ""),
-        bookInfo.published.trim(),
-        ...bookInfo.genres.trim().toLowerCase().split(", "),
-        bookInfo.status.trim().toLowerCase(),
-        ...bookInfo.author.trim().toLowerCase().split(" "),
-      ],
+      searchme: removeEmptyStringsFromArray(
+        removeDuplicateItemsFromArray([
+          ...bookInfo.title
+            .trim()
+            .toLowerCase()
+            .replace(/[^a-z0-9\s]/g, "")
+            .split(" ")
+            .filter((e) => e !== ""),
+          bookInfo.published.trim(),
+          ...bookInfo.genres.trim().toLowerCase().split(", "),
+          bookInfo.status.trim().toLowerCase(),
+          ...bookInfo.author.trim().toLowerCase().split(" "),
+        ])
+      ),
     };
 
     // trim white spaces for bookDownloadsData:
@@ -179,63 +181,55 @@ const AddBook: React.FC = () => {
       bookDownloadsData.links.push(res);
     });
 
-    // add new item to book database:
-    console.log(bookInfo);
-    try {
-      // add new book:
-      console.log("adding book...");
-      const id = uuid4();
-      console.log(id);
-      const bookRef = getBooksRef(id);
-      await setDoc(bookRef, bookData);
+    // add new book:
+    const id = uuid4();
+    await setDoc("books", id, bookData);
 
-      // add new bookWithDownload:
-      console.log("adding bookDownload...");
-      const bookDownloadRef = getBookDownloadsRef(id);
-      await setDoc(bookDownloadRef, bookDownloadsData);
-      setBookDownloadsInfo({
-        title: "",
-        links: [],
-      });
-      console.log("added bookDownload!");
+    // add new bookWithDownload:
+    await setDoc("bookDownloads", id, bookDownloadsData);
 
-      // updating stats:
-      console.log("updating Stats...");
-      const statsRef = getStatsRef("stats");
-      await updateDoc(statsRef, {
-        booksCount: increment(1),
-      });
+    // updating stats:
+    await updateStats("stats", "stats", {
+      booksCount: increment(1),
+    });
 
-      const genresRef = getStatsRef("genres");
-      const genresList = bookInfo.genres.trim().toLowerCase().split(", ");
-      await updateDoc(genresRef, { genres: arrayUnion(...genresList) });
-      console.log("Updated Stats");
+    const genresList = removeEmptyStringsFromArray(
+      removeDuplicateItemsFromArray(
+        bookInfo.genres.trim().toLowerCase().split(", ")
+      )
+    );
+    await updateStats("stats", "genres", { genres: arrayUnion(...genresList) });
 
-      setBookInfo({
-        title: "",
-        author: "",
-        synopsis: "",
-        published: "",
-        status: "",
-        volumes: 0,
-        genres: "",
-        views: 0,
-        downloads: 0,
-        info_link: "",
-        cover_link: "",
-        cover_shade: "",
-        searchme: [],
-        createdAt: serverTimestamp(),
-      });
-      console.log("book added!");
-    } catch (error) {
-      console.log(error);
-    }
-    setIsBookSubmitLoading(false);
+    // reset user inputs:
+    setBookInfo({
+      title: "",
+      author: "",
+      synopsis: "",
+      published: "",
+      status: "",
+      volumes: 0,
+      genres: "",
+      views: 0,
+      downloads: 0,
+      info_link: "",
+      cover_link: "",
+      cover_shade: "",
+      searchme: [],
+      createdAt: serverTimestamp(),
+    });
+    setBookDownloadsInfo({
+      title: "",
+      links: [],
+    });
+    setLinksInfo({
+      context: "",
+      epub_link: "",
+      pdf_link: "",
+    });
   };
 
   // show loading animation:
-  if (isBookSubmitLoading) return <LoadingAnimation />;
+  if (isSetDocLoading || isUpdateStatsLoading) return <LoadingAnimation />;
 
   return (
     <section className="add-book-page">
@@ -244,7 +238,7 @@ const AddBook: React.FC = () => {
       {/* Add Book Infos */}
       <div className="form-container">
         <div className="item">
-          <label htmlFor="">Title </label>
+          <label htmlFor="">Title* </label>
           <input
             placeholder="book title.."
             value={bookInfo.title}
@@ -259,7 +253,7 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Author </label>
+          <label htmlFor="">Author* </label>
           <input
             placeholder="author name.."
             value={bookInfo.author}
@@ -274,7 +268,7 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Synopsis </label>
+          <label htmlFor="">Synopsis* </label>
           <textarea
             placeholder="short description.."
             value={bookInfo.synopsis}
@@ -291,7 +285,7 @@ const AddBook: React.FC = () => {
           ></textarea>
         </div>
         <div className="item">
-          <label htmlFor="">Published </label>
+          <label htmlFor="">Published* </label>
           <input
             placeholder="ex: 2023.."
             value={bookInfo.published}
@@ -306,7 +300,7 @@ const AddBook: React.FC = () => {
           />
         </div>
         <div className="item">
-          <label htmlFor="">Status </label>
+          <label htmlFor="">Status* </label>
           <input
             placeholder="ex: ongoing.."
             value={bookInfo.status}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { abbreviateNumberForStats } from "../misc/commonFunctions";
+import { abbreviateNumberForStats } from "../utility/commonFunctions";
 
 import "./styles/BookSearchItem.css";
 

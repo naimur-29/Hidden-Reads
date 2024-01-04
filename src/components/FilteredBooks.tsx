@@ -9,7 +9,7 @@ import {
   limit,
   orderBy,
 } from "firebase/firestore";
-import { abbreviateNumberForStats } from "../misc/commonFunctions";
+import { abbreviateNumberForStats } from "../utility/commonFunctions";
 
 import "./styles/FilteredBooks.css";
 

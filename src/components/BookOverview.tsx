@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Download } from "lucide-react";
 import { increment } from "firebase/firestore";
-import { abbreviateNumberForStats } from "../misc/commonFunctions";
+import { abbreviateNumberForStats } from "../utility/commonFunctions";
 
 import "./styles/BookOverview.css";
 
