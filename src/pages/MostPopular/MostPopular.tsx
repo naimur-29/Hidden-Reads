@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
-import { db } from "../../config/firebase";
+import React, { useEffect, useRef } from "react";
 import {
   collection,
   query as fireStoreQuery,
   orderBy,
-  getDocs,
   limit,
+  QuerySnapshot,
+  DocumentData,
 } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 import "./MostPopular.css";
 
 // COMPONENTS:
 import BookByCoverContainer from "../../components/BooksByCoverContainer";
+import useGetDocs from "../../hooks/useGetDocs";
 
 // TYPES:
 type bookType = {
@@ -23,28 +25,24 @@ type bookType = {
 };
 
 const MostPopular: React.FC = () => {
-  // States:
-  const [filteredBooks, setFilteredBooks] = useState<bookType[]>([]);
-  const [isSearchResultLoading, setIsSearchResultLoading] = useState(true);
-
   // HOOKS:
   const firstLoadRef = useRef(false);
+  const [getMostPopularBooks, mostPopularBooks, isMostPopularBooksLoading] =
+    useGetDocs();
 
   // get data:
-  const getSearchData = async () => {
+  const handleGetMostPopularBooks = async () => {
     const q = fireStoreQuery(
       collection(db, "books"),
       limit(20),
       orderBy("views", "desc")
     );
 
-    try {
-      setIsSearchResultLoading(true);
-      console.log("book search data loading...");
-      setFilteredBooks([]);
-      const querySnapshot = await getDocs(q);
+    const filterBooks = (
+      snapshot: QuerySnapshot<DocumentData, DocumentData>
+    ) => {
       const res: bookType[] = [];
-      querySnapshot.forEach((doc) => {
+      snapshot.forEach((doc) => {
         const data = doc.data();
         res.push({
           id: doc.id || "",
@@ -54,39 +52,38 @@ const MostPopular: React.FC = () => {
           views: data.views || 0,
         });
       });
-      if (res.length) {
-        setFilteredBooks(res);
-      }
-      console.log("book search data loaded!");
-    } catch (error) {
-      console.log(error);
-    }
-    setIsSearchResultLoading(false);
+
+      return res as DocumentData[];
+    };
+
+    await getMostPopularBooks(q, filterBooks);
   };
 
   useEffect(() => {
     if (firstLoadRef.current === false) {
-      getSearchData();
+      console.log("running...");
+      handleGetMostPopularBooks();
       window.scrollTo(0, 0);
       firstLoadRef.current = true;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <section className="most-popular-page-container">
       <div className="title-container">
         <h2 className="title">
-          {isSearchResultLoading
+          {isMostPopularBooksLoading
             ? "Loading..."
-            : !filteredBooks.length
+            : !mostPopularBooks?.length
             ? "No Books!"
             : "Most Popular"}
         </h2>
       </div>
 
       <BookByCoverContainer
-        filteredBooks={filteredBooks}
-        isLoading={isSearchResultLoading}
+        filteredBooks={mostPopularBooks as bookType[]}
+        isLoading={isMostPopularBooksLoading}
       />
     </section>
   );

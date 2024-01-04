@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { db } from "../config/firebase";
 import {
   collection,
   query as fireStoreQuery,
@@ -8,6 +7,7 @@ import {
   DocumentData,
   QuerySnapshot,
 } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 import "./styles/BookSearchResults.css";
 
