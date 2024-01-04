@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  getDocs,
   query,
   collection,
   DocumentData,
   orderBy,
+  QuerySnapshot,
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
@@ -13,18 +13,21 @@ import "./styles/ManageBooks.css";
 // COMPONENTS:
 import LoadingAnimation from "../../components/LoadingAnimation";
 import LinkTo from "../../components/LinkTo";
+import useGetDocs from "../../hooks/useGetDocs";
 
 // TYPES:
-import { bookType } from "../../components/BookSearchItem";
+type bookType = {
+  id: string;
+  title: string;
+};
 
 const ManageBooks: React.FC = () => {
   // STATES:
-  const [books, setBooks] = useState<DocumentData[]>([]);
   const [searchInput, setSearchInput] = useState("");
-  const [isBooksLoading, setIsBooksLoading] = useState(true);
 
   // HOOKS:
   const firstCallRef = useRef(false);
+  const [getBooks, books, isBooksLoading] = useGetDocs();
 
   const filterBooksBySearchInput = (b: bookType) =>
     b.title
@@ -37,34 +40,31 @@ const ManageBooks: React.FC = () => {
           .replace(/[^a-z0-9\s]/g, "")
       );
 
-  const getBooks = async () => {
+  const handleGetBooks = async () => {
     const q = query(collection(db, "books"), orderBy("title"));
 
-    try {
-      const snapshot = await getDocs(q);
-      const booksData: DocumentData[] = [];
+    const filterBooks = (
+      snapshot: QuerySnapshot<DocumentData, DocumentData>
+    ) => {
+      const res: bookType[] = [];
       snapshot.forEach((doc) => {
-        booksData.push({
+        res.push({
           id: doc.id,
           title: doc.data().title,
         });
       });
+      return res as DocumentData[];
+    };
 
-      console.log(booksData.length);
-      if (booksData.length > 0) {
-        setBooks(booksData);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    setIsBooksLoading(false);
+    await getBooks(q, filterBooks);
   };
 
   useEffect(() => {
-    if (firstCallRef.current === false) {
-      getBooks();
+    if (!firstCallRef.current) {
+      handleGetBooks();
       firstCallRef.current = true;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isBooksLoading) return <LoadingAnimation />;
