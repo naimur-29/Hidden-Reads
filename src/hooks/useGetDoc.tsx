@@ -15,6 +15,7 @@ const useGetDoc = () => {
 
     try {
       setIsLoading(true);
+      setData({});
       const docRef = getRef(collectionName, id);
       const docSnapshot = await getDoc(docRef);
       const res = docSnapshot.data();

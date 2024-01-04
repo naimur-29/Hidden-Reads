@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../config/firebase";
 import {
   collection,
   query as fireStoreQuery,
   where,
-  getDocs,
+  DocumentData,
+  QuerySnapshot,
 } from "firebase/firestore";
 
 import "./styles/BookSearchResults.css";
 
 // Components:
 import BookSearchItem from "./BookSearchItem";
+
+// HOOKS:
+import useGetDocs from "../hooks/useGetDocs";
 
 // TYPES:
 type bookType = {
@@ -28,17 +32,14 @@ type bookType = {
 };
 
 const BookSearchResults: React.FC = () => {
-  // States:
-  const [filteredBooks, setFilteredBooks] = useState<bookType[]>([]);
-  const [isSearchResultLoading, setIsSearchResultLoading] = useState(false);
-
-  // hooks:
+  // HOOKS:
   const { query } = useParams();
+  const [getSearchResults, searchResults, isSearchResultsLoading] =
+    useGetDocs();
 
   // get search data:
   // process: filter by first word (back) then filter by the whole query(front):
-  const getSearchData = async (query: string) => {
-    setIsSearchResultLoading(true);
+  const handleSearchData = async (query: string) => {
     // back (DB) filter:
     const queryArr = query.trim().split(" ");
     const q = fireStoreQuery(
@@ -46,12 +47,11 @@ const BookSearchResults: React.FC = () => {
       where("searchme", "array-contains", queryArr[0])
     );
 
-    try {
-      console.log("book search data loading...");
-      setFilteredBooks([]);
-      const querySnapshot = await getDocs(q);
+    const filterSearchResults = (
+      snapshot: QuerySnapshot<DocumentData, DocumentData>
+    ): DocumentData[] => {
       const res: bookType[] = [];
-      querySnapshot.forEach((doc) => {
+      snapshot.forEach((doc) => {
         const data = doc.data();
 
         // front (Static) filter:
@@ -78,14 +78,11 @@ const BookSearchResults: React.FC = () => {
           });
         }
       });
-      if (res.length) {
-        setFilteredBooks(res);
-      }
-      console.log("book search data loaded!");
-    } catch (error) {
-      console.log(error);
-    }
-    setIsSearchResultLoading(false);
+
+      return res as DocumentData[];
+    };
+
+    await getSearchResults(q, filterSearchResults);
   };
 
   useEffect(() => {
@@ -98,25 +95,27 @@ const BookSearchResults: React.FC = () => {
         .split(" ")
         .filter((e) => e !== "")
         .join(" ");
-      getSearchData(queryText);
+      handleSearchData(queryText);
     } else {
-      setFilteredBooks([]);
       console.log("Invalid Query!");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   return (
     <div className="books-list-container">
-      <h3 className="main-title">{`Results (${filteredBooks.length})`}</h3>
+      <h3 className="main-title">{`Results (${searchResults.length})`}</h3>
       <div className="list-container">
-        {filteredBooks.length ? (
-          filteredBooks
+        {searchResults.length ? (
+          searchResults
             .sort((a, b) => b.views - a.views)
             .slice(0, 100)
-            .map((b, index) => <BookSearchItem book={b} key={index} />)
+            .map((b, index) => (
+              <BookSearchItem book={b as bookType} key={index} />
+            ))
         ) : (
           <p style={{ padding: "8px" }}>
-            {isSearchResultLoading ? "Books Loading..." : "No Books Found!"}
+            {isSearchResultsLoading ? "Books Loading..." : "No Books Found!"}
           </p>
         )}
       </div>

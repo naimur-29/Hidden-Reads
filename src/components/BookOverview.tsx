@@ -102,15 +102,25 @@ const BookOverview: React.FC = () => {
       <div className="inner-container">
         <div className="book-container">
           <div className="cover-container">
-            <img
-              src={isBookInfoLoading ? BookLoadingGif : bookInfo?.cover_link}
-              alt={bookInfo?.title}
-              className="cover"
-              style={{
-                backgroundImage: `linear-gradient(0deg, ${bookInfo.cover_shade}99, ${bookInfo.cover_shade}00, ${bookInfo.cover_shade}99)`,
-              }}
-            />
-
+            {!isBookInfoLoading && bookInfo?.cover_link?.includes("http") ? (
+              <img
+                src={bookInfo?.cover_link}
+                alt={bookInfo?.title}
+                className="cover"
+                style={{
+                  backgroundImage: `linear-gradient(0deg, ${bookInfo.cover_shade}99, ${bookInfo.cover_shade}00, ${bookInfo.cover_shade}99)`,
+                }}
+              />
+            ) : (
+              <img
+                src={BookLoadingGif}
+                alt={bookInfo?.title}
+                className="cover"
+                style={{
+                  backgroundImage: `linear-gradient(0deg, ${bookInfo.cover_shade}99, ${bookInfo.cover_shade}00, ${bookInfo.cover_shade}99)`,
+                }}
+              />
+            )}
             <div
               className="stats"
               style={{
@@ -158,10 +168,16 @@ const BookOverview: React.FC = () => {
               </h4> */}
 
                 <article className="synopsis">
-                  {`${bookInfo?.synopsis?.slice(0, 300)}... `}
-                  <a href={bookInfo?.info_link} target="_blank">
-                    See more
-                  </a>
+                  {bookInfo?.info_link?.includes("http") ? (
+                    <>
+                      {`${bookInfo?.synopsis?.slice(0, 300)}... `}
+                      <a href={bookInfo?.info_link} target="_blank">
+                        See more
+                      </a>
+                    </>
+                  ) : (
+                    bookInfo?.synopsis?.slice(0, 300)
+                  )}
                 </article>
               </div>
 
