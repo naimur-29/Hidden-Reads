@@ -27,8 +27,9 @@ const useGetDocs = () => {
       if (res.length > 0) setData(res);
     } catch (error) {
       if (error instanceof Error) setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return [getData, data, isLoading, error, setError] as const;

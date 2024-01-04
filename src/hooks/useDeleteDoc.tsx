@@ -19,8 +19,9 @@ const useDeleteDoc = () => {
       await deleteDoc(docRef);
     } catch (error) {
       setError(error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return [deleteData, isLoading, error] as const;

@@ -205,8 +205,10 @@ const AddBook: React.FC = () => {
         genres: arrayUnion(...genresList),
       });
 
+      setSetDocError("");
       setSuccessMsg("Book Added!");
     } catch (error) {
+      setSuccessMsg("");
       setSetDocError("Failed To Add Book!");
     }
 

@@ -30,8 +30,8 @@ const ErrorToast: React.FC<propType> = ({ message, setMessage }) => {
   }, [message]);
 
   return isVisible ? (
-    <div className="error-toast-container">
-      <p className="error-text">{message}</p>
+    <div className="success-toast-container">
+      <p className="success-text">{message}</p>
     </div>
   ) : (
     <></>

@@ -22,8 +22,9 @@ const useUpdateDoc = () => {
       await updateDoc(docRef, updatedData);
     } catch (error) {
       setError(error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return [update, isLoading, error] as const;

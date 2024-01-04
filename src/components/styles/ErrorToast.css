@@ -24,7 +24,6 @@
 
 @keyframes dropDown {
   0% {
-    background-color: #f470;
     opacity: 0;
     top: 0%;
   }
@@ -33,7 +32,6 @@
     top: 35%;
   }
   100% {
-    background-color: #f47d;
     opacity: 1;
     top: 30%;
   }
