@@ -13,6 +13,7 @@ import "./styles/BookSearchResults.css";
 
 // Components:
 import BookSearchItem from "./BookSearchItem";
+import ErrorToast from "./ErrorToast";
 
 // HOOKS:
 import useGetDocs from "../hooks/useGetDocs";
@@ -34,8 +35,13 @@ type bookType = {
 const BookSearchResults: React.FC = () => {
   // HOOKS:
   const { query } = useParams();
-  const [getSearchResults, searchResults, isSearchResultsLoading] =
-    useGetDocs();
+  const [
+    getSearchResults,
+    searchResults,
+    isSearchResultsLoading,
+    searchResultsError,
+    setSearchResultsError,
+  ] = useGetDocs();
 
   // get search data:
   // process: filter by first word (back) then filter by the whole query(front):
@@ -96,8 +102,8 @@ const BookSearchResults: React.FC = () => {
         .filter((e) => e !== "")
         .join(" ");
       handleSearchData(queryText);
-    } else {
-      console.log("Invalid Query!");
+    } else if (query && query?.trim() !== "") {
+      setSearchResultsError("Invalid Query!");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
@@ -105,6 +111,13 @@ const BookSearchResults: React.FC = () => {
   return (
     <div className="books-list-container">
       <h3 className="main-title">{`Results (${searchResults.length})`}</h3>
+
+      {/* ERROR TOAST */}
+      <ErrorToast
+        message={searchResultsError}
+        setMessage={setSearchResultsError}
+      />
+
       <div className="list-container">
         {searchResults.length ? (
           searchResults

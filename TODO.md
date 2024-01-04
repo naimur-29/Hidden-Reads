@@ -87,8 +87,14 @@
 ### Wednesday, January 3
 
 - host it! ✅
-- use hooks to interact with db
+
+### Thursday, January 4
+
+- use hooks to interact with db ✅
+- show error messages and success messages with toast ✅
+
 - design the request books page
+- clean the code (remove unnecessary imports/comments/anything else)
 - implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'
 - use some kind of state management/cache to not load data from db again and again!
 - highlight active menu from navigation menu list

@@ -10,7 +10,7 @@ const useGetDocs = () => {
   // STATES:
   const [data, setData] = useState<DocumentData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | unknown>("");
+  const [error, setError] = useState<string>("");
 
   const getData = async (
     query: Query<DocumentData, DocumentData>,
@@ -26,12 +26,12 @@ const useGetDocs = () => {
 
       if (res.length > 0) setData(res);
     } catch (error) {
-      setError(error);
+      if (error instanceof Error) setError(error.message);
     }
     setIsLoading(false);
   };
 
-  return [getData, data, isLoading, error] as const;
+  return [getData, data, isLoading, error, setError] as const;
 };
 
 export default useGetDocs;

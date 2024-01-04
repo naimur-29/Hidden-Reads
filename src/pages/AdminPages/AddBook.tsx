@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { v4 as uuid4 } from "uuid";
 import { serverTimestamp, arrayUnion, increment } from "firebase/firestore";
+import {
+  removeDuplicateItemsFromArray,
+  removeEmptyStringsFromArray,
+} from "../../utility/commonFunctions";
 
 import "./styles/AddBook.css";
 
 // COMPONENTS:
 import LoadingAnimation from "../../components/LoadingAnimation";
+import ErrorToast from "../../components/ErrorToast";
+import SuccessToast from "../../components/SuccessToast";
 
 // HOOKS:
 import useUpdateDoc from "../../hooks/useUpdateDoc";
 import useSetDoc from "../../hooks/useSetDoc";
-import {
-  removeDuplicateItemsFromArray,
-  removeEmptyStringsFromArray,
-} from "../../utility/commonFunctions";
 
 // TYPES:
 type bookInfoType = {
@@ -47,6 +49,7 @@ type bookDownloadsType = {
 
 const AddBook: React.FC = () => {
   // STATES:
+  const [successMsg, setSuccessMsg] = useState("");
   const [bookInfo, setBookInfo] = useState<bookInfoType>({
     title: "",
     author: "",
@@ -76,8 +79,7 @@ const AddBook: React.FC = () => {
   );
 
   // HOOKS:
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [setDoc, isSetDocLoading, _setDocError, setSetDocError] = useSetDoc();
+  const [setDoc, isSetDocLoading, setDocError, setSetDocError] = useSetDoc();
   const [updateStats, isUpdateStatsLoading] = useUpdateDoc();
 
   // handle add volume download links:
@@ -181,24 +183,32 @@ const AddBook: React.FC = () => {
       bookDownloadsData.links.push(res);
     });
 
-    // add new book:
-    const id = uuid4();
-    await setDoc("books", id, bookData);
+    try {
+      // add new book:
+      const id = uuid4();
+      await setDoc("books", id, bookData);
 
-    // add new bookWithDownload:
-    await setDoc("bookDownloads", id, bookDownloadsData);
+      // add new bookWithDownload:
+      await setDoc("bookDownloads", id, bookDownloadsData);
 
-    // updating stats:
-    await updateStats("stats", "stats", {
-      booksCount: increment(1),
-    });
+      // updating stats:
+      await updateStats("stats", "stats", {
+        booksCount: increment(1),
+      });
 
-    const genresList = removeEmptyStringsFromArray(
-      removeDuplicateItemsFromArray(
-        bookInfo.genres.trim().toLowerCase().split(", ")
-      )
-    );
-    await updateStats("stats", "genres", { genres: arrayUnion(...genresList) });
+      const genresList = removeEmptyStringsFromArray(
+        removeDuplicateItemsFromArray(
+          bookInfo.genres.trim().toLowerCase().split(", ")
+        )
+      );
+      await updateStats("stats", "genres", {
+        genres: arrayUnion(...genresList),
+      });
+
+      setSuccessMsg("Book Added!");
+    } catch (error) {
+      setSetDocError("Failed To Add Book!");
+    }
 
     // reset user inputs:
     setBookInfo({
@@ -234,6 +244,12 @@ const AddBook: React.FC = () => {
   return (
     <section className="add-book-page">
       <h1 className="title">Add Book</h1>
+
+      {/* ERROR TOAST */}
+      <ErrorToast message={setDocError} setMessage={setSetDocError} />
+
+      {/* SUCCESS TOAST */}
+      <SuccessToast message={successMsg} setMessage={setSuccessMsg} />
 
       {/* Add Book Infos */}
       <div className="form-container">

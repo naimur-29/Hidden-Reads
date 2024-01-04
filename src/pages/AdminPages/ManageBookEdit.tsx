@@ -6,6 +6,8 @@ import "./styles/ManageBookEdit.css";
 
 // COMPONENTS:
 import LoadingAnimation from "../../components/LoadingAnimation";
+import ErrorToast from "../../components/ErrorToast";
+import SuccessToast from "../../components/SuccessToast";
 
 // HOOKS:
 import useGetDoc from "../../hooks/useGetDoc";
@@ -28,6 +30,8 @@ interface bookInfoType {
 const ManageBookEdit: React.FC = () => {
   // STATES:
   const [isPageLoading, setIsPageLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [newLink, setNewLink] = useState<linkType>({
     context: "",
     epub_link: "",
@@ -43,6 +47,7 @@ const ManageBookEdit: React.FC = () => {
   });
 
   // HOOKS:
+  const deleteBookConfirmTimeoutRef = useRef<number | null>(null);
   const id = useParams().id?.split("===")[1];
   const navigate = useNavigate();
   const pageLoadingTimeoutRef = useRef<null | number>(null);
@@ -67,7 +72,7 @@ const ManageBookEdit: React.FC = () => {
         bookInfo.cover_link.trim().length === 0 ||
         bookInfo.cover_shade.trim().length === 0
       ) {
-        console.log("Invalid Cover Link!");
+        setErrorMsg("Invalid Cover Link!");
         return;
       } else
         data = {
@@ -76,7 +81,7 @@ const ManageBookEdit: React.FC = () => {
         };
     } else if (context === "INFO") {
       if (bookInfo.info_link.trim().length === 0) {
-        console.log("Invalid Info Link!");
+        setErrorMsg("Invalid Info Link!");
         return;
       } else
         data = {
@@ -95,14 +100,20 @@ const ManageBookEdit: React.FC = () => {
       pdf_link: "",
     });
 
-    await updateBookDownloadsInfo(
-      "bookDownloads",
-      id,
-      bookDownloadsInfo as DocumentData
-    );
-    await updateBookInfo("books", id, {
-      volumes: bookDownloadsInfo?.links?.length,
-    } as DocumentData);
+    try {
+      await updateBookDownloadsInfo(
+        "bookDownloads",
+        id,
+        bookDownloadsInfo as DocumentData
+      );
+      await updateBookInfo("books", id, {
+        volumes: bookDownloadsInfo?.links?.length,
+      } as DocumentData);
+
+      setSuccessMsg("Updated!");
+    } catch (error) {
+      setErrorMsg("Failed To Update!");
+    }
   };
 
   const handleDeleteBook = async () => {
@@ -178,11 +189,11 @@ const ManageBookEdit: React.FC = () => {
     // check exceptions:
     if (
       alreadyExists ||
-      link.context.trim().length === 0 ||
-      link.epub_link.trim().length === 0 ||
-      link.pdf_link.trim().length === 0
+      link.context.length === 0 ||
+      link.epub_link.length === 0 ||
+      link.pdf_link.length === 0
     ) {
-      console.log("Link Already Exists or Invalid Info!");
+      setErrorMsg("Link Already Exists or Invalid Info!");
       return;
     }
 
@@ -216,6 +227,20 @@ const ManageBookEdit: React.FC = () => {
     }, 1000);
   }, [navigate, id]);
 
+  useEffect(() => {
+    console.log("running...");
+
+    if (deleteBookConfirmTimeoutRef.current) {
+      window.clearTimeout(deleteBookConfirmTimeoutRef.current);
+    }
+
+    if (isDeleteBookConfirm) {
+      deleteBookConfirmTimeoutRef.current = window.setTimeout(() => {
+        setIsDeleteBookConfirm(false);
+      }, 1000);
+    }
+  }, [isDeleteBookConfirm]);
+
   // show loading animation if something is loading:
   if (
     isPageLoading ||
@@ -230,6 +255,12 @@ const ManageBookEdit: React.FC = () => {
   return (
     <div className="manage-book-edit-container">
       <h2 className="title">{bookDownloadsInfo?.title || "Update Book"}</h2>
+
+      {/* ERROR TOAST */}
+      <ErrorToast message={errorMsg} setMessage={setErrorMsg} />
+
+      {/* SUCCESS TOAST */}
+      <SuccessToast message={successMsg} setMessage={setSuccessMsg} />
 
       {isEditDownloadInfoRevealed ? (
         <></>
