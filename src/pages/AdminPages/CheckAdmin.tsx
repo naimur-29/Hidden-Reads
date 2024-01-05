@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { getDoc } from "firebase/firestore";
-import { getStatsRef } from "../../config/firebase";
+import { getRef } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 import LoadingAnimation from "../../components/LoadingAnimation";
 
@@ -28,7 +28,7 @@ const CheckAdmin: React.FC<propType> = ({ children }) => {
       try {
         console.log("logging...");
         // get stats:
-        const statsRef = getStatsRef("admin");
+        const statsRef = getRef("stats", "admin");
         const data = (await getDoc(statsRef)).data();
 
         if (data?.hashes.includes(hash)) {

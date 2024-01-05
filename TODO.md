@@ -93,6 +93,8 @@
 - use hooks to interact with db ✅
 - show error messages and success messages with toast ✅
 
+- fix the shakiness when scrollbar appear
+- fix on book by covers if image doesn't show up show BookLoadingGif
 - design the request books page
 - clean the code (remove unnecessary imports/comments/anything else)
 - implement a loading skeleton for 'BookSearchItem' in 'BookSearchResults'

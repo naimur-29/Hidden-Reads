@@ -45,10 +45,6 @@ const BookSearchItem: React.FC<propTypes> = ({ book }) => {
       <div className="right">
         <div className="title-container">
           <p className="title">{book.title}</p>
-          {/* <p className="translator">{book.translator}</p> */}
-          {/* <Link to={`/authors/${book.author}`} className="author">
-            {book.author}
-          </Link> */}
 
           <div className="author">{book.author}</div>
         </div>

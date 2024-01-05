@@ -40,7 +40,6 @@ const Navbar: React.FC = () => {
         )}
       </section>
       <section className="right-container">
-        {/* <SearchBar /> */}
         <NavMenu />
       </section>
     </nav>

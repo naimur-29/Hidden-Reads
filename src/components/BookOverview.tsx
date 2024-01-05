@@ -142,14 +142,6 @@ const BookOverview: React.FC = () => {
                   </p>
                 </>
               )}
-              {/* <a href="#comments-container" className="comments">
-                <MessageSquare />
-                {`${commentsCount} Comments`}
-              </a> */}
-              {/* <p className="comments">
-                <MessageSquare style={{ translate: "0px 3px" }} />
-                {`Comments Coming Soon...`}
-              </p> */}
             </div>
           </div>
 
@@ -163,9 +155,6 @@ const BookOverview: React.FC = () => {
             <div className="info-container">
               <div className="top">
                 <h3 className="title">{bookInfo?.title}</h3>
-                {/* <h4 className="title" style={{ fontSize: "1.2rem" }}>
-                {bookInfo?.og_title}
-              </h4> */}
 
                 <article className="synopsis">
                   {bookInfo?.info_link?.includes("http") ? (
@@ -275,29 +264,6 @@ const BookOverview: React.FC = () => {
                       )
                   )}
                 </div>
-              </div>
-
-              <div
-                className="notice-container"
-                style={{
-                  background: `linear-gradient(to bottom, ${bookInfo?.cover_shade}00 10%, ${bookInfo?.cover_shade}77 80%)`,
-                }}
-              >
-                <article className="notice">
-                  Please note that some download links may not work properly.
-                  So, if you face the issue, kindly request an update in{" "}
-                  <Link className="link" to="/request-books">
-                    Request Books Page
-                  </Link>
-                  ! For further information contact{" "}
-                  <a
-                    href="https://www.facebook.com/profile.php?id=61553805444489"
-                    target="_blank"
-                    className="link"
-                  >
-                    @jack
-                  </a>
-                </article>
               </div>
             </>
           )}

@@ -42,12 +42,6 @@ const NavMenu: React.FC = () => {
 
         <MenuItem
           setMenuState={setIsMenuActive}
-          linkTo="/request-books"
-          context="Request Books"
-        />
-
-        <MenuItem
-          setMenuState={setIsMenuActive}
           linkTo="/recently-added"
           context="Recently Added"
         />

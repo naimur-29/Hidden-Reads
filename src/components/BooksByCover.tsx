@@ -5,6 +5,9 @@ import { abbreviateNumberForStats } from "../utility/commonFunctions";
 // icons:
 import { Eye } from "lucide-react";
 
+// assets:
+import BookLoadingGif from "../assets/bookLoading.gif";
+
 // TYPES:
 import { bookType } from "./BooksByCoverContainer";
 type propType = {
@@ -20,16 +23,27 @@ const BookByCover: React.FC<propType> = ({ book }) => {
         backgroundImage: `linear-gradient(0deg, ${book.cover_shade}99, ${book.cover_shade}00, ${book.cover_shade}99)`,
       }}
     >
-      <img
-        className="cover"
-        src={book.cover_link}
-        loading="lazy"
-        alt={book.title}
-      />
+      {book?.cover_link?.includes("http") ? (
+        <img
+          className="cover"
+          src={book.cover_link}
+          loading="lazy"
+          alt={book.title}
+        />
+      ) : (
+        <img
+          className="cover"
+          src={BookLoadingGif}
+          loading="lazy"
+          alt={book.title}
+        />
+      )}
       <div
         className="overlay1"
         style={{
-          background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade} 80%)`,
+          background: book?.cover_link?.includes("http")
+            ? `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade} 80%)`
+            : "",
         }}
       >
         <h3 className="content">
@@ -41,7 +55,9 @@ const BookByCover: React.FC<propType> = ({ book }) => {
       <div
         className="overlay2"
         style={{
-          background: `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade} 80%)`,
+          background: book?.cover_link?.includes("http")
+            ? `linear-gradient(to bottom, ${book?.cover_shade}00 10%, ${book?.cover_shade} 80%)`
+            : "",
         }}
       >
         <h3 className="content">
