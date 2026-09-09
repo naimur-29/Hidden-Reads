@@ -1,2 +1,12 @@
-# Hidden-Reads
-Explore the enigmatic world of Hidden Reads—a curated collection of captivating light novels and web novels, where each page unveils hidden treasures and undiscovered tales. Dive into the allure of mystery with us.
+<h2>
+  <a href="https://hiddenreads.naimur29.site">Hidden Reads</a>
+</h2>
+
+<p>
+  A React, TypeScript, and Firebase project for light novels
+  and web novels.
+</p>
+
+<ul>
+  <li>Explored CSS animations & Dynamic URL systems that hold states.</li>
+</ul>
