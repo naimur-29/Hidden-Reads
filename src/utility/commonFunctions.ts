@@ -26,3 +26,21 @@ export function removeEmptyStringsFromArray(arr: string[]) {
 export function removeDuplicateItemsFromArray<Type>(arr: Type[]) {
   return [...new Set(arr)];
 }
+
+export function isAllowedSourceLink(value: string): boolean {
+  const trimmedValue = value.trim();
+  if (!trimmedValue) return true;
+
+  try {
+    const url = new URL(trimmedValue);
+    if (url.protocol !== "http:" && url.protocol !== "https:") return false;
+
+    const pathname = url.pathname.toLowerCase();
+    return !(
+      pathname.includes("download") ||
+      /\.(pdf|epub|mobi|azw|azw3|cbz|cbr)$/.test(pathname)
+    );
+  } catch {
+    return false;
+  }
+}
