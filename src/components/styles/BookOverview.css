@@ -110,13 +110,7 @@
   > .book-container
   > .cover-container
   > .stats
-  > .views,
-.book-overview-container
-  > .inner-container
-  > .book-container
-  > .cover-container
-  > .stats
-  > .downloads {
+  > .views {
   text-decoration: none;
   font-size: 1.1rem;
   display: flex;
@@ -239,151 +233,12 @@
 /* DESCRIPTION END */
 /* INFO START */
 
-/* DOWNLOAD START */
-.book-overview-container > .inner-container > .download-container {
-  background-color: #12121277;
-  font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.book-overview-container
-  > .inner-container
-  > .download-container
-  > .download-reveal-btn {
-  background-color: #242424;
-  text-decoration: none;
-  color: inherit;
-  font-weight: 600;
-  border: 2px solid #eee7;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 1.7rem;
-  cursor: pointer;
-  transition: border-color 150ms;
-}
-
-@media (hover: hover) {
-  .book-overview-container
-    > .inner-container
-    > .download-container
-    > .download-reveal-btn:hover {
-    border-color: #eee;
-  }
-}
-
-.book-overview-container > .inner-container > .download-container > div {
-  font-size: 1.4rem;
+/* POLICY NOTICE START */
+.book-overview-container > .inner-container > .policy-notice {
   background-color: #23232344;
   border: 2px solid #eeeb;
   padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.book-overview-container > .inner-container > .download-container > div > div {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.book-overview-container
-  > .inner-container
-  > .download-container
-  > div
-  > div
-  > a {
-  text-decoration: none;
-  background-color: #24242444;
-  color: inherit;
-  font-size: 1.05rem;
-  font-weight: 600;
-  border: 2px solid #eee7;
-  padding: 4px 12px;
-  cursor: pointer;
-  transition: all 300ms;
-}
-
-@media (max-width: 420px) {
-  .book-overview-container
-    > .inner-container
-    > .download-container
-    > div
-    > div
-    > a {
-    font-size: 0.95rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .book-overview-container
-    > .inner-container
-    > .download-container
-    > div
-    > div
-    > a {
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 280px) {
-  .book-overview-container
-    > .inner-container
-    > .download-container
-    > div
-    > div
-    > a {
-    font-size: 0.67rem;
-  }
-}
-
-@media (hover: hover) {
-  .book-overview-container
-    > .inner-container
-    > .download-container
-    > div
-    > div
-    > a:hover {
-    transform: translateY(-1px);
-    border-color: #eee;
-  }
-}
-
-/* NOTICE Start */
-.book-overview-container
-  > .inner-container
-  > .download-container
-  > .notice-container {
-  background-color: #23232344;
-  font-size: 1.4rem;
-  border: 2px solid #eeeb;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-.book-overview-container
-  > .inner-container
-  > .download-container
-  > .notice-container
-  > .notice {
-  font-size: 1.15rem;
-  font-weight: 400;
   text-align: center;
+  font-size: 1.15rem;
 }
-
-.book-overview-container
-  > .inner-container
-  > .download-container
-  > .notice-container
-  > .notice
-  > a {
-  color: inherit;
-  font-weight: bold;
-}
-/* NOTICE END */
-/* DOWNLOAD END */
+/* POLICY NOTICE END */
